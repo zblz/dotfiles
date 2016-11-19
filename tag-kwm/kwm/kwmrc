@@ -5,7 +5,7 @@
 
 // Set default values for screen padding
 /*kwmc config padding 26 2 2 2*/
-kwmc config padding 0 20 0 0
+kwmc config padding 1 21 1 1
 
 // Set default values for container gaps
 kwmc config gap 1 1
