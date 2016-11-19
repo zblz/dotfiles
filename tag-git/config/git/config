@@ -1,0 +1,48 @@
+[user]
+    name = Víctor Zabalza
+    email = vzabalza@gmail.com
+[push]
+    default = simple
+[help]
+    autocorrect = 1
+[alias]
+    last = log -1 HEAD
+    visual = !gitg
+    latexdiff = !scm-latexdiff
+    g = log --graph --decorate --oneline --all
+
+    # one-line log
+    l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+
+    a = add
+    ap = add -p
+    c = commit --verbose
+    ca = commit -a --verbose
+    cm = commit -m
+    cam = commit -a -m
+    m = commit --amend --verbose
+
+    d = diff
+    ds = diff --stat
+    dc = diff --cached
+
+    s = status -s
+    co = checkout
+    cob = checkout -b
+    # list branches sorted by last modified
+    b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+
+    # list aliases
+    la = "!git config -l | grep alias | cut -c 7-"
+
+[http]
+    postBuffer = 524288000
+
+[url "git@github.com:"]
+    insteadOf = gh:
+
+[url "git@bitbucket.org:"]
+    insteadOf = bb:
+
+[url "https://gist.github.com/"]
+    insteadOf = gist:

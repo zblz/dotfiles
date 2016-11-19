@@ -1,0 +1,64 @@
+/*
+    kwm config
+    by Eliza Weisman (@hawkw)
+ */
+
+// Set default values for screen padding
+/*kwmc config padding 26 2 2 2*/
+kwmc config padding 0 20 0 0
+
+// Set default values for container gaps
+kwmc config gap 1 1
+
+// Default tiling mode for Kwm (bsp | monocle | float | off)
+kwmc config tiling bsp
+
+kwmc config lock-to-container on
+
+// Automatically float windows that fail to resize
+kwmc config float-non-resizable on
+
+// Set focus-follows-mouse-mode to on
+kwmc config focus-follows-mouse on
+// The mouse will automatically move to the center
+// of the focused window
+kwmc config mouse-follows-focus off
+
+// Focus-follows-mouse is temporarily disabled when
+// a floating window has focus
+kwmc config standby-on-float on
+
+/* Center window when made floating */
+kwmc config center-on-float on
+
+// Allow window focus to wrap-around
+kwmc config cycle-focus on
+
+// Set default container split-ratio
+// kwmc config split-ratio 0.5
+
+// New splits become the right leaf-node
+kwmc config spawn right
+
+// Mouse drag
+kwmc config mouse-drag on
+kwmc config mouse-drag mod cmd+alt+ctrl
+
+
+/*
+    Window borders
+ */
+
+// Enable border for focused window
+kwmc config border focused on
+kwmc config border focused size 1
+kwmc config border focused color 0xff7f9f7f
+kwmc config border focused radius 6
+
+// Enable border for marked window
+kwmc config border marked on
+kwmc config border marked size 1
+// kwmc config border marked color 0xff65727f
+kwmc config border marked radius 6
+
+include rules

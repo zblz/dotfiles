@@ -1,0 +1,77 @@
+# Enable kwm compatibility mode
+khd kwm on
+
+# set color of default mode
+khd mode default color 0xFFD5C4A1
+
+# Exit, restart reload
+lalt - q : brew services restart kwm; brew services restart khd
+
+# Set Space Tiling Modes
+lalt - a : kwmc space -t bsp
+lalt - s : kwmc space -t monocle
+lalt - d : kwmc space -t float
+
+# Rotate Window-Tree By 90degrees (Clockwise)
+lalt - r : kwmc tree rotate 90
+
+# Modify Container
+# prefix - s    : kwmc window -c split-mode toggle
+# prefix - 0x32 : kwmc window -c type toggle
+
+# Use lalt-, lalt-. to expand/reduce windows
+lalt - 0x2B         : kwmc window -c expand 0.05 east
+lalt - 0x2F         : kwmc window -c reduce 0.05 east
+lalt + shift - 0x2B : kwmc window -c expand 0.05 north
+lalt + shift - 0x2F : kwmc window -c reduce 0.05 north
+
+# lalt- up/down cycles focus through windows
+lalt - up   : kwmc window -f prev
+lalt - down : kwmc window -f next
+
+# Move windows within space
+lalt + ctrl - up    : kwmc window -s north
+lalt + ctrl - down  : kwmc window -s south
+lalt + ctrl - left  : kwmc window -s west
+lalt + ctrl - right : kwmc window -s east
+
+# Move windows to other spaces
+lalt + shift - left  : kwmc window -m space left
+lalt + shift - right : kwmc window -m space right
+
+# Set Focus To Next Display (0x2C = /)
+lalt - 0x2C          : kwmc display -f next
+# Move Window To Next Display (0x2C = /)
+lalt + lshift - 0x2C : kwmc window -m display next
+
+# Poke the focused window to resize itself
+lalt - d             : kwmc window -r focused
+
+# Launch stuff
+lalt + shift - return : exec osascript /Users/victor/.kwm/scripts/iterm.scpt
+
+# Enable an internet mode map
+khd mode internet prefix on
+khd mode internet timeout 1
+khd mode internet restore default
+khd mode internet color 0xFF458588
+lalt - i : khd -e "mode activate internet"
+
+internet - f : exec osascript /Users/victor/.kwm/scripts/chrome.scpt
+internet - t : exec open -a /Applications/Telegram.app
+internet - s : exec open -a /Applications/Slack.app
+internet - m : exec open -a /Applications/Radiant\ Player.app
+
+# Set Current Space
+lalt - left  : kwmc space -fExperimental left
+lalt - right : kwmc space -fExperimental right
+lalt - 1     : kwmc space -fExperimental 1
+lalt - 2     : kwmc space -fExperimental 2
+lalt - 3     : kwmc space -fExperimental 3
+lalt - 4     : kwmc space -fExperimental 4
+lalt - 5     : kwmc space -fExperimental 5
+lalt - 6     : kwmc space -fExperimental 6
+lalt - 7     : kwmc space -fExperimental 7
+lalt - 8     : kwmc space -fExperimental 8
+lalt - 9     : kwmc space -fExperimental 9
+lalt - 0     : kwmc space -fExperimental 10

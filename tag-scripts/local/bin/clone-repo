@@ -1,0 +1,17 @@
+#!/bin/bash
+
+repo=$1
+w=$(echo $repo | cut -f 1 -d ':')
+r=$(echo $repo | cut -f 2- -d ':')
+
+if [ "$w" == "gh" ]; then
+    d=$HOME/github.com/$r
+elif [ "$w" == "bb" ]; then
+    d=$HOME/bitbucket.org/$r
+else
+    echo "prefix $w not known"
+    exit 1
+fi
+
+mkdir -p $d
+git clone $repo $d
