@@ -1,0 +1,3 @@
+HOSTNAME="vega"
+EXCLUDES="LICENSE README.md"
+TAGS="fish git kwm nvim sbt scripts ipython"

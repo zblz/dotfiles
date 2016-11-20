@@ -1,2 +1,0 @@
-EXCLUDES="LICENSE README.md"
-TAGS="fish git kwm nvim rcm sbt scripts ipython"
