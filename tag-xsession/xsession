@@ -1,0 +1,17 @@
+#!/bin/bash --login
+
+while true; do
+  for script in $(run-parts --test $HOME/.xsession.d); do
+    echo I: sourcing ${script:t}... >&2
+    source $script
+    echo I: done sourcing ${script:t}... >&2
+  done
+
+  [ -e $HOME/.xsession-exit ] && break
+
+  echo "I: restarting xsession (touch $HOME/.xsession-exit to exit)..." >&2
+done
+
+rm -f $HOME/.xsession-exit
+
+exit 0

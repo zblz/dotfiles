@@ -1,0 +1,26 @@
+Config { font = "xft:DejaVu Sans Mono:size=9"
+       , bgColor = "#3f3f3f"
+       , fgColor = "#dcdccc"
+       , alpha = 255
+       , allDesktops = True
+       , position = BottomW L 91
+       -- , position = Static { xpos=0, ypos=748, width=1244, height=20 }
+       , lowerOnStart = True
+       , sepChar = "%"
+       , alignSep = "}{"
+       , commands = [ Run MultiCpu ["-t","Cpu: <total0><total1><total2><total3>","-L","30","-H","60","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC","-w","3"] 25
+                    , Run Memory ["-t","Mem: <usedratio>%","-L","15","-H","50","--low","green","--high","red"] 50
+                    , Run Battery [] 250
+                    , Run Date "%d/%m/%y %H:%M" "mydate" 100
+                    , Run StdinReader
+                    -- , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
+                             -- , "--Low"      , "1000"       -- units: kB/s
+                             -- , "--High"     , "5000"       -- units: kB/s
+                             -- , "--low"      , "darkgreen"
+                             -- , "--normal"   , "darkorange"
+                             -- , "--high"     , "darkred"
+                             -- ] 10
+					,  Run Network "wlan0" ["-L","0","-H","100","--normal","green","--high","red","-w","4"] 25
+                    ]
+       , template = "%StdinReader% }{ %multicpu% | %memory% | %battery% | %wlan0% | <fc=#ee9a00>%mydate%</fc> "
+       }

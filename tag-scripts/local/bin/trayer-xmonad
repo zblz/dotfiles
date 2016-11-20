@@ -1,0 +1,6 @@
+#!/bin/bash 
+if [ "$(pgrep trayer)" != "" ]; then
+    pkill -f trayer.*bottom
+fi
+trayer --edge bottom --align right --width 9 --height 19 --transparent true \
+    --alpha 0 --tint 0x3f3f3f --monitor 0 &

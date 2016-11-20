@@ -1,0 +1,7 @@
+xkb_keymap {
+	xkb_keycodes  { include "evdev+aliases(qwerty)"	};
+	xkb_types     { include "complete"	};
+	xkb_compat    { include "complete"	};
+	xkb_symbols   { include "pc+us(altgr-intl)+inet(evdev)+capslock(escape)+mizar(menu)+mizar(updn)+fix(plusminus)" };
+	xkb_geometry  { include "thinkpad(60)"	};
+};

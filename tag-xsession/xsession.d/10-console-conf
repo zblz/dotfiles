@@ -1,0 +1,10 @@
+
+
+xrdb -merge $HOME/.Xdefaults
+numlockx off
+xsetroot -cursor_name left_ptr
+xsetroot -solid '#3f3f3f'
+#Set beep off
+xset b off
+# Add $HOME/bin to path
+export PATH=$HOME/bin:$PATH

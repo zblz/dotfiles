@@ -1,0 +1,3 @@
+HOSTNAME="mizar"
+EXCLUDES="LICENSE README.md"
+TAGS="fish git nvim sbt scripts ipython xmonad xsession"

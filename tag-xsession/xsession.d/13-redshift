@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#coords="41.4:2.2" # Barcelona
+#coords="48.3:8.9" # Heidelberg
+#coords="52.63:-1.13" # Leicester
+coords="51.50:0.12" # London
+redshift -l $coords -t 5200:3200 -m randr & 

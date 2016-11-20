@@ -1,0 +1,86 @@
+#define COLOR_FG                  #dcdccc
+#define COLOR_BG                  #3f3f3f
+
+#define COLOR_TERM_BLACK          #000000
+#define COLOR_TERM_DARK_RED       #907070
+#define COLOR_TERM_DARK_GREEN     #60b48a
+#define COLOR_TERM_DARK_YELLOW    #dfaf8f
+#define COLOR_TERM_DARK_BLUE      #506070
+#define COLOR_TERM_DARK_MAGENTA   #dc8cc3
+#define COLOR_TERM_DARK_CYAN      #8cd0d3
+#define COLOR_TERM_LIGHT_GRAY     #eeeeee
+#define COLOR_TERM_DARK_GRAY      #709080
+#define COLOR_TERM_LIGHT_RED      #dca3a3
+#define COLOR_TERM_LIGHT_GREEN    #c3bf9f
+#define COLOR_TERM_LIGHT_YELLOW   #f0dfaf
+#define COLOR_TERM_LIGHT_BLUE     #94bff3
+#define COLOR_TERM_LIGHT_MAGENTA  #ec93d3
+#define COLOR_TERM_LIGHT_CYAN     #93e0e3
+#define COLOR_TERM_WHITE          #ffffff
+
+
+*color0:  COLOR_TERM_BLACK
+*color1:  COLOR_TERM_DARK_RED
+*color2:  COLOR_TERM_DARK_GREEN
+*color3:  COLOR_TERM_DARK_YELLOW
+*color4:  COLOR_TERM_DARK_BLUE
+*color5:  COLOR_TERM_DARK_MAGENTA
+*color6:  COLOR_TERM_DARK_CYAN
+*color7:  COLOR_TERM_LIGHT_GRAY
+*color8:  COLOR_TERM_DARK_GRAY
+*color9:  COLOR_TERM_LIGHT_RED
+*color10: COLOR_TERM_LIGHT_GREEN
+*color11: COLOR_TERM_LIGHT_YELLOW
+*color12: COLOR_TERM_LIGHT_BLUE
+*color13: COLOR_TERM_LIGHT_MAGENTA
+*color14: COLOR_TERM_LIGHT_CYAN
+*color15: COLOR_TERM_WHITE
+
+!! Xft
+!Xft.dpi:       96
+Xft.rgba:       rgb
+Xft.hinting:    1
+Xft.autohint:   0
+Xft.antialias:  1
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+
+!! rxvt
+URxvt*termName:   rxvt-256color
+URxvt*loginShell: true
+URxvt*scrollBar:  false
+URxvt*background: COLOR_BG
+URxvt*foreground: COLOR_FG
+URxvt*font:       xft:DejaVu Sans Mono for Powerline:size=9
+
+!! xpdf
+xpdf*enableFreetype:    true
+xpdf*antialias:         true
+xpdf*foreground:        black
+xpdf*background:        #e4e4e4
+xpdf*urlCommand:        xdg-open %s
+xpdf*initialZoom:       width
+xpdf*continuousView:    true
+
+!! xscreensaver
+xscreensaver.splash: false
+! -- font settings -- !
+!general dialog box (affects main hostname, username, password text)
+xscreensaver.Dialog.foreground:         COLOR_FG
+xscreensaver.Dialog.background:         COLOR_BG
+xscreensaver.Dialog.topShadowColor:     COLOR_BG
+xscreensaver.Dialog.bottomShadowColor:  COLOR_BG
+xscreensaver.Dialog.Button.foreground:  COLOR_FG
+xscreensaver.Dialog.Button.background:  #505050
+!username/password input box and date text colour
+xscreensaver.Dialog.text.foreground:    COLOR_FG
+xscreensaver.Dialog.text.background:    #505050
+xscreensaver.Dialog.internalBorderWidth:25
+xscreensaver.Dialog.borderWidth:        0
+xscreensaver.Dialog.shadowThickness:    0
+!timeout bar (background is actually determined by Dialog.text.background)
+xscreensaver.passwd.thermometer.foreground:  COLOR_TERM_DARK_GREEN
+xscreensaver.passwd.thermometer.background:  COLOR_BG
+xscreensaver.passwd.thermometer.width:       8
+!datestamp format--see the strftime(3) manual page for details
+xscreensaver.dateFormat:    %H:%M %a %b %d, %Y

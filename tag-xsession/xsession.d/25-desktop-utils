@@ -1,0 +1,4 @@
+
+trayer --edge bottom --align right --width 9 --height 18 --transparent true --alpha 0 --tint 0x3f3f3f & 
+/usr/local/bin/dunst &
+$HOME/bin/conky-init start &
