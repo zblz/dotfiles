@@ -6,5 +6,5 @@ xsetroot -cursor_name left_ptr
 xsetroot -solid '#3f3f3f'
 #Set beep off
 xset b off
-# Add $HOME/bin to path
-export PATH=$HOME/bin:$PATH
+# Add $HOME/.local/bin to path
+export PATH=$HOME/.local/bin:$PATH

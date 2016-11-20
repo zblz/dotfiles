@@ -172,8 +172,8 @@ myKeys conf@(XConfig {modMask = modm}) =
          [ 
            ((modm .|. shiftMask, xK_x), spawn "urxvt -e vim /home/vzabalza/.xmonad/xmonad.hs" )
          , ((modm,               xK_i), submap internetMap )
-         , ((modm .|.controlMask,xK_c), spawn "/home/vzabalza/bin/conky-init stop" ) 
-         , ((modm,               xK_c), spawn "/home/vzabalza/bin/conky-init start" ) 
+         , ((modm .|.controlMask,xK_c), spawn "/home/vzabalza/.local/bin/conky-init stop" ) 
+         , ((modm,               xK_c), spawn "/home/vzabalza/.local/bin/conky-init start" ) 
          , ((modm,               xK_y), spawn "urxvt -e ipython3 --matplotlib=qt4" ) 
          , ((modm,               xK_k), spawn "kodi" ) 
          -- Full Screen
@@ -205,14 +205,14 @@ myKeys conf@(XConfig {modMask = modm}) =
          , ((modm .|. shiftMask, xK_y   ), namedScratchpadAction scratchpads "ipython")
          , ((modm .|. shiftMask, xK_m   ), namedScratchpadAction scratchpads "ncmpcpp")
          -- toggle display outputs
-         , ((0, xF86XK_Display ), spawn "/home/vzabalza/bin/thinkpad-fn-f7 toggle")
-         , ((modm, xK_F7 ), spawn "/home/vzabalza/bin/thinkpad-fn-f7 toggle")
+         , ((0, xF86XK_Display ), spawn "/home/vzabalza/.local/bin/thinkpad-fn-f7 toggle")
+         , ((modm, xK_F7 ), spawn "/home/vzabalza/.local/bin/thinkpad-fn-f7 toggle")
          -- Xscreensaver
          , ((0, xK_Pause  ), spawn "xscreensaver-command -lock")
          , ((0, xF86XK_ScreenSaver ), spawn "xscreensaver-command -lock")
          -- Suspend
          , ((0, 0x1008ffa7), spawn "systemctl hibernate")
-         , ((modm .|. shiftMask, xK_t), spawn "/home/vzabalza/bin/trayer-xmonad" )
+         , ((modm .|. shiftMask, xK_t), spawn "/home/vzabalza/.local/bin/trayer-xmonad" )
          -- TLP full charge
          , ((0, xF86XK_Launch1 ), spawn "sudo tlp fullcharge")
          -- Varis
@@ -236,7 +236,7 @@ internetMap = M.fromList $
                , ((0, xK_r), spawn "google-chrome --profile-directory='Default' --new-window http://cloud.feedly.com" )
                , ((0, xK_g), spawn "google-chrome --profile-directory='Default' --new-window http://mail.google.com/mail" )
                , ((0, xK_d), spawn "google-chrome --profile-directory='Default' --app=https://www.todoist.com" )
-               , ((0, xK_t), spawn "/home/vzabalza/bin/Telegram-dist/Telegram" )
+               , ((0, xK_t), spawn "/home/vzabalza/.local/bin/Telegram-dist/Telegram" )
                , ((0, xK_a), spawn "google-chrome --profile-directory='Profile 1'" )
                {-, ((0, xK_w), spawn "google-chrome --app=https://web.whatsapp.com" )-}
                , ((0, xK_y), spawn "skypeforlinux" )

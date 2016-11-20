@@ -1,4 +1,4 @@
 #!/bin/bash
 
 xscreensaver -no-splash &
-$HOME/bin/lightsOn.sh 100 &
+$HOME/.local/bin/lightsOn.sh 100 &
