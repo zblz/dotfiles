@@ -1,0 +1,15 @@
+#!/bin/bash
+
+case $1 in
+ start)
+#      if [ $(ps -A | grep conky | wc -l) != 0 ]; then
+#            exit 1
+#      fi
+      /home/vzabalza/bin/trayer-xmonad
+      killall conky
+      conky -c /home/vzabalza/.config/conkyrc
+      ;;
+ stop)
+      killall conky
+      ;;
+esac

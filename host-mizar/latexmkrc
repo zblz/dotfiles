@@ -1,0 +1,5 @@
+$pdf_previewer = "xpdf -remote %R %O %S";
+$pdf_update_method = 4;
+$pdf_update_command = "xpdf -remote %R -reload";
+$latex = 'latex -recorder -halt-on-error -interaction=nonstopmode -shell-escape';
+$pdflatex = 'pdflatex -recorder -halt-on-error -interaction=nonstopmode -shell-escape';

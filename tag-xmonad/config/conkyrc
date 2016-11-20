@@ -1,0 +1,134 @@
+#	.conkyrc configuration
+#	Tristam Green, 11-21-2007
+# 	Modified J. Settle 2008-01-04	
+#
+# maintain spacing between certain elements
+use_spacer right
+
+# set to yes if you want tormo to be forked in the background
+background yes
+
+use_xft yes
+
+# Xft font when Xft is enabled
+#xftfont Vera-10
+#xftfont Cantarell-11
+xftfont DejaVu Sans Mono-10
+#xftfont Andale Mono-9
+#xftfont Clean-8
+#xftfont cubicfive10:pixelsize=8
+#xftfont squaredance10:pixelsize=14
+#xftfont swf!t_v02:pixelsize=10
+
+# Text alpha when using Xft
+xftalpha 1
+#mail_spool $MAIL
+
+# Update interval in seconds
+update_interval 1.0
+update_interval_on_battery 10.0
+
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_hints below
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# Minimum size of text area
+minimum_size 200 5
+maximum_width 250
+
+# Draw shades?
+draw_shades no
+
+# Draw outlines?
+draw_outline no # amplifies text
+
+# Draw borders around text
+draw_borders no
+
+# Stippled borders?
+stippled_borders 3
+
+# border margins
+border_margin 5
+
+# border widt5
+border_width 6
+
+# Default colors and also border colors, grey90 == #dccccc
+default_color grey90
+default_shade_color black
+default_outline_color DarkGrey
+
+# Text alignment, other possible values are commented
+alignment top_left
+#alignment top_right
+#alignment bottom_left
+#alignment bottom_right
+
+# Gap between borders of screen and text
+gap_x 24 
+gap_y 00 
+
+# Subtract file system buffers from used memory?
+no_buffers yes
+
+# set to yes if you want all text to be in uppercase
+uppercase no
+
+# stuff after 'TEXT' will be formatted on screen
+#  ${color #dccccc}total $alignr $processes
+#  ${color #dccccc}execucio $alignr $running_processes
+#
+#${color #60b48a}Audio ${hr 1}
+#  ${color #dccccc}Volum: ${mixer}/100$alignr $if_mixer_mute Mute $endif
+#   ${color #dccccc}diskio $alignr $diskio
+#   ${color #dccccc}uptime $alignr $uptime_short
+#${color #60b48a}Processos ${hr 1}
+#${color #dccccc}CPU $alignr CPU% MEM%
+#  ${top name 1}$alignr${top cpu 1}  ${top mem 1}
+#  ${top name 2}$alignr${top cpu 2}  ${top mem 2}
+#  ${top name 3}$alignr${top cpu 2}  ${top mem 3}
+#MEM $alignr CPU% MEM%
+#  ${top_mem name 1}$alignr${top_mem cpu 1}  ${top_mem mem 1}
+#  ${top_mem name 2}$alignr${top_mem cpu 2}  ${top_mem mem 2}
+#  ${top_mem name 3}$alignr${top_mem cpu 3}  ${top_mem mem 3}
+
+
+TEXT
+
+${color #dccccc}${font Vera:size=14}$nodename ${font}${font Vera:size=9}$alignr ${time %a } ${time %e %B %G} | ${time %H:%M}${font}
+${color #60b48a}Sistema ${hr 1} 
+  ${color #dccccc}cpu $color $alignr $cpu%
+  ${color #dccccc}cpu temp $color $alignr ${execi 3 sensors | grep  'Physical id' |cut -c18-24}
+
+${color #60b48a}Bateria ${hr 1}
+  ${color #dccccc}estat $alignr ${battery BAT0}
+  ${color #dccccc}temps restant $alignr ${battery_time BAT0}
+  #${color #dccccc}consum $alignr ${exec ~/bin/get_power.py}
+
+${color #60b48a}Memoria ${hr 1}
+  ${color #dccccc}en us $alignr $mem/${memmax}
+  	${color #60b48a}${membar}
+  	${color #60b48a}${swapbar}
+
+${color #60b48a}Sistemes de fitxers ${hr 1}
+  ${color #dccccc}root  $alignr ${color #dccccc}${fs_free /} ${color #dccccc}lliure de ${fs_size /}
+       ${color #60b48a}${fs_bar /}
+  ${color #dccccc}home $alignr ${color #dccccc}${fs_free /home} ${color #dccccc}lliure de ${fs_size /home}
+       ${color #60b48a}${fs_bar /home}
+
+${color #60b48a}Wireless (${color #dfaf8f}${addr wlan0}${color #60b48a}) ${hr 1}
+  ${color dccccc}ssid   ${color #60b48a}${wireless_essid wlan0}
+  ${color dccccc}down ${color #dfaf8f}${downspeedf wlan0}${color dccccc}k/s ${alignr}${color dccccc}up ${color #60b48a}${upspeedf wlan0} ${color dccccc}k/s
+  
+${color #60b48a}Ethernet (${color #dfaf8f}${addr eth0}${color #60b48a}) ${hr 1}
+  ${color dccccc}down ${color #dfaf8f}${downspeedf eth0} ${color dccccc}k/s ${alignr}${color dccccc}up ${color #60b48a}${upspeedf eth0} ${color dccccc}k/s
+
+${color #60b48a}USB (${color #dfaf8f}${addr usb0}${color #60b48a}) ${hr 1}
+  ${color dccccc}down ${color #dfaf8f}${downspeedf usb0} ${color dccccc}k/s ${alignr}${color dccccc}up ${color #60b48a}${upspeedf usb0} ${color dccccc}k/s

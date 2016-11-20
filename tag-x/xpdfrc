@@ -1,0 +1,4 @@
+psFile "|lp"
+psPaperSize "A4"
+bind s any toggleOutline
+urlCommand "chrome-autoproxy %s"

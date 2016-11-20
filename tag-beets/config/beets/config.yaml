@@ -1,0 +1,60 @@
+directory: /data/musica
+library: ~/.config/beets/musiclibrary.blb
+
+#asciify_paths: yes
+replace:
+    ' ': _
+    '[\\/]': _
+    '^\.': _
+    '[\x00-\x1f]': _
+    '[<>"\?\*\|]': _
+    "[:;]": ','
+    "'": ''
+    '…': ...
+    '\.$': _
+    '\s+$': ''
+    '–': '-'
+art_filename: cover
+plugins: fetchart embedart lastgenre chroma fromfilename inline mbsync web replaygain
+
+per_disc_numbering: yes
+
+item_fields:
+    disc_and_track: u'%i-%02i' % (disc, track) if disctotal > 1 and disctotal < 10
+                    else u'%02i-%02i' % (disc, track) if disctotal >= 10
+                    else u'%02i' % (track)
+
+album_fields:
+    albumartist_sort_2: albumartist_sort if albumartist_sort != '' else albumartist 
+
+import:
+    write: yes
+    copy: no
+    move: yes
+    resume: no
+    quiet_fallback: skip
+    log: ~/.config/beets/beets-import.log
+    languages: ['en']
+
+paths:
+    #default: $albumartist_sort/${original_year}_$album%aunique{}/${disc_and_track}_$title
+    default: $albumartist_sort_2/${original_year}_$album%aunique{}/${disc_and_track}_$title
+    singleton: Pistes/$artist - $title
+    comp: BSO_i_Recopilacions/$album%aunique{}/${disc_and_track}_${artist}_-_$title
+    albumtype:soundtrack: BSO_i_Recopilacions/$album%aunique{}/${disc_and_track}_${artist}_-_$title
+
+
+original_date: yes
+#match:
+    #preferred:
+        #countries: ['XE', 'GB|UK', 'US']
+        #media: ['CD', 'Digital Media|File']
+        #original_year: yes
+        #
+chroma:
+    auto: no
+
+replaygain:
+    auto: yes
+    backend: gstreamer
+    #overwrite: yes

@@ -1,0 +1,18 @@
+[Added Associations]
+application/pdf=xpdf.desktop;
+application/x-shellscript=gvim.desktop;
+text/x-tex=gedit.desktop;
+text/x-matlab=gedit.desktop;
+image/jpeg=eog.desktop;
+text/plain=gvim.desktop;
+video/mp4=smplayer.desktop;
+audio/x-mpegurl=smplayer.desktop;
+audio/x-scpls=smplayer.desktop;
+
+[Default Applications]
+application/pdf=xpdf.desktop
+x-scheme-handler/tg=telegramdesktop.desktop
+video/mp4=smplayer.desktop
+audio/x-mpegurl=smplayer.desktop
+audio/x-scpls=smplayer.desktop
+text/plain=gvim.desktop

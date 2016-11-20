@@ -1,0 +1,3 @@
+HOSTNAME="draco"
+EXCLUDES="LICENSE README.md"
+TAGS="fish git nvim scripts beets"
