@@ -1,10 +1,5 @@
-/*
-    kwm config
-    by Eliza Weisman (@hawkw)
- */
-
 // Set default values for screen padding
-/*kwmc config padding 26 2 2 2*/
+// Leave 1 px for border rendering and 20 below for nerdbar
 kwmc config padding 1 21 1 1
 
 // Set default values for container gaps
@@ -20,8 +15,6 @@ kwmc config float-non-resizable on
 
 // Set focus-follows-mouse-mode to on
 kwmc config focus-follows-mouse on
-// The mouse will automatically move to the center
-// of the focused window
 kwmc config mouse-follows-focus off
 
 // Focus-follows-mouse is temporarily disabled when

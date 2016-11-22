@@ -266,15 +266,15 @@ let g:neomake_warning_sign = { 'text': 'W>', 'texthl': 'WarningMsg' }
 
 "let g:neomake_open_list = 2
 
+"""" Key Mappings
+let mapleader=","
+" bind ctrl+space for omnicompletion
+
 " File picker
 nnoremap <silent> <leader>e :PickerEdit<cr>
 nnoremap <silent> <leader>s :PickerSplit<cr>
 nnoremap <silent> <leader>t :PickerTabedit<cr>
 nnoremap <silent> <leader>v :PickerVsplit<cr>
-
-"""" Key Mappings
-let mapleader=","
-" bind ctrl+space for omnicompletion
 
 nnoremap <leader>u :GundoToggle<CR>
 inoremap <F1> <ESC>

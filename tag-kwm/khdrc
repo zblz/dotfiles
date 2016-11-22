@@ -2,7 +2,7 @@
 khd kwm on
 
 # set color of default mode
-khd mode default color 0xFFD5C4A1
+khd mode default color 0xff7f9f7f
 
 # Exit, restart reload
 lalt - q : brew services restart kwm; brew services restart khd
@@ -47,20 +47,26 @@ lalt + lshift - 0x2C : kwmc window -m display next
 # Poke the focused window to resize itself
 lalt - d             : kwmc window -r focused
 
+# Close window
+lalt + shift - c : khd -p "cmd + alt - q"
+
 # Launch stuff
 lalt + shift - return : exec osascript /Users/victor/.kwm/scripts/iterm.scpt
+alt + shift - f : exec osascript /Users/victor/.kwm/scripts/chrome.scpt
 
 # Enable an internet mode map
 khd mode internet prefix on
 khd mode internet timeout 1
 khd mode internet restore default
-khd mode internet color 0xFF458588
+khd mode internet color 0xff65727f
 lalt - i : khd -e "mode activate internet"
 
-internet - f : exec osascript /Users/victor/.kwm/scripts/chrome.scpt
-internet - t : exec open -a /Applications/Telegram.app
-internet - s : exec open -a /Applications/Slack.app
-internet - m : exec open -a /Applications/Radiant\ Player.app
+internet - t : exec open -a /Applications/Telegram.app;\
+               khd -e "mode activate default"
+internet - s : exec open -a /Applications/Slack.app;\
+               khd -e "mode activate default"
+internet - m : exec open -a /Applications/Radiant\ Player.app;\
+               khd -e "mode activate default"
 
 # Set Current Space
 lalt - left  : kwmc space -fExperimental left

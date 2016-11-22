@@ -1,5 +1,5 @@
 cancelable in Global := true
 
-libraryDependencies += "com.lihaoyi" % "ammonite" % "latest.integration" cross CrossVersion.full
+//libraryDependencies += "com.lihaoyi" % "ammonite" % "latest.integration" cross CrossVersion.full
 
-initialCommands in console := """ammonite.Main().run()"""
+//initialCommands in console := """ammonite.Main().run()"""
