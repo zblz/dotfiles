@@ -13,7 +13,8 @@ lalt - s : kwmc space -t monocle
 lalt - d : kwmc space -t float
 
 # Rotate Window-Tree By 90degrees (Clockwise)
-lalt - r : kwmc tree rotate 90
+lalt - r     : kwmc tree rotate 90
+lalt - space : kwmc window -c split-mode toggle
 
 # Modify Container
 # prefix - s    : kwmc window -c split-mode toggle
