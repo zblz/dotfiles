@@ -37,7 +37,6 @@ alias vi 'nvim'
 alias vim 'nvim'
 alias lt 'ls -lhtr'
 
-alias ipython 'frameworkpython -m IPython'
 alias tmux 'tmux -2'
 
 alias cdd 'cd ~/.dotfiles'
