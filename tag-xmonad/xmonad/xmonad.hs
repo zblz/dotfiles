@@ -170,7 +170,7 @@ myKeys conf@(XConfig {modMask = modm}) =
       M.fromList $
          -- Aplicacions
          [ 
-           ((modm .|. shiftMask, xK_x), spawn "urxvt -e vim /home/vzabalza/.xmonad/xmonad.hs" )
+           ((modm .|. shiftMask, xK_x), spawn "urxvt -e nvim /home/vzabalza/.xmonad/xmonad.hs" )
          , ((modm,               xK_i), submap internetMap )
          , ((modm .|.controlMask,xK_c), spawn "/home/vzabalza/.local/bin/conky-init stop" ) 
          , ((modm,               xK_c), spawn "/home/vzabalza/.local/bin/conky-init start" ) 

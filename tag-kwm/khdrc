@@ -1,3 +1,6 @@
+# These settings mostly replicate the xmonad keybindings in
+# tag-xmonad/xmonad.hs
+
 # Enable kwm compatibility mode
 khd kwm on
 
