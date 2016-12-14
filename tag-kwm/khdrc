@@ -30,8 +30,10 @@ lalt + shift - 0x2B : kwmc window -c expand 0.05 north
 lalt + shift - 0x2F : kwmc window -c reduce 0.05 north
 
 # lalt- up/down cycles focus through windows
-lalt - up   : kwmc window -f prev
-lalt - down : kwmc window -f next
+lalt - up    : kwmc window -f north
+lalt - down  : kwmc window -f south
+lalt - left  : kwmc window -f west
+lalt - right : kwmc window -f east
 
 # Move windows within space
 lalt + ctrl - up    : kwmc window -s north
