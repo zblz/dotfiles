@@ -58,6 +58,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'elzr/vim-json'
 Plug 'srstevenson/vim-picker'
 Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-abolish'
 
 " colors
 Plug 'jnurmine/Zenburn'
