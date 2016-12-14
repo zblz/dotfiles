@@ -23,6 +23,7 @@ set -g VIRTUALFISH_COMPAT_ALIASES "True"
 eval (python -m virtualfish compat_aliases auto_activation global_requirements)
 
 path_prepend ~/.local/bin
+set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 
 # Better less
 set -gx LESSOPEN "| highlight %s --out-format xterm256 --line-numbers --quiet --force --style zenburn"
