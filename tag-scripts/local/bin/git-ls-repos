@@ -2,4 +2,4 @@
 
 set -eu
 
-find "$HOME"/src -type d -mindepth 3 -maxdepth 3 | sed "s,$HOME/src/,,"
+find "$HOME"/src -mindepth 3 -maxdepth 3 -type d | sed "s,$HOME/src/,,"
