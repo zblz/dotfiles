@@ -3,8 +3,8 @@ Config { font = "xft:DejaVu Sans Mono:size=9"
        , fgColor = "#dcdccc"
        , alpha = 255
        , allDesktops = True
-       , position = BottomW L 91
-       -- , position = Static { xpos=0, ypos=748, width=1244, height=20 }
+       -- , position = BottomW L 91
+       , position = Static { xpos=0, ypos=748, width=1244, height=20 }
        , lowerOnStart = True
        , sepChar = "%"
        , alignSep = "}{"
@@ -13,14 +13,7 @@ Config { font = "xft:DejaVu Sans Mono:size=9"
                     , Run Battery [] 250
                     , Run Date "%d/%m/%y %H:%M" "mydate" 100
                     , Run StdinReader
-                    -- , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
-                             -- , "--Low"      , "1000"       -- units: kB/s
-                             -- , "--High"     , "5000"       -- units: kB/s
-                             -- , "--low"      , "darkgreen"
-                             -- , "--normal"   , "darkorange"
-                             -- , "--high"     , "darkred"
-                             -- ] 10
-					,  Run Network "wlan0" ["-L","0","-H","100","--normal","green","--high","red","-w","4"] 25
+                    ,  Run Network "wlan0" ["-L","0","-H","100","--normal","green","--high","red","-w","4"] 25
                     ]
        , template = "%StdinReader% }{ %multicpu% | %memory% | %battery% | %wlan0% | <fc=#ee9a00>%mydate%</fc> "
        }
