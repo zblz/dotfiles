@@ -31,6 +31,7 @@ Plug 'diepm/vim-rest-console'
 
 " Scala
 Plug 'derekwyatt/vim-scala'
+Plug 'ensime/ensime-vim'
 
 " indent guide
 Plug 'nathanaelkane/vim-indent-guides'
@@ -169,12 +170,12 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#omni#input_patterns = {}
 let g:deoplete#omni#input_patterns.scala = [
 \ '[^. *\t]\.\w*', '[:\[,] ?\w*', '^import .*']
-let g:deoplete#disable_auto_complete = 1
-if has("gui_running")
-    inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
-else
-    inoremap <silent><expr><C-@> deoplete#mappings#manual_complete()
-endif
+"let g:deoplete#disable_auto_complete = 1
+"if has("gui_running")
+    "inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
+"else
+    "inoremap <silent><expr><C-@> deoplete#mappings#manual_complete()
+"endif
 
 " UltiSnips
 inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
