@@ -142,6 +142,7 @@ set smartcase        " search case sensitive if caps on
 set incsearch        " show best match so far
 set hlsearch         " Highlight matches to the search 
 set showmatch
+" remove highlight for previous search results
 nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
@@ -157,6 +158,13 @@ nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>  " F2 toggles numbers
 set pastetoggle=<f6>
 set list
 "set listchars=tab:▸\ ,eol:¬
+
+" Comments
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 0
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
 
 " tab labels show the filename without path(tail)
 set guitablabel=%N/\ %t\ %M
@@ -321,13 +329,6 @@ else
    vnoremap < <gv                       
    vnoremap > >gv 
 endif
-
-" Extra functionality for some existing commands:
-" <C-6> switches back to the alternate file and the correct column in the line.
-nnoremap <C-6> <C-6>`"
-
-" CTRL-g shows filename and buffer number, too.
-nnoremap <C-g> 2<C-g>
 
 " <C-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
