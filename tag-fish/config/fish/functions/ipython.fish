@@ -3,7 +3,7 @@ function ipython
         case Darwin
             frameworkpython -m IPython $argv
         case '*'
-            ipython $argv
+            python -m IPython $argv
     end
 end
 
