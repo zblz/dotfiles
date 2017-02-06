@@ -239,7 +239,7 @@ internetMap = M.fromList $
                , ((0, xK_t), spawn "/home/vzabalza/.local/bin/Telegram-dist/Telegram" )
                , ((0, xK_a), spawn "google-chrome --profile-directory='Profile 1'" )
                {-, ((0, xK_w), spawn "google-chrome --app=https://web.whatsapp.com" )-}
-               , ((0, xK_y), spawn "skypeforlinux" )
+               , ((0, xK_y), spawn "skype" )
                , ((0, xK_b), spawn "deluge-gtk" )
                {-, ((0, xK_s), sshPrompt myXPConfig ) -}
                , ((0, xK_s), spawn "slack" ) 
