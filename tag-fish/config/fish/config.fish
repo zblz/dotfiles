@@ -24,6 +24,7 @@ eval (python -m virtualfish compat_aliases auto_activation global_requirements)
 
 path_prepend ~/.local/bin
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+set __fish_git_prompt_show_informative_status "1"
 
 # Better less
 set -gx LESSOPEN "| highlight %s --out-format xterm256 --line-numbers --quiet --force --style zenburn"
