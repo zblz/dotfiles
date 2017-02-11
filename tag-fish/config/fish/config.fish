@@ -24,7 +24,11 @@ eval (python -m virtualfish compat_aliases auto_activation global_requirements)
 
 path_prepend ~/.local/bin
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
-set __fish_git_prompt_show_informative_status "1"
+
+set __fish_git_prompt_show_informative_status true
+set -g __fish_git_prompt_showupstream         auto
+set -g __fish_git_prompt_describe_style       branch
+set -g __fish_git_prompt_showcolorhints       true
 
 # Better less
 set -gx LESSOPEN "| highlight %s --out-format xterm256 --line-numbers --quiet --force --style zenburn"
@@ -32,7 +36,6 @@ set -gx LESS " -R"
 alias less 'less -m -N -g -i -J --line-numbers --underline-special'
 alias more 'less'
 # alias cat "highlight $1 --out-format xterm256 --line-numbers --quiet --force --style zenburn"
-
 
 # Aliases
 alias vi 'nvim'
