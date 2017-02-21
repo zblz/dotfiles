@@ -15,15 +15,24 @@ set -x PIP_TIMEOUT 15
 set -x PIP_ALLOW_ALL_EXTERNAL "false"
 set -x PIP_NO_ALLOW_INSECURE "false"
 
-# Set up virtualfish
-set -x WORKON_HOME "$HOME/virtualenvs"
-set -x PROJECT_HOME "$HOME/projects"
-set -g VIRTUALFISH_HOME $WORKON_HOME
-set -g VIRTUALFISH_COMPAT_ALIASES "True"
-eval (python -m virtualfish compat_aliases auto_activation global_requirements)
 
 path_prepend ~/.local/bin
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+
+switch (uname)
+    case Darwin
+        if test -d ~/miniconda3
+            path_prepend ~/miniconda3/bin
+            source (conda info --root)/etc/fish/conf.d/conda.fish
+        end
+    case '*'
+        # Set up virtualfish
+        set -x WORKON_HOME "$HOME/virtualenvs"
+        set -x PROJECT_HOME "$HOME/projects"
+        set -g VIRTUALFISH_HOME $WORKON_HOME
+        set -g VIRTUALFISH_COMPAT_ALIASES "True"
+        eval (python -m virtualfish compat_aliases auto_activation global_requirements)
+end
 
 set __fish_git_prompt_show_informative_status true
 set -g __fish_git_prompt_showupstream         auto
