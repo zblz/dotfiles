@@ -26,12 +26,17 @@ switch (uname)
             source (conda info --root)/etc/fish/conf.d/conda.fish
         end
     case '*'
-        # Set up virtualfish
-        set -x WORKON_HOME "$HOME/virtualenvs"
-        set -x PROJECT_HOME "$HOME/projects"
-        set -g VIRTUALFISH_HOME $WORKON_HOME
-        set -g VIRTUALFISH_COMPAT_ALIASES "True"
-        eval (python -m virtualfish compat_aliases auto_activation global_requirements)
+        if eval (python -c 'try: import virtualfish; print(1); except: print(0)')
+            # Set up virtualfish
+            set -x WORKON_HOME "$HOME/virtualenvs"
+            set -x PROJECT_HOME "$HOME/projects"
+            set -g VIRTUALFISH_HOME $WORKON_HOME
+            set -g VIRTUALFISH_COMPAT_ALIASES "True"
+            eval (python -m virtualfish compat_aliases auto_activation global_requirements)
+        else
+            source (conda info --root)/etc/fish/conf.d/conda.fish
+        end
+
 end
 
 set __fish_git_prompt_show_informative_status true
