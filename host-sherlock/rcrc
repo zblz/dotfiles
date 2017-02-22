@@ -1,0 +1,4 @@
+HOSTNAME="sherlock"
+EXCLUDES="LICENSE README.md"
+TAGS="bash fish git nvim sbt scripts ipython"
+
