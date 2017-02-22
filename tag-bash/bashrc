@@ -56,6 +56,9 @@ export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export TERM=rxvt-256color
 export EDITOR=nvim
 
+alias vi='nvim'
+alias vim='nvim'
+
 xset b off &> /dev/null
 
 stty -ixon
