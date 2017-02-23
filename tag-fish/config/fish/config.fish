@@ -24,6 +24,8 @@ switch (uname)
         if test -d ~/miniconda3
             path_prepend ~/miniconda3/bin
             source (conda info --root)/etc/fish/conf.d/conda.fish
+            alias workon 'conda activate'
+            complete -f -c workon -a '(__fish_conda_envs)'
         end
     case '*'
         # Set up virtualfish
