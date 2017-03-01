@@ -1,6 +1,10 @@
 # ~/.config/fish/functions/cds.fish
 
 function cds -d 'Change directory to a source code repository'
-    git ls-repos | fzy | read -l result
-    and cd ~/src/$result
+    if count $argv > /dev/null
+        git ls-repos | grep -i $argv[1] | read -g result
+    else
+        git ls-repos | fzy | read -g result
+    end
+    cd ~/src/$result
 end
