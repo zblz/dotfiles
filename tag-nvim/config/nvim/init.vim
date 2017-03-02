@@ -6,7 +6,7 @@ call plug#begin()
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-Plug 'tpope/vim-rsi'
+" Plug 'tpope/vim-rsi'
 " airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -14,24 +14,24 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 
-"Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
 Plug 'neomake/neomake'
 
 " jupyter
-Plug 'ivanov/vim-ipython'
+" Plug 'ivanov/vim-ipython'
 
 " Worksheet
-"Plug 'HerringtonDarkholme/vim-worksheet'
+" Plug 'HerringtonDarkholme/vim-worksheet'
 
 " Terminal
-Plug 'kassio/neoterm'
+" Plug 'kassio/neoterm'
 
 " REST console
 Plug 'diepm/vim-rest-console'
 
 " Scala
 Plug 'derekwyatt/vim-scala'
-Plug 'ensime/ensime-vim'
+" Plug 'ensime/ensime-vim'
 
 " indent guide
 Plug 'nathanaelkane/vim-indent-guides'
@@ -41,16 +41,16 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 
 " folding / indent
-Plug 'tmhedberg/SimpylFold'
-Plug 'vim-scripts/indentpython.vim'
+" Plug 'tmhedberg/SimpylFold'
+" Plug 'vim-scripts/indentpython.vim'
 
 " tags
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 
 " latex
-Plug 'lervag/vimtex'
+" Plug 'lervag/vimtex'
 
-"rainbow parens
+" rainbow parens
 Plug 'luochen1990/rainbow'
 
 " other 
@@ -58,12 +58,12 @@ Plug 'sjl/gundo.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'elzr/vim-json'
 Plug 'srstevenson/vim-picker'
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-abolish'
 
 " colors
 Plug 'jnurmine/Zenburn'
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
 
@@ -77,10 +77,10 @@ set modelines=0
 " persistent undo
 set undofile
 " set undodir=~/.vim/undodir
-set undolevels=10000 "maximum number of changes that can be undone
-set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+set undolevels=10000 " maximum number of changes that can be undone
+set undoreload=10000 " maximum number lines to save for undo on a buffer reload
 
-"Set backups and swap files outside working dir
+" Set backups and swap files outside working dir
 set backupdir=~/.backup//,.,/tmp//
 set directory=~/.backup//,.,/tmp//
 
@@ -99,17 +99,17 @@ set softtabstop=4         " 4 spaces as a tab for bs/del
 set expandtab
 set smarttab
 set autoindent
-"set smartindent
+" set smartindent
 
 """" Messages, Info, Status
-set shortmess+=a         " Use [+] [RO] [w] for modified, read-only, modified
+" set shortmess+=a         " Use [+] [RO] [w] for modified, read-only, modified
 set showcmd              " Display what command is waiting for an operator
-set laststatus=2         " Always show statusline, even if only 1 window
+" set laststatus=2         " Always show statusline, even if only 1 window
 set report=0             " Notify me whenever any lines have changed
 set confirm              " Y-N-C prompt if closing with unsaved changes
 set vb t_vb=             " Disable visual bell!  I hate that flashing.
-set statusline=%<%f%m%r%y%=%b\ 0x%B\ \ %l,%c%V\ %P
-set cursorline
+" set statusline=%<%f%m%r%y%=%b\ 0x%B\ \ %l,%c%V\ %P
+" set cursorline
 
 set grepprg=grep\ -nH\ $*
 
@@ -144,6 +144,10 @@ set hlsearch         " Highlight matches to the search
 set showmatch
 " remove highlight for previous search results
 nnoremap <leader><space> :noh<cr>
+
+""" Show replacement results live
+" set ics=nosplit
+
 nnoremap <tab> %
 vnoremap <tab> %
 
@@ -152,16 +156,16 @@ vnoremap <tab> %
 set lazyredraw                " Don't repaint when scripts are running
 set scrolloff=4               " Keep 3 lines below and above the cursor
 set ruler                     " line numbers and column the cursor is on
-set nonumber                    " Show line numbering
+set nonumber                  " Show line numbering
 set numberwidth=1             " Use 1 col + 1 space for numbers
 nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>  " F2 toggles numbers
 set pastetoggle=<f6>
 set list
-"set listchars=tab:▸\ ,eol:¬
+" set listchars=tab:▸\ ,eol:¬
 
 " Comments
 " Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 0
+let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
@@ -178,12 +182,12 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#omni#input_patterns = {}
 let g:deoplete#omni#input_patterns.scala = [
 \ '[^. *\t]\.\w*', '[:\[,] ?\w*', '^import .*']
-"let g:deoplete#disable_auto_complete = 1
-"if has("gui_running")
-    "inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
-"else
-    "inoremap <silent><expr><C-@> deoplete#mappings#manual_complete()
-"endif
+" let g:deoplete#disable_auto_complete = 1
+" if has("gui_running")
+    " inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
+" else
+    " inoremap <silent><expr><C-@> deoplete#mappings#manual_complete()
+" endif
 
 " UltiSnips
 inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -203,10 +207,9 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 """" Python
-"autocmd FileType python set complete+=k~/.vim/syntax/python.vim isk+=.,(
-map <buffer> <S-e> :w<CR>:!/usr/bin/env python % <CR>
-autocmd FileType python set formatoptions-=tc
-"autocmd FileType python set omnifunc=pythoncomplete#Complete
+" autocmd FileType python set complete+=k~/.vim/syntax/python.vim isk+=.,(
+" map <buffer> <S-e> :w<CR>:!/usr/bin/env python % <CR>
+" autocmd FileType python set omnifunc=pythoncomplete#Complete
 
 au FileType python 
     \ set tabstop=4 |
@@ -216,6 +219,8 @@ au FileType python
     \ set expandtab |
     \ set autoindent |
     \ set fileformat=unix |
+    \ set formatoptions-=tc
+
 
 au FileType python map <silent> <leader>b oimport pdb; pdb.set_trace()<esc>
 au FileType python map <silent> <leader>B Oimport pdb; pdb.set_trace()<esc>
@@ -228,7 +233,7 @@ au FileType python match BadWhitespace /^\t\+/
 au FileType python match BadWhitespace /\s\+$/
 "
 
-"python with virtualenv support
+" python with virtualenv support
 py << EOF
 import os.path
 import sys
@@ -274,7 +279,7 @@ let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_error_sign = { 'text': 'E>', 'texthl': 'ErrorMsg' }
 let g:neomake_warning_sign = { 'text': 'W>', 'texthl': 'WarningMsg' }
 
-"let g:neomake_open_list = 2
+" let g:neomake_open_list = 2
 
 """" Key Mappings
 let mapleader=","
@@ -297,7 +302,7 @@ if has('mac')
     inoremap £ #
     inoremap # £
 endif
-"au FocusLost * :wa
+" au FocusLost * :wa
 
 nnoremap <leader>q gqip
 nnoremap Q gqip
@@ -310,9 +315,9 @@ imap <C-t> <Esc>:tabnew<CR>
 noremap j gj
 noremap k gk
 
-"reselect the text that was just pasted
-"nnoremap <leader>v V`] 
-"vertical split
+" reselect the text that was just pasted
+" nnoremap <leader>v V`] 
+" vertical split
 nnoremap <leader>w <C-w>v<C-w>l 
 
 
