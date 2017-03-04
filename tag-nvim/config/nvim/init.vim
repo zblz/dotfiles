@@ -247,10 +247,10 @@ EOF
 
 
 """ Scala
-au FileType scala
-    \ if executable('scala') |
-    \   call neoterm#repl#set('scala') |
-    \ end
+" au FileType scala
+"     \ if executable('scala') |
+"     \   call neoterm#repl#set('scala') |
+"     \ end
 
 """" YAML
 autocmd FileType yaml set tabstop=2
@@ -268,12 +268,9 @@ let fortran_do_enddo=1
 " Markdown
 au BufRead,BufNewFile *.md set filetype=markdown
 
-" Change title of terminal to current buffer
-autocmd BufEnter * let &titlestring = "vim - " . expand("%:t") 
-set title
-
 " Neomake
 autocmd! BufWritePost,BufEnter,InsertLeave * Neomake
+
 let g:neomake_python_enabled_makers = ['flake8']
 
 let g:neomake_error_sign = { 'text': 'E>', 'texthl': 'ErrorMsg' }
@@ -298,11 +295,11 @@ vnoremap <F1> <ESC>
 inoremap jj <ESC>
 
 nnoremap ; :
+
 if has('mac')
     inoremap £ #
     inoremap # £
 endif
-" au FocusLost * :wa
 
 nnoremap <leader>q gqip
 nnoremap Q gqip
@@ -318,8 +315,7 @@ noremap k gk
 " reselect the text that was just pasted
 " nnoremap <leader>v V`] 
 " vertical split
-nnoremap <leader>w <C-w>v<C-w>l 
-
+nnoremap <leader>w <C-w>v<C-w>l
 
 " Toggle the tag list bar
 nmap <F4> :TlistToggle<CR>
@@ -331,8 +327,8 @@ if &diff
    vnoremap > :diffput<CR>
 else
 " visual shifting (builtin-repeat)
-   vnoremap < <gv                       
-   vnoremap > >gv 
+   vnoremap < <gv
+   vnoremap > >gv
 endif
 
 " <C-l> redraws the screen and removes any search highlighting.
