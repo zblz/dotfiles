@@ -44,6 +44,11 @@ switch (uname)
         end
 end
 
+# Source any files matching /etc/profile.d/*.fish
+for file in /etc/profile.d/*.fish
+    source $file
+end
+
 set __fish_git_prompt_show_informative_status true
 set -g __fish_git_prompt_showupstream         auto
 set -g __fish_git_prompt_describe_style       branch
