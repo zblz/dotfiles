@@ -16,6 +16,7 @@ Plug 'scrooloose/nerdcommenter'
 
 " Plug 'scrooloose/syntastic'
 Plug 'neomake/neomake'
+Plug 'dojoteef/neomake-autolint'
 
 " jupyter
 " Plug 'ivanov/vim-ipython'
@@ -270,8 +271,9 @@ au BufRead,BufNewFile *.md set filetype=markdown
 
 " Neomake
 autocmd! BufWritePost,BufEnter,InsertLeave * Neomake
-
+" autocmd! BufWritePost,InsertLeave * Neomake
 let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_scala_enabled_makers = ['scalac']
 
 let g:neomake_error_sign = { 'text': 'E>', 'texthl': 'ErrorMsg' }
 let g:neomake_warning_sign = { 'text': 'W>', 'texthl': 'WarningMsg' }
