@@ -31,7 +31,7 @@ Plug 'diepm/vim-rest-console'
 
 " Scala
 Plug 'derekwyatt/vim-scala'
-" Plug 'ensime/ensime-vim'
+Plug 'ensime/ensime-vim'
 
 " indent guide
 Plug 'nathanaelkane/vim-indent-guides'
@@ -205,10 +205,10 @@ let g:deoplete#omni#input_patterns.scala = [
 " endif
 
 " UltiSnips
-inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " NeoTerm
 nnoremap <silent> <leader>tf :TREPLSendFile<cr>
@@ -266,6 +266,10 @@ EOF
 "     \ if executable('scala') |
 "     \   call neoterm#repl#set('scala') |
 "     \ end
+autocmd BufWritePost *.scala silent! :EnTypeCheck
+nnoremap <leader>at :EnTypeCheck<CR>
+au FileType scala nnoremap <leader>ad :EnDeclarationSplit<CR>
+au FileType scala nnoremap <leader>av :EnDeclarationSplit v<CR>
 
 """" YAML
 autocmd FileType yaml set tabstop=2
