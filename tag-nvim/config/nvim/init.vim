@@ -31,7 +31,7 @@ Plug 'diepm/vim-rest-console'
 
 " Scala
 Plug 'derekwyatt/vim-scala'
-Plug 'ensime/ensime-vim'
+" Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 
 " indent guide
 Plug 'nathanaelkane/vim-indent-guides'
@@ -266,10 +266,10 @@ EOF
 "     \ if executable('scala') |
 "     \   call neoterm#repl#set('scala') |
 "     \ end
-autocmd BufWritePost *.scala silent! :EnTypeCheck
-nnoremap <leader>at :EnTypeCheck<CR>
-au FileType scala nnoremap <leader>ad :EnDeclarationSplit<CR>
-au FileType scala nnoremap <leader>av :EnDeclarationSplit v<CR>
+" autocmd BufWritePost *.scala silent! :EnTypeCheck
+" nnoremap <leader>at :EnTypeCheck<CR>
+" au FileType scala nnoremap <leader>ad :EnDeclarationSplit<CR>
+" au FileType scala nnoremap <leader>av :EnDeclarationSplit v<CR>
 
 """" YAML
 autocmd FileType yaml set tabstop=2
