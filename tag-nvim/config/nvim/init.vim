@@ -24,14 +24,14 @@ Plug 'dojoteef/neomake-autolint'
 " Plug 'HerringtonDarkholme/vim-worksheet'
 
 " Terminal
-" Plug 'kassio/neoterm'
+Plug 'kassio/neoterm'
 
 " REST console
 Plug 'diepm/vim-rest-console'
 
 " Scala
 Plug 'derekwyatt/vim-scala'
-" Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
+Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 
 " indent guide
 Plug 'nathanaelkane/vim-indent-guides'
@@ -80,10 +80,6 @@ set undofile
 set undolevels=10000 " maximum number of changes that can be undone
 set undoreload=10000 " maximum number lines to save for undo on a buffer reload
 
-" Set backups and swap files outside working dir
-set backupdir=~/.backup//,.,/tmp//
-set directory=~/.backup//,.,/tmp//
-
 " we don't want to edit these type of files
 set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*.swp
 set wildmode=longest,list,full
@@ -104,7 +100,7 @@ set autoindent
 """" Messages, Info, Status
 " set shortmess+=a         " Use [+] [RO] [w] for modified, read-only, modified
 set showcmd              " Display what command is waiting for an operator
-" set laststatus=2         " Always show statusline, even if only 1 window
+set laststatus=2         " Always show statusline, even if only 1 window
 set report=0             " Notify me whenever any lines have changed
 set confirm              " Y-N-C prompt if closing with unsaved changes
 set vb t_vb=             " Disable visual bell!  I hate that flashing.
@@ -262,14 +258,15 @@ EOF
 
 
 """ Scala
-" au FileType scala
-"     \ if executable('scala') |
-"     \   call neoterm#repl#set('scala') |
-"     \ end
-" autocmd BufWritePost *.scala silent! :EnTypeCheck
-" nnoremap <leader>at :EnTypeCheck<CR>
-" au FileType scala nnoremap <leader>ad :EnDeclarationSplit<CR>
-" au FileType scala nnoremap <leader>av :EnDeclarationSplit v<CR>
+au FileType scala
+    \ if executable('scala') |
+    \   call neoterm#repl#set('scala') |
+    \ end
+autocmd BufWritePost *.scala silent! :EnTypeCheck
+au FileType scala nnoremap <leader>at :EnTypeCheck<CR>
+au FileType scala nnoremap <leader>ad :EnDeclaration<CR>
+au FileType scala nnoremap <leader>as :EnDeclarationSplit<CR>
+au FileType scala nnoremap <leader>av :EnDeclarationSplit v<CR>
 
 """" YAML
 autocmd FileType yaml set tabstop=2
