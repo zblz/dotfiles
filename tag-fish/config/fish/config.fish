@@ -1,3 +1,5 @@
+status -i; or exit
+
 set fish_greeting
 
 set -x ARCHFLAGS "-arch x86_64"
