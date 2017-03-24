@@ -8,7 +8,8 @@ Plug 'airblade/vim-gitgutter'
 
 " Plug 'tpope/vim-rsi'
 " airline
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " filesystem
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
@@ -53,7 +54,7 @@ Plug 'zchee/deoplete-jedi'
 " rainbow parens
 Plug 'luochen1990/rainbow'
 
-" other 
+" other
 Plug 'sjl/gundo.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'elzr/vim-json'
@@ -114,31 +115,16 @@ set textwidth=80
 set nu
 set splitright
 
-" """ Airline
-set noshowmode
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&readonly?"":""}',
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'LightlineFugitive'
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
-      \ }
-
-function! LightlineFugitive()
-  if exists("*fugitive#head")
-    let branch = fugitive#head()
-    return branch !=# '' ? ' '.branch : ''
-  endif
-  return ''
-endfunction
+"""" Airline
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline_theme = 'zenburn'
 
 " Bad whitespace
 highlight BadWhitespace ctermbg=237
@@ -149,9 +135,9 @@ set foldlevelstart=99    " All folds open by default
 
 """" Searching and Patterns
 set ignorecase       " search is case insensitive
-set smartcase        " search case sensitive if caps on 
+set smartcase        " search case sensitive if caps on
 set incsearch        " show best match so far
-set hlsearch         " Highlight matches to the search 
+set hlsearch         " Highlight matches to the search
 set showmatch
 " remove highlight for previous search results
 nnoremap <leader><space> :noh<cr>
@@ -222,7 +208,7 @@ nmap ga <Plug>(EasyAlign)
 " map <buffer> <S-e> :w<CR>:!/usr/bin/env python % <CR>
 " autocmd FileType python set omnifunc=pythoncomplete#Complete
 
-au FileType python 
+au FileType python
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
@@ -270,13 +256,13 @@ au FileType scala nnoremap <leader>av :EnDeclarationSplit v<CR>
 
 """" YAML
 autocmd FileType yaml set tabstop=2
-autocmd FileType yaml set shiftwidth=2  
-autocmd FileType yaml set softtabstop=2 
+autocmd FileType yaml set shiftwidth=2
+autocmd FileType yaml set softtabstop=2
 
 """" tf
 autocmd FileType tf set tabstop=2
-autocmd FileType tf set shiftwidth=2  
-autocmd FileType tf set softtabstop=2 
+autocmd FileType tf set shiftwidth=2
+autocmd FileType tf set softtabstop=2
 
 " Fortran
 let fortran_do_enddo=1
@@ -330,7 +316,7 @@ noremap j gj
 noremap k gk
 
 " reselect the text that was just pasted
-" nnoremap <leader>v V`] 
+" nnoremap <leader>v V`]
 " vertical split
 nnoremap <leader>w <C-w>v<C-w>l
 
@@ -339,7 +325,7 @@ nmap <F4> :TlistToggle<CR>
 nmap <F3> :NERDTreeToggle<CR>
 
 if &diff
-" easily handle diffing 
+" easily handle diffing
    vnoremap < :diffget<CR>
    vnoremap > :diffput<CR>
 else
