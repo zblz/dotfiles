@@ -124,7 +124,14 @@ let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_scala_enabled_makers = ['scalac']
 
 let g:neomake_error_sign = { 'text': 'E>', 'texthl': 'ErrorMsg' }
-let g:neomake_warning_sign = { 'text': 'W>', 'texthl': 'WarningMsg' }
+let g:neomake_warning_sign = { 'text': 'W>', 'texthl': 'ErrorMsg' }
+
+augroup neomake_highlights
+    au!
+    autocmd ColorScheme *
+      \ highlight link NeomakeError SpellBad |
+      \ highlight link NeomakeWarning SpellCap
+augroup END
 
 """" Key Mappings
 let mapleader=","
