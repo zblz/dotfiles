@@ -35,6 +35,7 @@ set expandtab
 set grepprg=grep\ -nH
 set inccommand=nosplit
 set incsearch
+set hidden
 set laststatus=2
 set lbr
 set list
