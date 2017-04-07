@@ -7,7 +7,7 @@ Plug 'derekwyatt/vim-scala'
 Plug 'diepm/vim-rest-console'
 Plug 'dojoteef/neomake-autolint'
 Plug 'elzr/vim-json'
-Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 Plug 'jnurmine/zenburn'
 Plug 'junegunn/vim-easy-align'
 Plug 'kassio/neoterm'
@@ -107,10 +107,10 @@ au FileType python match BadWhitespace /^\t\+/
 au FileType python match BadWhitespace /\s\+$/
 
 """ Scala ensime
-au FileType scala nnoremap <leader>et :EnTypeCheck<CR>
-au FileType scala nnoremap <leader>ed :EnDeclaration<CR>
-au FileType scala nnoremap <leader>es :EnDeclarationSplit<CR>
-au FileType scala nnoremap <leader>ev :EnDeclarationSplit v<CR>
+" au FileType scala nnoremap <leader>et :EnTypeCheck<CR>
+" au FileType scala nnoremap <leader>ed :EnDeclaration<CR>
+" au FileType scala nnoremap <leader>es :EnDeclarationSplit<CR>
+" au FileType scala nnoremap <leader>ev :EnDeclarationSplit v<CR>
 
 """" YAML
 au FileType yaml set tabstop=2
