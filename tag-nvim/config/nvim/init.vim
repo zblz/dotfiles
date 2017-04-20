@@ -1,30 +1,28 @@
 set encoding=utf-8
 
-call plug#begin()
+call plug#begin('~/.local/share/nvim/site/plugins')
 
 Plug 'airblade/vim-gitgutter'
-Plug 'derekwyatt/vim-scala'
 Plug 'diepm/vim-rest-console'
-Plug 'dojoteef/neomake-autolint'
-Plug 'elzr/vim-json'
 " Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 Plug 'jnurmine/zenburn'
 Plug 'junegunn/vim-easy-align'
 Plug 'kassio/neoterm'
 Plug 'luochen1990/rainbow'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'neomake/neomake'
+Plug 'roxma/nvim-completion-manager'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'sheerun/vim-polyglot'
 Plug 'sjl/gundo.vim'
 Plug 'srstevenson/vim-picker'
+Plug 'srstevenson/vim-topiary'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'zchee/deoplete-jedi'
+Plug 'w0rp/ale'
 
 call plug#end()
 
@@ -120,21 +118,6 @@ au FileType yaml set softtabstop=2
 " Markdown
 au BufRead,BufNewFile *.md set filetype=markdown
 
-" Neomake
-autocmd! BufWritePost,BufEnter,InsertLeave * Neomake
-let g:neomake_python_enabled_makers = ['flake8']
-let g:neomake_scala_enabled_makers = ['scalac']
-
-let g:neomake_error_sign = { 'text': 'E>', 'texthl': 'ErrorMsg' }
-let g:neomake_warning_sign = { 'text': 'W>', 'texthl': 'ErrorMsg' }
-
-augroup neomake_highlights
-    au!
-    autocmd ColorScheme *
-      \ highlight link NeomakeError SpellBad |
-      \ highlight link NeomakeWarning SpellCap
-augroup END
-
 """" Key Mappings
 let mapleader=","
 
@@ -198,12 +181,6 @@ vnoremap <space> zf
 
 " allow arrow keys when code completion window is up
 inoremap <Down> <C-R>=pumvisible() ? "\<lt>C-N>" : "\<lt>Down>"<CR>
-
-""" Abbreviations
-" function! EatChar(pat)
-"     let c = nr2char(getchar(0))
-"     return (c =~ a:pat) ? '' : c
-" endfunc
 
 colorscheme zenburn
 hi ColorColumn ctermbg=238
