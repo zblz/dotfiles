@@ -74,8 +74,8 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 " Use python from neovim virtual environments
-let g:python_host_prog = expand('~/virtualenvs/neovim2/bin/python')
-let g:python3_host_prog = expand('~/virtualenvs/neovim3/bin/python')
+" let g:python_host_prog = expand('~/virtualenvs/neovim2/bin/python')
+" let g:python3_host_prog = expand('~/virtualenvs/neovim3/bin/python')
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
