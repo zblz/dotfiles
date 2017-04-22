@@ -17,7 +17,6 @@ set -x PIP_TIMEOUT 15
 set -x PIP_ALLOW_ALL_EXTERNAL "false"
 set -x PIP_NO_ALLOW_INSECURE "false"
 
-
 path_prepend ~/.local/bin
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 
@@ -30,8 +29,8 @@ switch (uname)
             complete -f -c workon -a '(__fish_conda_envs)'
         end
     case '*'
-        if test -d ~/anaconda
-            path_prepend ~/anaconda/bin
+        if test -d /opt/anaconda
+            path_prepend /opt/anaconda/bin
             source (conda info --root)/etc/fish/conf.d/conda.fish
             alias workon 'conda activate'
             complete -f -c workon -a '(__fish_conda_envs)'
