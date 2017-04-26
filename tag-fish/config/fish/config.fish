@@ -24,14 +24,14 @@ switch (uname)
     case Darwin
         if test -d ~/miniconda3
             path_prepend ~/miniconda3/bin
-            source (conda info --root)/etc/fish/conf.d/conda.fish
+            source ~/miniconda3/etc/fish/conf.d/conda.fish
             alias workon 'conda activate'
             complete -f -c workon -a '(__fish_conda_envs)'
         end
     case '*'
         if test -d /opt/anaconda
             path_prepend /opt/anaconda/bin
-            source (conda info --root)/etc/fish/conf.d/conda.fish
+            source /opt/anaconda/etc/fish/conf.d/conda.fish
             alias workon 'conda activate'
             complete -f -c workon -a '(__fish_conda_envs)'
             workon Python3
