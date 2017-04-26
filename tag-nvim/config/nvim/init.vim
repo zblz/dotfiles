@@ -74,7 +74,11 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 " Use python from neovim virtual environments when not in mizar
-if substitute(system('hostname'), '\n', '', '') != 'mizar'
+let hostname = substitute(system('hostname'), '\n', '', '')
+if hostname =~# '^cube-.*'
+    let g:python_host_prog = '/opt/anaconda/envs/Python2/bin/python'
+    let g:python3_host_prog = '/opt/anaconda/envs/Python3/bin/python'
+elseif hostname == 'vega'
     let g:python_host_prog = expand('~/virtualenvs/neovim2/bin/python')
     let g:python3_host_prog = expand('~/virtualenvs/neovim3/bin/python')
 endif
