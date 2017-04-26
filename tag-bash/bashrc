@@ -53,11 +53,8 @@ export PAGER=less
 
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
-export TERM=rxvt-256color
-export EDITOR=nvim
-
-alias vi='nvim'
-alias vim='nvim'
+export TERM=screen-256color
+export EDITOR=vim
 
 xset b off &> /dev/null
 
