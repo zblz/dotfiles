@@ -2,6 +2,7 @@ set encoding=utf-8
 
 call plug#begin('~/.local/share/nvim/site/plugins')
 
+" Plug 'ap/vim-css-color'
 Plug 'airblade/vim-gitgutter'
 Plug 'diepm/vim-rest-console'
 " Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
