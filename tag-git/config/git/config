@@ -22,6 +22,8 @@
     cam = commit -a -m
     m = commit --amend --verbose
 
+    puo = push -u origin
+
     d = diff
     ds = diff --stat
     dc = diff --cached
