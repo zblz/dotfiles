@@ -7,6 +7,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'diepm/vim-rest-console'
 " Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 Plug 'jnurmine/zenburn'
+Plug 'morhetz/gruvbox'
 Plug 'junegunn/vim-easy-align'
 Plug 'kassio/neoterm'
 Plug 'luochen1990/rainbow'
@@ -190,10 +191,14 @@ vnoremap <space> zf
 " allow arrow keys when code completion window is up
 inoremap <Down> <C-R>=pumvisible() ? "\<lt>C-N>" : "\<lt>Down>"<CR>
 
-colorscheme zenburn
+" colorscheme zenburn
+colorscheme gruvbox
+set background=dark
 hi ColorColumn ctermbg=238
 set colorcolumn=80
 set t_Co=256
+
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Indent Guide
 hi IndentGuidesEven ctermbg=237
