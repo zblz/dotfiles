@@ -18,7 +18,6 @@
 #define COLOR_TERM_LIGHT_CYAN     #93e0e3
 #define COLOR_TERM_WHITE          #ffffff
 
-
 *color0:  COLOR_TERM_BLACK
 *color1:  COLOR_TERM_DARK_RED
 *color2:  COLOR_TERM_DARK_GREEN
@@ -52,6 +51,11 @@ URxvt*scrollBar:  false
 URxvt*background: COLOR_BG
 URxvt*foreground: COLOR_FG
 URxvt*font:       xft:DejaVu Sans Mono for Powerline:size=9
+URxvt*saveLines:  100000
+
+URxvt*scrollTtyOutput:   false
+URxvt*scrollWithBuffer:  true
+URxvt*scrollTtyKeypress: true
 
 !! xpdf
 xpdf*enableFreetype:    true
