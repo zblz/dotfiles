@@ -3,6 +3,7 @@
     email = vzabalza@gmail.com
 [push]
     default = simple
+    followTags = true
 [help]
     autocorrect = 1
 [alias]
