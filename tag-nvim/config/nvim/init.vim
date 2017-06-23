@@ -7,12 +7,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'diepm/vim-rest-console'
 " Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 Plug 'jnurmine/zenburn'
-Plug 'morhetz/gruvbox'
 Plug 'junegunn/vim-easy-align'
-Plug 'kassio/neoterm'
+" Plug 'kassio/neoterm'
 Plug 'luochen1990/rainbow'
-Plug 'lervag/vimtex'
-Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'lervag/vimtex'
+" Plug 'nathanaelkane/vim-indent-guides'
 Plug 'roxma/nvim-completion-manager'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -85,12 +84,6 @@ elseif hostname == 'vega'
     let g:python_host_prog = expand('~/virtualenvs/neovim2/bin/python')
     let g:python3_host_prog = expand('~/virtualenvs/neovim3/bin/python')
 endif
-
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#omni#input_patterns = {}
-let g:deoplete#omni#input_patterns.scala = [
-    \ '[^. *\t]\.\w*', '[:\[,] ?\w*', '^import .*']
 
 " NeoTerm
 nnoremap <silent> <leader>tf :TREPLSendFile<cr>
