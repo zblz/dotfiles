@@ -85,6 +85,11 @@ elseif hostname == 'vega'
     let g:python3_host_prog = expand('~/virtualenvs/neovim3/bin/python')
 endif
 
+" ALE
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
+
 " NeoTerm
 nnoremap <silent> <leader>tf :TREPLSendFile<cr>
 nnoremap <silent> <leader>ts :TREPLSendLine<cr>
