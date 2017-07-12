@@ -81,8 +81,8 @@ if hostname =~# '^cube-.*'
     let g:python_host_prog = '/opt/anaconda/envs/Python2/bin/python'
     let g:python3_host_prog = '/opt/anaconda/envs/Python3/bin/python'
 elseif hostname == 'vega'
-    let g:python_host_prog = expand('~/virtualenvs/neovim2/bin/python')
-    let g:python3_host_prog = expand('~/virtualenvs/neovim3/bin/python')
+    let g:python_host_prog = expand('~/miniconda3/envs/py2/bin/python')
+    let g:python3_host_prog = expand('~/miniconda3/envs/py3/bin/python')
 endif
 
 " ALE
