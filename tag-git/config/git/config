@@ -56,3 +56,5 @@
 [merge "jupyternotebook"]
     driver = git-nbmergedriver merge %O %A %B %L %P
     name = jupyter notebook merge driver
+[core]
+    excludesfile = ~/.config/git/ignore
