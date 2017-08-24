@@ -1,4 +1,4 @@
-function k8slogs --description 'Logs for a pod' --argument container
+function k8slogs-old --description 'Logs for a pod' --argument container
   if test -z $container
       set -l container "-c $container"
   end
