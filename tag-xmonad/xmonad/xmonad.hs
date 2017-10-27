@@ -1,6 +1,5 @@
 -- vim:foldmethod=marker foldmarker={{{,}}} sw=2 sts=2 ts=2 tw=0 et ai nowrap
 
-
 -- IMPORTS {{{
 import XMonad
 import qualified XMonad.StackSet as W
@@ -48,21 +47,20 @@ conf = defaultConfig
              , focusFollowsMouse = True
              }
 
-
 main = do
   xmproc <- spawnPipe "xmobar /home/vzabalza/.xmonad/xmobar"
   xmonad $ ewmh conf
-            { 
+            {
             logHook = myLogHook xmproc
             }
 -- end of MAIN }}}
 
 -- LogHook
 myLogHook h =  dynamicLogWithPP xmobarPP
-      { 
+      {
             ppOutput = hPutStrLn h . wrap "< "      " >"
-          , ppCurrent = xmobarColor "#ee9a00" "" . (wrap "["        "]" ) 
-          , ppVisible = (wrap "("        ")" ) 
+          , ppCurrent = xmobarColor "#ee9a00" "" . (wrap "["        "]" )
+          , ppVisible = (wrap "("        ")" )
           , ppHidden = hideScratchpad
           {-, ppHiddenNoWindows =  (take 1) . hideScratchpad-}
           , ppLayout = (\_->"")
@@ -70,22 +68,22 @@ myLogHook h =  dynamicLogWithPP xmobarPP
           {-, ppSep = " >-< "-}
           , ppTitle = xmobarColor "#60b48a" "" .           shorten 300
       }
-      where 
+      where
         hideScratchpad ws = if ws == "NSP" then "" else  ws
 
 -- COLORS, FONTS, PROMPTS {{{
- 
+
 --- Main Colours
 myFgColor = "#DCDCCC"
 myBgColor = "#3f3f3f"
 myHighlightedFgColor = myFgColor
 myHighlightedBgColor = "#7F9F7F"
- 
+
 --- Borders
 myActiveBorderColor = myCurrentWsBgColor
 myInactiveBorderColor = "#262626"
 myBorderWidth = 1
- 
+
 --- Ws Stuff
 myCurrentWsFgColor = myHighlightedFgColor
 myCurrentWsBgColor = myHighlightedBgColor
@@ -117,7 +115,7 @@ myXPConfig =
                     }
 
 myTabFont = "xft:DejaVu Sans:size=8"
-myTheme = defaultTheme 
+myTheme = defaultTheme
       { activeColor = myHighlightedBgColor
       , activeTextColor = myFgColor
       , activeBorderColor = myActiveBorderColor
@@ -125,25 +123,24 @@ myTheme = defaultTheme
       , inactiveTextColor = myHighlightedBgColor
       , inactiveBorderColor = myInactiveBorderColor
       , fontName = myTabFont
-      , decoHeight = 14 
+      , decoHeight = 14
       }
 
 -- End of COLORS, FONTS, PROMPTS }}}
-
 
 -- Scratchpads
 
 scratchpads=[
        NS "term" "urxvt -name term " (resource =? "term") termFloating
-     , NS "ncmpcpp" "urxvt -name ncmpcpp -e ncmpcpp" (resource =? "ncmpcpp") termFloating 
+     , NS "ncmpcpp" "urxvt -name ncmpcpp -e ncmpcpp" (resource =? "ncmpcpp") termFloating
      , NS "ipython" "urxvt -name ipython-scratch -e ipython3 --matplotlib=qt4" (resource =? "ipython-scratch") termFloating
      , NS "pavucontrol" "pavucontrol" (resource =? "pavucontrol") paFloating
      , NS "htop" "urxvt -name htop -e htop" (title =? "htop") htFloating
-        ] where 
+        ] where
             termFloating = (customFloating $ W.RationalRect 0.1 0.1 0.8 0.8)
             paFloating = (customFloating $ W.RationalRect 0.2 0.2 0.6 0.6)
             htFloating = (customFloating $ W.RationalRect 0.2 0.05 0.6 0.9)
- 
+
 --- manageHook
 
 myManageHook = (composeAll
@@ -157,7 +154,7 @@ myManageHook = (composeAll
     , isDialog                           --> doCenterFloat
     , manageDocks
     ]) <+> namedScratchpadManageHook scratchpads
- 
+
 --- Urgency
 myUrgencyHintFgColor = "red"
 myUrgencyHintBgColor = "blue"
@@ -166,25 +163,25 @@ myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
 gsconfig1 = defaultGSConfig { gs_cellheight = 60, gs_cellwidth = 300 }
 
-myKeys conf@(XConfig {modMask = modm}) = 
+myKeys conf@(XConfig {modMask = modm}) =
       M.fromList $
          -- Aplicacions
-         [ 
+         [
            ((modm .|. shiftMask, xK_x), spawn "urxvt -e nvim /home/vzabalza/.xmonad/xmonad.hs" )
          , ((modm,               xK_i), submap internetMap )
-         , ((modm .|.controlMask,xK_c), spawn "/home/vzabalza/.local/bin/conky-init stop" ) 
-         , ((modm,               xK_c), spawn "/home/vzabalza/.local/bin/conky-init start" ) 
-         , ((modm,               xK_y), spawn "urxvt -e ipython3 --matplotlib=qt4" ) 
-         , ((modm,               xK_k), spawn "kodi" ) 
+         , ((modm .|.controlMask,xK_c), spawn "/home/vzabalza/.local/bin/conky-init stop" )
+         , ((modm,               xK_c), spawn "/home/vzabalza/.local/bin/conky-init start" )
+         , ((modm,               xK_y), spawn "urxvt -e ipython3 --matplotlib=qt4" )
+         , ((modm,               xK_k), spawn "kodi" )
          -- Full Screen
          , ((modm,               xK_b), sendMessage ToggleStruts )
          -- Navegar entre finestres i WS
-         , ((modm,               xK_Left ), prevWS ) 
+         , ((modm,               xK_Left ), prevWS )
          , ((modm,               xK_Right), nextWS )
          , ((modm .|. shiftMask, xK_Left ), shiftToPrev )
-         , ((modm .|. shiftMask, xK_Right), shiftToNext ) 
+         , ((modm .|. shiftMask, xK_Right), shiftToNext )
          , ((modm,               xK_Down ), windows W.focusDown)
-         , ((modm,               xK_Up   ), windows W.focusUp) 
+         , ((modm,               xK_Up   ), windows W.focusUp)
          , ((modm,               xK_Tab  ), toggleWS)
          , ((modm,               xK_F1   ), windowPromptGoto myXPConfig)
          , ((modm,               xK_F2   ), windowPromptBring myXPConfig)
@@ -216,22 +213,22 @@ myKeys conf@(XConfig {modMask = modm}) =
          -- TLP full charge
          , ((0, xF86XK_Launch1 ), spawn "sudo tlp fullcharge")
          -- Varis
-         , ((modm .|. shiftMask, xK_space), withFocused $ \w -> hide w >> reveal w >> setFocusX w) 
+         , ((modm .|. shiftMask, xK_space), withFocused $ \w -> hide w >> reveal w >> setFocusX w)
          -- %! force the window to redraw itself
-         
+
          -- Cerques
          , ((modm,               xK_s), submap $ searchMap $ Search.promptSearch myXPConfig)
          , ((modm .|. shiftMask, xK_s), submap $ searchMap $ Search.selectSearch)
          ]
          ++
-         [((m .|. modm, k), windows $ f i) 
+         [((m .|. modm, k), windows $ f i)
               | (i, k) <- zip myWorkspaces [xK_1 .. xK_9]
               , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
     {-where-}
         {-shutdownHook = spawn "pkill -TERM -P `pgrep -o xmonad`"-}
 
 internetMap = M.fromList $
-               [ 
+               [
                  ((0, xK_f), spawn "google-chrome --profile-directory='Default'" )
                , ((0, xK_r), spawn "google-chrome --profile-directory='Default' --new-window http://cloud.feedly.com" )
                , ((0, xK_g), spawn "google-chrome --profile-directory='Default' --new-window http://mail.google.com/mail" )
@@ -239,10 +236,10 @@ internetMap = M.fromList $
                , ((0, xK_t), spawn "/home/vzabalza/.local/bin/Telegram-dist/Telegram" )
                , ((0, xK_a), spawn "google-chrome --profile-directory='Profile 1'" )
                {-, ((0, xK_w), spawn "google-chrome --app=https://web.whatsapp.com" )-}
-               , ((0, xK_y), spawn "skype" )
+               , ((0, xK_y), spawn "skypeforlinux" )
                , ((0, xK_b), spawn "deluge-gtk" )
                {-, ((0, xK_s), sshPrompt myXPConfig ) -}
-               , ((0, xK_s), spawn "slack" ) 
+               , ((0, xK_s), spawn "slack" )
                ]
 
 myNasaADS = searchEngine "ads" "http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch="
@@ -251,8 +248,8 @@ searchMap method = M.fromList $
                    [ ((0, xK_g),  method Search.google )
                    , ((0, xK_w),  method Search.wikipedia )
                    , ((0, xK_a),  method myNasaADS )
-                   , ((0, xK_i),  method Search.imdb ) 
-                   , ((0, xK_m),  method Search.maps ) 
+                   , ((0, xK_i),  method Search.imdb )
+                   , ((0, xK_m),  method Search.maps )
                    , ((0, xK_d),  method Search.mathworld )
                    , ((0, xK_y),  method Search.youtube ) ]
 
