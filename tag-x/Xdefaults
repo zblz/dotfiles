@@ -52,7 +52,6 @@ URxvt*background:  COLOR_BG
 URxvt*foreground:  COLOR_FG
 URxvt*saveLines:   100000
 URxvt*font:        xft:DejaVu Sans Mono for Powerline:pixelsize=12
-URxvt.letterSpace: -1
 
 URxvt*scrollTtyOutput:   false
 URxvt*scrollWithBuffer:  true
