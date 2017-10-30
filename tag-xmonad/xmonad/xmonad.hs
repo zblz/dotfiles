@@ -51,25 +51,21 @@ main = do
   spawn "xmobar /home/vzabalza/.xmonad/xmobar"
   xmonad $ ewmh $ docks $ conf
             {
-            logHook = dynamicLogString defaultPP >>= xmonadPropLog
+            logHook = dynamicLogString myPP >>= xmonadPropLog
             }
 -- end of MAIN }}}
 
--- LogHook
-myLogHook h =  dynamicLogWithPP xmobarPP
-      {
-            ppOutput = hPutStrLn h . wrap "< "      " >"
+myPP = xmobarPP {
+            ppOutput = putStrLn . wrap "< "      " >"
           , ppCurrent = xmobarColor "#ee9a00" "" . (wrap "["        "]" )
-          , ppVisible = (wrap "("        ")" )
           , ppHidden = hideScratchpad
-          {-, ppHiddenNoWindows =  (take 1) . hideScratchpad-}
+          {- , ppHiddenNoWindows =  (take 1) . hideScratchpad -}
           , ppLayout = (\_->"")
-          {-, ppUrgent = (\_->"")-}
-          {-, ppSep = " >-< "-}
+          {- , ppSep = " >-< " -}
           , ppTitle = xmobarColor "#60b48a" "" .           shorten 300
-      }
-      where
-        hideScratchpad ws = if ws == "NSP" then "" else  ws
+          }
+            where
+              hideScratchpad ws = if ws == "NSP" then "" else  ws
 
 -- COLORS, FONTS, PROMPTS {{{
 
