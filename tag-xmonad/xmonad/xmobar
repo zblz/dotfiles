@@ -12,8 +12,8 @@ Config { font = "xft:DejaVu Sans Mono:size=9"
                     , Run Memory ["-t","Mem: <usedratio>%","-L","15","-H","50","--low","green","--high","red"] 50
                     , Run Battery [] 250
                     , Run Date "%d/%m/%y %H:%M" "mydate" 100
-                    , Run StdinReader
+                    , Run XMonadLog
                     ,  Run Network "wlan0" ["-L","0","-H","100","--normal","green","--high","red","-w","4"] 25
                     ]
-       , template = "%StdinReader% }{ %multicpu% | %memory% | %battery% | %wlan0% | <fc=#ee9a00>%mydate%</fc> "
+       , template = "%XMonadLog% }{ %multicpu% | %memory% | %battery% | %wlan0% | <fc=#ee9a00>%mydate%</fc> "
        }

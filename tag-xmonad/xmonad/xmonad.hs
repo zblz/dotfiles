@@ -48,10 +48,10 @@ conf = defaultConfig
              }
 
 main = do
-  xmproc <- spawnPipe "xmobar /home/vzabalza/.xmonad/xmobar"
-  xmonad $ ewmh conf
+  spawn "xmobar /home/vzabalza/.xmonad/xmobar"
+  xmonad $ ewmh $ docks $ conf
             {
-            logHook = myLogHook xmproc
+            logHook = dynamicLogString defaultPP >>= xmonadPropLog
             }
 -- end of MAIN }}}
 
