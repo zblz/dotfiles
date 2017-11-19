@@ -89,8 +89,10 @@ endif
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
-" scalac is *very* slow, ends up using a lot of resources
-au FileType scala let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 1
+" " scalac is *very* slow, ends up using a lot of resources
+" au FileType scala let g:ale_lint_on_text_changed = 'never'
 
 " NeoTerm
 nnoremap <silent> <leader>tf :TREPLSendFile<cr>
