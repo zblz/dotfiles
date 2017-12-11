@@ -77,7 +77,7 @@ function fish_right_prompt -d "Write out the right prompt"
     if set -q VIRTUAL_ENV
 		echo -n -s (set_color blue) "(" (basename "$VIRTUAL_ENV") ")" (set_color normal) " "
 	end
-    if set -q __kube_context
+    if test -n __kube_context()
         __kube_context
     end
 end
