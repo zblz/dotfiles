@@ -38,7 +38,6 @@ kwmc config spawn right
 kwmc config mouse-drag on
 kwmc config mouse-drag mod cmd+alt+ctrl
 
-
 /*
     Window borders
  */
@@ -47,7 +46,7 @@ kwmc config mouse-drag mod cmd+alt+ctrl
 kwmc config border focused on
 kwmc config border focused size 1
 kwmc config border focused color 0xff7f9f7f
-kwmc config border focused radius 6
+kwmc config border focused radius 0
 
 // Enable border for marked window
 kwmc config border marked on

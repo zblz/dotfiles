@@ -8,56 +8,56 @@ khd kwm on
 khd mode default color 0xff7f9f7f
 
 # Exit, restart reload
-lalt - q : brew services restart kwm; brew services restart khd
+alt - q : brew services restart kwm; brew services restart khd
 
 # Set Space Tiling Modes
-lalt - a : kwmc space -t bsp
-lalt - s : kwmc space -t monocle
-lalt - d : kwmc space -t float
+alt - a : kwmc space -t bsp
+alt - s : kwmc space -t monocle
+alt - d : kwmc space -t float
 
 # Rotate Window-Tree By 90degrees (Clockwise)
-lalt - r     : kwmc tree rotate 90
-lalt - space : kwmc window -c split-mode toggle
+alt - r     : kwmc tree rotate 90
+alt - space : kwmc window -c split-mode toggle
 
 # Modify Container
 # prefix - s    : kwmc window -c split-mode toggle
 # prefix - 0x32 : kwmc window -c type toggle
 
-# Use lalt-, lalt-. to expand/reduce windows
-lalt - 0x2B         : kwmc window -c expand 0.05 east
-lalt - 0x2F         : kwmc window -c reduce 0.05 east
-lalt + shift - 0x2B : kwmc window -c expand 0.05 north
-lalt + shift - 0x2F : kwmc window -c reduce 0.05 north
+# Use alt-, alt-. to expand/reduce windows
+alt - 0x2B         : kwmc window -c expand 0.05 east
+alt - 0x2F         : kwmc window -c reduce 0.05 east
+alt + shift - 0x2B : kwmc window -c expand 0.05 north
+alt + shift - 0x2F : kwmc window -c reduce 0.05 north
 
-# lalt- up/down cycles focus through windows
-lalt - up    : kwmc window -f north
-lalt - down  : kwmc window -f south
-lalt - left  : kwmc window -f west
-lalt - right : kwmc window -f east
+# alt- up/down cycles focus through windows
+alt - up    : kwmc window -f north
+alt - down  : kwmc window -f south
+alt - left  : kwmc window -f west
+alt - right : kwmc window -f east
 
 # Move windows within space
-lalt + ctrl - up    : kwmc window -s north
-lalt + ctrl - down  : kwmc window -s south
-lalt + ctrl - left  : kwmc window -s west
-lalt + ctrl - right : kwmc window -s east
+alt + ctrl - up    : kwmc window -s north
+alt + ctrl - down  : kwmc window -s south
+alt + ctrl - left  : kwmc window -s west
+alt + ctrl - right : kwmc window -s east
 
 # Move windows to other spaces
-lalt + shift - left  : kwmc window -m space left
-lalt + shift - right : kwmc window -m space right
+alt + shift - left  : kwmc window -m space left
+alt + shift - right : kwmc window -m space right
 
 # Set Focus To Next Display (0x2C = /)
-lalt - 0x2C          : kwmc display -f next
+alt - 0x2C          : kwmc display -f next
 # Move Window To Next Display (0x2C = /)
-lalt + lshift - 0x2C : kwmc window -m display next
+alt + lshift - 0x2C : kwmc window -m display next
 
 # Poke the focused window to resize itself
-lalt - d             : kwmc window -r focused
+alt - d             : kwmc window -r focused
 
 # Close window
-lalt + shift - c : khd -p "cmd + alt - q"
+alt + shift - c : khd -p "cmd + alt - q"
 
 # Launch stuff
-lalt + shift - return : exec osascript /Users/victor/.kwm/scripts/iterm.scpt
+alt + shift - return : exec osascript /Users/victor/.kwm/scripts/iterm.scpt
 alt + shift - f : exec osascript /Users/victor/.kwm/scripts/chrome.scpt
 
 # Enable an internet mode map
@@ -65,7 +65,7 @@ khd mode internet prefix on
 khd mode internet timeout 1
 khd mode internet restore default
 khd mode internet color 0xff65727f
-lalt - i : khd -e "mode activate internet"
+alt - i : khd -e "mode activate internet"
 
 internet - t : exec open -a /Applications/Telegram.app;\
                khd -e "mode activate default"
@@ -75,15 +75,15 @@ internet - m : exec open -a /Applications/Radiant\ Player.app;\
                khd -e "mode activate default"
 
 # Set Current Space
-lalt - left  : kwmc space -fExperimental left
-lalt - right : kwmc space -fExperimental right
-lalt - 1     : kwmc space -fExperimental 1
-lalt - 2     : kwmc space -fExperimental 2
-lalt - 3     : kwmc space -fExperimental 3
-lalt - 4     : kwmc space -fExperimental 4
-lalt - 5     : kwmc space -fExperimental 5
-lalt - 6     : kwmc space -fExperimental 6
-lalt - 7     : kwmc space -fExperimental 7
-lalt - 8     : kwmc space -fExperimental 8
-lalt - 9     : kwmc space -fExperimental 9
-lalt - 0     : kwmc space -fExperimental 10
+alt - left  : kwmc space -fExperimental left
+alt - right : kwmc space -fExperimental right
+alt - 1     : kwmc space -fExperimental 1
+alt - 2     : kwmc space -fExperimental 2
+alt - 3     : kwmc space -fExperimental 3
+alt - 4     : kwmc space -fExperimental 4
+alt - 5     : kwmc space -fExperimental 5
+alt - 6     : kwmc space -fExperimental 6
+alt - 7     : kwmc space -fExperimental 7
+alt - 8     : kwmc space -fExperimental 8
+alt - 9     : kwmc space -fExperimental 9
+alt - 0     : kwmc space -fExperimental 10
