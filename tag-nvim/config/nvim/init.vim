@@ -34,9 +34,9 @@ set backspace=2
 set diffopt+=vertical
 set expandtab
 set grepprg=grep\ -nH
+set hidden
 set inccommand=nosplit
 set incsearch
-set hidden
 set laststatus=2
 set lbr
 set list
