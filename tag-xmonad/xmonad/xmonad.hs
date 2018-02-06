@@ -225,17 +225,15 @@ myKeys conf@(XConfig {modMask = modm}) =
 
 internetMap = M.fromList $
                [
-                 ((0, xK_f), spawn "google-chrome --profile-directory='Default'" )
-               , ((0, xK_r), spawn "google-chrome --profile-directory='Default' --new-window http://cloud.feedly.com" )
-               , ((0, xK_g), spawn "google-chrome --profile-directory='Default' --new-window http://mail.google.com/mail" )
-               , ((0, xK_d), spawn "google-chrome --profile-directory='Default' --app=https://www.todoist.com" )
-               , ((0, xK_t), spawn "/home/vzabalza/.local/bin/Telegram-dist/Telegram" )
+                 ((0, xK_f), spawn "firefox" )
+               , ((0, xK_r), spawn "firefox --new-window http://cloud.feedly.com" )
+               , ((0, xK_g), spawn "firefox --new-window http://mail.google.com/mail" )
                , ((0, xK_a), spawn "google-chrome --profile-directory='Profile 1'" )
                {-, ((0, xK_w), spawn "google-chrome --app=https://web.whatsapp.com" )-}
                , ((0, xK_y), spawn "skypeforlinux" )
                , ((0, xK_b), spawn "deluge-gtk" )
                {-, ((0, xK_s), sshPrompt myXPConfig ) -}
-               , ((0, xK_s), spawn "slack" )
+               , ((0, xK_t), spawn "franz" )
                ]
 
 myNasaADS = searchEngine "ads" "http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch="
