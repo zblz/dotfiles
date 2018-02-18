@@ -2,13 +2,12 @@ set encoding=utf-8
 
 call plug#begin('~/.local/share/nvim/site/plugins')
 
-" Plug 'ap/vim-css-color'
 Plug 'airblade/vim-gitgutter'
 Plug 'diepm/vim-rest-console'
 " Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 Plug 'jnurmine/zenburn'
 Plug 'junegunn/vim-easy-align'
-" Plug 'kassio/neoterm'
+Plug 'junegunn/seoul256.vim'
 Plug 'luochen1990/rainbow'
 " Plug 'lervag/vimtex'
 " Plug 'nathanaelkane/vim-indent-guides'
@@ -201,8 +200,11 @@ vnoremap <space> zf
 " allow arrow keys when code completion window is up
 inoremap <Down> <C-R>=pumvisible() ? "\<lt>C-N>" : "\<lt>Down>"<CR>
 
-let g:zenburn_force_dark_Background = 1
-colorscheme zenburn
+let g:seoul256_background = 235
+colorscheme seoul256
+
+" let g:zenburn_force_dark_Background = 1
+" colorscheme zenburn
 set colorcolumn=80
 
 " Indent Guide
