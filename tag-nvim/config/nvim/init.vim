@@ -18,6 +18,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'sjl/gundo.vim'
 Plug 'srstevenson/vim-picker'
 Plug 'srstevenson/vim-topiary'
+Plug 'tarekbecker/vim-yaml-formatter'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
@@ -200,7 +201,7 @@ vnoremap <space> zf
 " allow arrow keys when code completion window is up
 inoremap <Down> <C-R>=pumvisible() ? "\<lt>C-N>" : "\<lt>Down>"<CR>
 
-let g:seoul256_background = 235
+let g:seoul256_background = 236
 colorscheme seoul256
 
 " let g:zenburn_force_dark_Background = 1
