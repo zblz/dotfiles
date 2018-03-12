@@ -22,12 +22,8 @@ set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 
 switch (uname)
     case Darwin
-        if test -d ~/miniconda3
-            path_prepend ~/miniconda3/bin
-            source ~/miniconda3/etc/fish/conf.d/conda.fish
-            alias workon 'conda activate'
-            complete -f -c workon -a '(__fish_conda_envs)'
-        end
+        set -gx VIRTUAL_ENV_DISABLE_PROMPT 1
+        source (pyenv init - | psub)
     case '*'
         if test -d /opt/anaconda
             path_prepend /opt/anaconda/bin
