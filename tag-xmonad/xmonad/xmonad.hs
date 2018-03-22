@@ -225,9 +225,9 @@ myKeys conf@(XConfig {modMask = modm}) =
 
 internetMap = M.fromList $
                [
-                 ((0, xK_f), spawn "firefox" )
-               , ((0, xK_r), spawn "firefox --new-window http://cloud.feedly.com" )
-               , ((0, xK_g), spawn "firefox --new-window http://mail.google.com/mail" )
+                 ((0, xK_f), spawn "google-chrome" )
+               , ((0, xK_r), spawn "google-chrome --new-window http://cloud.feedly.com" )
+               , ((0, xK_g), spawn "google-chrome --new-window http://mail.google.com/mail" )
                , ((0, xK_a), spawn "google-chrome --profile-directory='Profile 1'" )
                {-, ((0, xK_w), spawn "google-chrome --app=https://web.whatsapp.com" )-}
                , ((0, xK_y), spawn "skypeforlinux" )
