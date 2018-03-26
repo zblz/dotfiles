@@ -47,8 +47,8 @@ alt - down : chunkc tiling::window --focus south
 alt - up : chunkc tiling::window --focus north
 alt - right : chunkc tiling::window --focus east
 
-cmd - j : chunkc tiling::window --focus prev
-cmd - k : chunkc tiling::window --focus next
+# cmd - j : chunkc tiling::window --focus prev
+# cmd - k : chunkc tiling::window --focus next
 
 # equalize size of windows
 shift + alt - 0 : chunkc tiling::desktop --equalize
