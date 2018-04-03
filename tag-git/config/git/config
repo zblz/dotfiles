@@ -5,6 +5,8 @@
     default = simple
     followTags = true
 
+[commit]
+  verbose = true
 [merge]
   tool = nvimdiff
 [mergetool]
