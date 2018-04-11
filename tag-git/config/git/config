@@ -13,6 +13,8 @@
   prompt = true
 [mergetool "nvimdiff"]
   cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[diff]
+  colorMoved = true
 
 [help]
     autocorrect = 1
