@@ -151,11 +151,6 @@ nnoremap <leader>u :GundoToggle<CR>
 
 nnoremap ; :
 
-if has('mac')
-    inoremap £ #
-    inoremap # £
-endif
-
 nnoremap <leader>q gqip
 nnoremap Q gqip
 
