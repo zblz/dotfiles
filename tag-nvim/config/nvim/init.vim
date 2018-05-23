@@ -12,6 +12,7 @@ Plug 'luochen1990/rainbow'
 " Plug 'lervag/vimtex'
 " Plug 'nathanaelkane/vim-indent-guides'
 Plug 'roxma/nvim-completion-manager'
+Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
@@ -120,6 +121,14 @@ au FileType python match BadWhitespace /\s\+$/
 " au FileType scala nnoremap <leader>ed :EnDeclaration<CR>
 " au FileType scala nnoremap <leader>es :EnDeclarationSplit<CR>
 " au FileType scala nnoremap <leader>ev :EnDeclarationSplit v<CR>
+" scalafmt
+
+" autocmd BufWritePre *.{scala,sbt} Neoformat
+let g:neoformat_scala_scalafmt = {
+        \ 'exe': 'scalafmt',
+        \ 'args': ['--stdin'],
+        \ 'stdin': 1,
+        \ }
 
 """" YAML
 au FileType yaml set tabstop=2
