@@ -123,12 +123,12 @@ au FileType python match BadWhitespace /\s\+$/
 " au FileType scala nnoremap <leader>ev :EnDeclarationSplit v<CR>
 " scalafmt
 
-" autocmd BufWritePre *.{scala,sbt} Neoformat
+autocmd BufWritePre *.{scala,sbt} Neoformat
 let g:neoformat_scala_scalafmt = {
-        \ 'exe': 'scalafmt',
-        \ 'args': ['--stdin'],
-        \ 'stdin': 1,
-        \ }
+            \ 'exe': 'ng',
+            \ 'args': ['org.scalafmt.cli.Cli', '--stdin'],
+            \ 'stdin': 1,
+            \ }
 
 """" YAML
 au FileType yaml set tabstop=2
