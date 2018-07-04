@@ -3,8 +3,10 @@ set encoding=utf-8
 call plug#begin('~/.local/share/nvim/site/plugins')
 
 Plug 'airblade/vim-gitgutter'
+Plug 'ambv/black'
 Plug 'diepm/vim-rest-console'
 " Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
+Plug 'jceb/vim-orgmode'
 Plug 'jnurmine/zenburn'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/seoul256.vim'
@@ -25,6 +27,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/SyntaxRange'
 Plug 'w0rp/ale'
 
 call plug#end()
@@ -115,6 +118,8 @@ au FileType python map <silent> <leader>b oimport pdb; pdb.set_trace()<esc>
 " Display tabs and trailing space in Python mode as bad.
 au FileType python match BadWhitespace /^\t\+/
 au FileType python match BadWhitespace /\s\+$/
+
+let g:black_virtualenv = '~/.local/venvs/black'
 
 """ Scala ensime
 " au FileType scala nnoremap <leader>et :EnTypeCheck<CR>
