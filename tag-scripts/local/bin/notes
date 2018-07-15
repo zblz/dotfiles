@@ -1,0 +1,27 @@
+#!/bin/bash
+shopt -s extglob
+set -e
+
+NOTES_DIR="$HOME/Dropbox/notes"
+
+CWD=$PWD
+
+trap "cd $PWD" EXIT
+
+cd $NOTES_DIR
+
+case $1 in
+    n?(ew))
+        shift
+        STUB=""
+        if [ "$*" != "" ]; then
+            STUB=-$(echo "$@" | sed 's/ /-/g')
+        fi
+        DATE=$(date +%y%m%d)
+        FILENAME=$DATE$STUB.md
+        nvim $FILENAME
+        ;;
+    *)
+        nvim +PickerEdit
+        ;;
+esac
