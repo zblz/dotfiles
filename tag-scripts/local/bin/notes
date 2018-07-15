@@ -21,6 +21,12 @@ case $1 in
         FILENAME=$DATE$STUB.md
         nvim $FILENAME
         ;;
+    t?(odo))
+        nvim todo.md
+        ;;
+    c?(ommit))
+        git commit -a -v
+        ;;
     *)
         nvim +PickerEdit
         ;;
