@@ -25,7 +25,9 @@ case $1 in
         nvim todo.md
         ;;
     c?(ommit))
+        git add .
         git commit -a -v
+        git push
         ;;
     *)
         nvim +PickerEdit
