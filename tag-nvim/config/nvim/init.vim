@@ -120,6 +120,7 @@ au FileType python match BadWhitespace /^\t\+/
 au FileType python match BadWhitespace /\s\+$/
 
 let g:black_virtualenv = '~/.local/venvs/black'
+let g:black_linelength = 79
 
 """ Scala ensime
 " au FileType scala nnoremap <leader>et :EnTypeCheck<CR>
