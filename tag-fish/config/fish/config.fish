@@ -19,6 +19,7 @@ set -x PIP_NO_ALLOW_INSECURE "false"
 
 path_prepend ~/.local/bin
 path_prepend ~/go/bin
+path_prepend ~/.nvm/current/bin
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 
 switch (uname)
