@@ -4,27 +4,14 @@ call plug#begin('~/.local/share/nvim/site/plugins')
 
 Plug 'airblade/vim-gitgutter'
 Plug 'ambv/black'
+Plug 'davidhalter/jedi-vim'
 Plug 'diepm/vim-rest-console'
 " Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 Plug 'jceb/vim-orgmode'
 Plug 'jnurmine/zenburn'
-Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/seoul256.vim'
+Plug 'junegunn/vim-easy-align'
 Plug 'luochen1990/rainbow'
-" Plug 'lervag/vimtex'
-" Plug 'nathanaelkane/vim-indent-guides'
-
-" Plug 'roxma/nvim-completion-manager'
-" Async autocompletion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Completion from other opened files
-Plug 'Shougo/context_filetype.vim'
-" Python autocompletion
-Plug 'zchee/deoplete-jedi', { 'do': ':UpdateRemotePlugins' }
-" Just to add the python go-to-definition and similar features, autocompletion
-" from this plugin is disabled
-Plug 'davidhalter/jedi-vim'
-
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -40,6 +27,14 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/SyntaxRange'
 Plug 'w0rp/ale'
+
+" autocompletion
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/context_filetype.vim'
+Plug 'zchee/deoplete-jedi', { 'do': ':UpdateRemotePlugins' }
+
+" Javascript formatter
+Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript'] }
 
 call plug#end()
 
@@ -180,6 +175,22 @@ au FileType yaml set softtabstop=2
 
 " Markdown
 au BufRead,BufNewFile *.md set filetype=markdown
+
+" Javascript
+au FileType javascript
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
+
+nmap <Leader>jp <Plug>(PrettierAsync)
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+let g:prettier#autoformat = 0
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'false'
+let g:prettier#config#arrow_parens = 'avoid'
+let g:prettier#config#trailing_comma = 'none'
+let g:prettier#config#parser = 'babylon'
 
 """" Key Mappings
 let mapleader=","
