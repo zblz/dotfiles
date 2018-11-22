@@ -17,11 +17,6 @@ set -x PIP_TIMEOUT 15
 set -x PIP_ALLOW_ALL_EXTERNAL "false"
 set -x PIP_NO_ALLOW_INSECURE "false"
 
-path_prepend ~/.local/bin
-path_prepend ~/go/bin
-path_prepend ~/.nvm/current/bin
-set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
-
 switch (uname)
     case Darwin
         set -gx VIRTUAL_ENV_DISABLE_PROMPT 1
@@ -70,3 +65,9 @@ alias start_conda 'source (conda info --root)/etc/fish/conf.d/conda.fish'
 alias tmux 'tmux -2'
 
 alias cdd 'cd ~/.dotfiles'
+
+# Make sure this has priority over anything else
+path_prepend ~/go/bin
+path_prepend ~/.nvm/current/bin
+set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
+path_prepend ~/.local/bin
