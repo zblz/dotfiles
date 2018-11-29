@@ -183,7 +183,6 @@ au FileType javascript
     \ set shiftwidth=2
 
 nmap <Leader>jp <Plug>(PrettierAsync)
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 let g:prettier#autoformat = 0
 let g:prettier#config#single_quote = 'true'
 let g:prettier#config#bracket_spacing = 'true'
