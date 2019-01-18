@@ -7,6 +7,7 @@ Plug 'ambv/black'
 Plug 'davidhalter/jedi-vim'
 Plug 'diepm/vim-rest-console'
 " Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
+Plug 'jamessan/vim-gnupg'
 Plug 'jceb/vim-orgmode'
 Plug 'jnurmine/zenburn'
 Plug 'junegunn/seoul256.vim'
