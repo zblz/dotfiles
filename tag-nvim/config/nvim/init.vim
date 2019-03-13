@@ -278,3 +278,7 @@ let g:indent_guides_start_level=2
 " Rainbow Parens
 let g:rainbow_active = 0
 nmap <leader>r :RainbowToggle<CR>
+
+""" MLflow configuration
+autocmd BufReadPost */src/github.com/*/mlflow/*.py set colorcolumn=101
+autocmd BufReadPost */src/github.com/*/mlflow/*.py let g:ale_python_flake8_options = '--max-line-length=100'
