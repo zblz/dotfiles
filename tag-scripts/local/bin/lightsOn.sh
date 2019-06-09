@@ -52,7 +52,7 @@ delay_progs=('impressive') # For example ('ardour2' 'gmpc')
 
 # Role of windows that, when present, should delay the screensaver
 # skype call windows have role "CallWindow"
-delay_roles=('CallWindow')
+delay_roles=('CallWindow' 'browser-window')
 
 # YOU SHOULD NOT NEED TO MODIFY ANYTHING BELOW THIS LINE
 
@@ -72,21 +72,6 @@ while read id
 do
     displays="$displays $id"
 done < <(xvinfo | sed -n 's/^screen #\([0-9]\+\)$/\1/p')
-
-# Detect screensaver been used (xscreensaver, kscreensaver or none)
-if [ `pgrep -l xscreensaver | grep -wc xscreensaver` -ge 1 ]; then
-    screensaver=xscreensaver
-    log "xscreensaver detected"
-elif [ `pgrep -l kscreensaver | grep -wc kscreensaver` -ge 1 ]; then
-    screensaver=kscreensaver
-    log "kscreensaver detected"
-elif [ `pgrep -l xautolock | grep -wc xautolock` -ge 1 ]; then
-    screensaver=xautolock
-    log "xautolock detected"
-else
-    screensaver=None
-    log "No screensaver detected, but it could be gnome"
-fi
 
 checkDelayProgs()
 {
@@ -120,7 +105,6 @@ checkDelayRoles()
     done
 }
 
-
 checkFullscreen()
 {
     log "checkFullscreen()"
@@ -135,7 +119,6 @@ checkFullscreen()
         #vary.
         activ_win_ids=$(DISPLAY=:${display} xprop -root _NET_CLIENT_LIST_STACKING | sed 's/.*# //' | sed 's/,//g')
 
-        
         # Skip invalid window ids (commented as I could not reproduce a case
         # where invalid id was returned, plus if id invalid
         # isActivWinFullscreen will fail anyway.)
@@ -279,32 +262,11 @@ isAppRunning()
 return 0
 }
 
-
 delayScreensaver()
 {
     # reset inactivity time counter so screensaver is not started
-    if [ "$screensaver" == "xscreensaver" ]; then
-        log "delayScreensaver(): delaying xscreensaver..."
-        xscreensaver-command -deactivate > /dev/null
-    elif [ "$screensaver" == "kscreensaver" ]; then
-        log "delayScreensaver(): delaying kscreensaver..."
-        qdbus org.freedesktop.ScreenSaver /ScreenSaver SimulateUserActivity > /dev/null
-    elif [ "$screensaver" == "xautolock" ]; then
-        log "delayScreensaver(): delaying xautolock..."
-        xautolock -disable
-        xautolock -enable
-    else
-        log "delayScreensaver(): delaying org.gnome.ScreenSaver or anything else..."
-        dbus-send --session --dest=org.gnome.ScreenSaver --type=method_call /org/gnome/ScreenSaver org.gnome.ScreenSaver.SimulateUserActivity
-        if [ -f /usr/bin/xdg-screensaver ]; then
-            log "delayScreensaver(): trying to delay with xdg-screensaver..."
-            xdg-screensaver reset
-        fi
-        if [ -f /usr/bin/xdotool ]; then
-            log "delayScreensaver(): trying to delay with xdotool..."
-            xdotool key ctrl
-        fi
-    fi
+    log "delayScreensaver(): Delaying with xdg-screensaver..."
+    xdg-screensaver reset
 
     #Check if DPMS is on. If it is, deactivate. If it is not, do nothing.
     dpmsStatus=`xset -q | grep -ce 'DPMS is Enabled'`
