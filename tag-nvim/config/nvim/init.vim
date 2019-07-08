@@ -86,11 +86,15 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
+let g:black_virtualenv = '~/.local/venvs/black'
+let g:black_linelength = 79
+
 " Use python from neovim virtual environments when not in mizar
 let hostname = substitute(system('hostname'), '\n', '', '')
 if hostname =~# '^cube-.*'
     let g:python_host_prog = '/opt/anaconda/envs/Python2/bin/python'
     let g:python3_host_prog = '/opt/anaconda/envs/Python3/bin/python'
+    let g:black_virtualenv = '/opt/anaconda/envs/Python3'
 elseif hostname == 'vega'
     let g:python_host_prog = expand('~/miniconda3/envs/py2/bin/python')
     let g:python3_host_prog = expand('~/miniconda3/envs/py3/bin/python')
@@ -151,9 +155,6 @@ au FileType python map <silent> <leader>b oimport pdb; pdb.set_trace()<esc>
 " Display tabs and trailing space in Python mode as bad.
 au FileType python match BadWhitespace /^\t\+/
 au FileType python match BadWhitespace /\s\+$/
-
-let g:black_virtualenv = '~/.local/venvs/black'
-let g:black_linelength = 79
 
 """ Scala ensime
 " au FileType scala nnoremap <leader>et :EnTypeCheck<CR>
