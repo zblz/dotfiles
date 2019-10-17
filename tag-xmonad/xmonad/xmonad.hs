@@ -232,6 +232,7 @@ internetMap = M.fromList $
                , ((0, xK_b), spawn "deluge-gtk" )
                {-, ((0, xK_s), sshPrompt myXPConfig ) -}
                , ((0, xK_t), spawn "rambox" )
+               , ((0, xK_c), spawn "google-chrome" )
                ]
 
 myNasaADS = searchEngine "ads" "http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch="
