@@ -1,3 +1,2 @@
 /usr/local/bin/dunst &
 $HOME/.local/bin/trayer-xmonad &
-$HOME/.local/bin/conky-init start &
