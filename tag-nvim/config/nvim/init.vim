@@ -3,7 +3,7 @@ set encoding=utf-8
 call plug#begin('~/.local/share/nvim/site/plugins')
 
 Plug 'airblade/vim-gitgutter'
-Plug 'ambv/black'
+Plug 'psf/black'
 Plug 'davidhalter/jedi-vim'
 Plug 'diepm/vim-rest-console'
 " Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
@@ -119,8 +119,10 @@ vnoremap <silent> <leader>ts :TREPLSendSelection<cr>
 " Use deoplete.
 
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_ignore_case = 1
-let g:deoplete#enable_smart_case = 1
+call deoplete#custom#option({
+    \ 'smart_case': v:true,
+    \ 'ignore_case': v:true,
+    \ })
 " complete with words from any opened file
 let g:context_filetype#same_filetypes = {}
 let g:context_filetype#same_filetypes._ = '_'
