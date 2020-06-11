@@ -203,13 +203,13 @@ nnoremap <unique> <leader>gd :Gdiff<cr>
 nnoremap <unique> <leader>gs :Gstatus<cr>
 nnoremap <unique> <leader>gw :Gwrite<cr>
 
-nmap <unique> <leader>pe <Plug>PickerEdit
-nmap <unique> <leader>ps <Plug>PickerSplit
-nmap <unique> <leader>pt <Plug>PickerTabedit
-nmap <unique> <leader>pv <Plug>PickerVsplit
-nmap <unique> <leader>pb <Plug>PickerBuffer
-nmap <unique> <leader>p] <Plug>PickerTag
-nmap <unique> <leader>ph <Plug>PickerHelp
+nmap <unique> <leader>pe <Plug>(PickerEdit)
+nmap <unique> <leader>ps <Plug>(PickerSplit)
+nmap <unique> <leader>pt <Plug>(PickerTabedit)
+nmap <unique> <leader>pv <Plug>(PickerVsplit)
+nmap <unique> <leader>pb <Plug>(PickerBuffer)
+nmap <unique> <leader>p] <Plug>(PickerTag)
+nmap <unique> <leader>ph <Plug>(PickerHelp)
 
 nnoremap <leader>u :GundoToggle<CR>
 
