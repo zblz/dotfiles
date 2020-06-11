@@ -3,15 +3,15 @@ shopt -s extglob
 set -e
 
 NOTES_DIR="$HOME/Dropbox/notes"
+WIKI_DIR="$HOME/Dropbox/wiki"
 
 CWD=$PWD
 
 trap "cd $PWD" EXIT
 
-cd $NOTES_DIR
-
 case $1 in
     n?(ew))
+        cd $NOTES_DIR
         shift
         STUB=""
         if [ "$*" != "" ]; then
@@ -22,6 +22,7 @@ case $1 in
         nvim $FILENAME
         ;;
     t?(odo))
+        cd $WIKI_DIR
         nvim todo.md
         ;;
     c?(ommit))
@@ -30,6 +31,7 @@ case $1 in
         git push
         ;;
     *)
+        cd $NOTES_DIR
         nvim +PickerEdit
         ;;
 esac
