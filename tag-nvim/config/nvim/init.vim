@@ -27,6 +27,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/SyntaxRange'
+Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
 
 " autocompletion
@@ -285,3 +286,8 @@ nmap <leader>r :RainbowToggle<CR>
 """ MLflow configuration
 autocmd BufReadPost */src/github.com/*/mlflow/*.py set colorcolumn=101
 autocmd BufReadPost */src/github.com/*/mlflow/*.py let g:ale_python_flake8_options = '--max-line-length=100'
+
+""" vimwiki
+
+let g:vimwiki_list = [{'path': '~/Dropbox/wiki/',
+                   \ 'syntax': 'markdown', 'ext': '.md'}]
