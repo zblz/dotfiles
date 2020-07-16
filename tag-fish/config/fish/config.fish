@@ -71,3 +71,8 @@ path_prepend ~/go/bin
 path_prepend ~/.nvm/current/bin
 set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
 path_prepend ~/.local/bin
+
+# Add SDKMAN paths to PATH
+for ITEM in $HOME/.sdkman/candidates/* ;
+    set -gx PATH $PATH $ITEM/current/bin
+end
