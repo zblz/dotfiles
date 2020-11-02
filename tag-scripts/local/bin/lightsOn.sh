@@ -35,6 +35,10 @@ DEBUG=0
 # this is actually the minimum allowed dynamic delay; also the default (if something fails)
 default_sleep_delay=50
 
+# Set this variable to 0 to disable checking for individual programs below,
+# but instead trigger on any active fullscreen.
+app_checks=0
+
 # Modify these variables if you want this script to detect if Mplayer,
 # VLC, Minitube, or Firefox or Chromium Flash Video are Fullscreen and disable
 # xscreensaver/kscreensaver and PowerManagement.
@@ -46,6 +50,7 @@ chromium_html5_detection=1
 chromium_pepper_flash_detection=1
 chrome_pepper_flash_detection=1
 chrome_html5_detection=1
+firefox_html5_detection=1
 
 # Names of programs which, when running, you wish to delay the screensaver.
 delay_progs=('impressive') # For example ('ardour2' 'gmpc')
@@ -154,6 +159,11 @@ checkFullscreen()
 
 isAppRunning()
 {
+    if [ $app_checks == 0 ]; then
+        log "isAppRunning() deactivated - delaying because something is running in fullscreen"
+        return 1
+    fi
+
     activ_win_id=$1
     log "isAppRunning()"
     #Get title of active window
@@ -216,6 +226,18 @@ isAppRunning()
             chrome_process=`pgrep -lfc "(c|C)hrome"`
             if [[ $chrome_process -ge 1 ]];then
                 log "isAppRunning(): chrome html5 fullscreen detected"
+                return 1
+            fi
+        fi
+    fi
+
+    # Check if user want to detect HTML5 fullscreen on Firefox.
+    if [ $firefox_html5_detection == 1 ]; then
+        if [[ "$activ_win_title" = *Firefox* || "$activ_win_title" = *Iceweasel* ]]; then
+            # Check if Firefox process is actually running.
+            # firefox_process=$(pgrep -c "(firefox|/usr/bin/firefox|iceweasel|/usr/bin/iceweasel)")
+            if [ "$(pidof -s firefox-esr firefox iceweasel)" ]; then
+                log "isAppRunning(): firefox html5 fullscreen detected"
                 return 1
             fi
         fi
