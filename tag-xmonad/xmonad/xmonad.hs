@@ -17,7 +17,7 @@ import XMonad.Util.Scratchpad (scratchpadSpawnAction, scratchpadManageHook, scra
 import XMonad.Util.NamedScratchpad
 -- PROMPT
 import XMonad.Prompt
-import XMonad.Prompt.Window (windowPromptBring,windowPromptGoto)
+-- import XMonad.Prompt.Window (windowPrompt)
 import XMonad.Util.Run(spawnPipe,safeSpawn)
 import XMonad.Prompt.Ssh
 import XMonad.Actions.Submap
@@ -33,14 +33,14 @@ import XMonad.Hooks.SetWMName
 
 -- MAIN {{{
 
-conf = defaultConfig
+conf = def
              { terminal = "urxvt"
-             , handleEventHook = fullscreenEventHook
-             , manageHook = myManageHook <+> manageHook defaultConfig
+             -- , handleEventHook = fullscreenEventHook
+             , manageHook = myManageHook <+> manageHook def
              , layoutHook = myLayout
              , workspaces = myWorkspaces
              , modMask = mod4Mask
-             , keys = \c -> myKeys c `M.union` keys defaultConfig c
+             , keys = \c -> myKeys c `M.union` keys def c
              , normalBorderColor  = myInactiveBorderColor
              , focusedBorderColor = myActiveBorderColor
              , borderWidth = myBorderWidth
@@ -49,7 +49,7 @@ conf = defaultConfig
 
 main = do
   spawn "xmobar /home/vzabalza/.xmonad/xmobar"
-  xmonad $ ewmh $ docks $ conf
+  xmonad $ ewmhFullscreen $ ewmh $ docks $ conf
             {
             logHook = dynamicLogString myPP >>= xmonadPropLog
             }
@@ -96,22 +96,22 @@ myFont = "xft:DejaVu Sans:size=9"
 
 -- <prompts>
 myXPConfig :: XPConfig
-myXPConfig =
-    defaultXPConfig { font                  = myFont
-                    , bgColor               = myBgColor
-                    , fgColor               = myFgColor
-                    , bgHLight              = myHighlightedBgColor
-                    , fgHLight              = myHighlightedFgColor
-                    , borderColor           = myActiveBorderColor
-                    , promptBorderWidth     = 1
-                    , height                = 18
-                    , position              = Bottom
-                    , historySize           = 100
-                    , historyFilter         = deleteConsecutive
-                    }
+myXPConfig = def
+  { font                  = myFont
+  , bgColor               = myBgColor
+  , fgColor               = myFgColor
+  , bgHLight              = myHighlightedBgColor
+  , fgHLight              = myHighlightedFgColor
+  , borderColor           = myActiveBorderColor
+  , promptBorderWidth     = 1
+  , height                = 18
+  , position              = Bottom
+  , historySize           = 100
+  , historyFilter         = deleteConsecutive
+  }
 
 myTabFont = "xft:DejaVu Sans:size=8"
-myTheme = defaultTheme
+myTheme = def
       { activeColor = myHighlightedBgColor
       , activeTextColor = myFgColor
       , activeBorderColor = myActiveBorderColor
@@ -157,7 +157,7 @@ myUrgencyHintBgColor = "blue"
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
-gsconfig1 = defaultGSConfig { gs_cellheight = 60, gs_cellwidth = 300 }
+gsconfig1 = def { gs_cellheight = 60, gs_cellwidth = 300 }
 
 myKeys conf@(XConfig {modMask = modm}) =
       M.fromList $
@@ -179,8 +179,8 @@ myKeys conf@(XConfig {modMask = modm}) =
          , ((modm,               xK_Down ), windows W.focusDown)
          , ((modm,               xK_Up   ), windows W.focusUp)
          , ((modm,               xK_Tab  ), toggleWS)
-         , ((modm,               xK_F1   ), windowPromptGoto myXPConfig)
-         , ((modm,               xK_F2   ), windowPromptBring myXPConfig)
+         -- , ((modm,               xK_F1   ), windowPrompt myXPConfig)
+         -- , ((modm,               xK_F2   ), windowPrompt myXPConfig)
          -- GridSelect
          , ((modm, xK_g), goToSelected gsconfig1)
          {-, ((modm, xK_comma), toggleWS)-}
