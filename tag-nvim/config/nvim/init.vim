@@ -1,44 +1,39 @@
 set encoding=utf-8
 
-call plug#begin('~/.local/share/nvim/site/plugins')
+"""" Plugins
+function! PackInit() abort
+    packadd minpac
 
-Plug 'airblade/vim-gitgutter'
-Plug 'psf/black'
-Plug 'davidhalter/jedi-vim'
-Plug 'diepm/vim-rest-console'
-" Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
-Plug 'jamessan/vim-gnupg'
-Plug 'jceb/vim-orgmode'
-Plug 'jnurmine/zenburn'
-Plug 'junegunn/seoul256.vim'
-Plug 'junegunn/vim-easy-align'
-Plug 'luochen1990/rainbow'
-Plug 'sbdchd/neoformat'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'sheerun/vim-polyglot'
-Plug 'sjl/gundo.vim'
-Plug 'srstevenson/vim-picker'
-Plug 'srstevenson/vim-topiary'
-Plug 'tarekbecker/vim-yaml-formatter'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-unimpaired'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-scripts/SyntaxRange'
-Plug 'vimwiki/vimwiki'
-Plug 'w0rp/ale'
+    call minpac#init()
+    call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-" autocompletion
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/context_filetype.vim'
-Plug 'zchee/deoplete-jedi', { 'do': ':UpdateRemotePlugins' }
+    call minpac#add('airblade/vim-gitgutter')
+    call minpac#add('psf/black')
+    call minpac#add('davidhalter/jedi-vim')
+    call minpac#add('junegunn/seoul256.vim')
+    call minpac#add('sbdchd/neoformat')
+    call minpac#add('scrooloose/nerdcommenter')
+    call minpac#add('sheerun/vim-polyglot')
+    call minpac#add('sjl/gundo.vim')
+    call minpac#add('srstevenson/vim-picker')
+    call minpac#add('srstevenson/vim-topiary')
+    call minpac#add('tpope/vim-abolish')
+    call minpac#add('tpope/vim-fugitive')
+    call minpac#add('vim-airline/vim-airline')
+    call minpac#add('vim-airline/vim-airline-themes')
+    call minpac#add('vimwiki/vimwiki')
+    call minpac#add('w0rp/ale')
 
-" Javascript formatter
-Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript'] }
+    " autocompletion
+    call minpac#add('Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' })
+    call minpac#add('Shougo/context_filetype.vim')
+    call minpac#add('zchee/deoplete-jedi', { 'do': ':UpdateRemotePlugins' })
 
-call plug#end()
+endfunction
+
+command! PackUpdate call PackInit() | call minpac#update()
+command! PackClean  call PackInit() | call minpac#clean()
+command! PackStatus packadd minpac | call minpac#status()
 
 """" Editing
 set autoindent
@@ -63,6 +58,7 @@ set softtabstop=4
 set splitright
 set tabstop=4
 set textwidth=80
+set colorcolumn=80
 set vb t_vb=
 
 """" Airline
@@ -110,25 +106,20 @@ let g:ale_lint_on_insert_leave = 1
 " " scalac is *very* slow, ends up using a lot of resources
 " au FileType scala let g:ale_lint_on_text_changed = 'never'
 
-" NeoTerm
-nnoremap <silent> <leader>tf :TREPLSendFile<cr>
-nnoremap <silent> <leader>ts :TREPLSendLine<cr>
-vnoremap <silent> <leader>ts :TREPLSendSelection<cr>
-
-" Deoplete -----------------------------
+" Deoplete
 
 " Use deoplete.
 
 let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option({
-    \ 'smart_case': v:true,
-    \ 'ignore_case': v:true,
-    \ })
+" call deoplete#custom#option({
+"     \ 'smart_case': v:true,
+"     \ 'ignore_case': v:true,
+"     \ })
 " complete with words from any opened file
 let g:context_filetype#same_filetypes = {}
 let g:context_filetype#same_filetypes._ = '_'
 
-" Jedi-vim ------------------------------
+" Jedi-vim
 
 " Disable autocompletion (using deoplete instead)
 let g:jedi#completions_enabled = 0
@@ -239,10 +230,6 @@ nnoremap K :Ag <C-R><C-W><CR>
 noremap j gj
 noremap k gk
 
-" Toggle the tag list bar
-nmap <F4> :TlistToggle<CR>
-nmap <F3> :NERDTreeToggle<CR>
-
 if &diff
 " easily handle diffing
    vnoremap < :diffget<CR>
@@ -267,21 +254,6 @@ inoremap <Down> <C-R>=pumvisible() ? "\<lt>C-N>" : "\<lt>Down>"<CR>
 
 let g:seoul256_background = 236
 colorscheme seoul256
-
-" let g:zenburn_force_dark_Background = 1
-" colorscheme zenburn
-set colorcolumn=80
-
-" Indent Guide
-hi IndentGuidesEven ctermbg=237
-hi IndentGuidesOdd  ctermbg=238
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_guide_size=1
-let g:indent_guides_start_level=2
-
-" Rainbow Parens
-let g:rainbow_active = 0
-nmap <leader>r :RainbowToggle<CR>
 
 """ MLflow configuration
 autocmd BufReadPost */src/github.com/*/mlflow/*.py set colorcolumn=101
