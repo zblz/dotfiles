@@ -77,6 +77,8 @@ highlight BadWhitespace ctermbg=237
 
 nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>  " F2 toggles numbers
 
+ autocmd FileType gitcommit,markdown setlocal spell
+
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
