@@ -73,3 +73,5 @@
     name = jupyter notebook merge driver
 [core]
     excludesfile = ~/.config/git/ignore
+[pull]
+	rebase = true
