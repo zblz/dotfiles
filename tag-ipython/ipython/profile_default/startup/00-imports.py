@@ -1,6 +1,7 @@
-from __future__ import division, print_function
-
-import numpy as np
+try:
+    import numpy as np
+except ImportError:
+    pass
 
 try:
     import astropy.units as u

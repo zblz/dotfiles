@@ -7,7 +7,6 @@ config.TerminalIPythonApp.display_banner = False
 config.InteractiveShell.autoindent = True
 config.InteractiveShell.colors = 'Linux'
 config.InteractiveShell.confirm_exit = False
-config.InteractiveShell.deep_reload = False
 config.InteractiveShell.editor = 'vim'
 config.InteractiveShell.xmode = 'Context'
 config.InteractiveShell.autocall = 2
