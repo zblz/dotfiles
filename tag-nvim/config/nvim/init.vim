@@ -89,13 +89,12 @@ let g:black_virtualenv = '~/.local/venvs/black'
 let g:black_linelength = 79
 
 " Use python from neovim virtual environments when not in mizar
+let g:loaded_python_provider = 0
 let hostname = substitute(system('hostname'), '\n', '', '')
 if hostname =~# '^cube-.*'
-    let g:python_host_prog = '/opt/anaconda/envs/Python2/bin/python'
     let g:python3_host_prog = '/opt/anaconda/envs/Python3/bin/python'
     let g:black_virtualenv = '/opt/anaconda/envs/Python3'
 elseif hostname == 'vega'
-    let g:python_host_prog = expand('~/miniconda3/envs/py2/bin/python')
     let g:python3_host_prog = expand('~/miniconda3/envs/py3/bin/python')
 endif
 
