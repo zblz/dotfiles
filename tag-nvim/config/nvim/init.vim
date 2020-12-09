@@ -259,6 +259,8 @@ colorscheme seoul256
 """ MLflow configuration
 autocmd BufReadPost */src/github.com/*/mlflow/*.py set colorcolumn=101
 autocmd BufReadPost */src/github.com/*/mlflow/*.py let g:ale_python_flake8_options = '--max-line-length=100'
+autocmd BufReadPost */src/github.com/dagster-io/*.py set colorcolumn=101
+autocmd BufReadPost */src/github.com/dagster-io/*.py let g:ale_python_flake8_options = '--max-line-length=100'
 
 """ vimwiki
 
