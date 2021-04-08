@@ -1,2 +1,1 @@
-
-ionice -c 3 $HOME/.local/bin/dropbox start
+ionice -c 3 $HOME/.dropbox-dist/dropboxd &
