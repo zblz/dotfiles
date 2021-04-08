@@ -17,7 +17,6 @@ import XMonad.Util.Scratchpad (scratchpadSpawnAction, scratchpadManageHook, scra
 import XMonad.Util.NamedScratchpad
 -- PROMPT
 import XMonad.Prompt
--- import XMonad.Prompt.Window (windowPrompt)
 import XMonad.Util.Run(spawnPipe,safeSpawn)
 import XMonad.Prompt.Ssh
 import XMonad.Actions.Submap
@@ -33,39 +32,36 @@ import XMonad.Hooks.SetWMName
 
 -- MAIN {{{
 
-conf = def
-             { terminal = "urxvt"
-             -- , handleEventHook = fullscreenEventHook
-             , manageHook = myManageHook <+> manageHook def
-             , layoutHook = myLayout
-             , workspaces = myWorkspaces
-             , modMask = mod4Mask
-             , keys = \c -> myKeys c `M.union` keys def c
-             , normalBorderColor  = myInactiveBorderColor
-             , focusedBorderColor = myActiveBorderColor
-             , borderWidth = myBorderWidth
-             , focusFollowsMouse = True
-             }
+conf = def {
+    terminal = "urxvt"
+  , manageHook = myManageHook <+> manageHook def
+  , layoutHook = myLayout
+  , workspaces = myWorkspaces
+  , modMask = mod4Mask
+  , keys = \c -> myKeys c `M.union` keys def c
+  , normalBorderColor  = myInactiveBorderColor
+  , focusedBorderColor = myActiveBorderColor
+  , borderWidth = myBorderWidth
+  , focusFollowsMouse = True
+  }
+
+myPP = xmobarPP {
+    ppOutput = putStrLn . wrap "< " " >"
+  , ppCurrent = xmobarColor "#ee9a00" "" . (wrap "[" "]" )
+  , ppHidden = hideScratchpad
+  , ppLayout = (\_->"")
+  , ppTitle = xmobarColor "#60b48a" "" . shorten 300
+  }
+    where
+      hideScratchpad ws = if ws == "NSP" then "" else  ws
 
 main = do
   spawn "xmobar /home/vzabalza/.xmonad/xmobar"
-  xmonad $ ewmhFullscreen $ ewmh $ docks $ conf
-            {
-            logHook = dynamicLogString myPP >>= xmonadPropLog
-            }
--- end of MAIN }}}
+  xmonad $ ewmhFullscreen $ ewmh $ docks $ conf {
+    logHook = dynamicLogString myPP >>= xmonadPropLog
+  }
 
-myPP = xmobarPP {
-            ppOutput = putStrLn . wrap "< "      " >"
-          , ppCurrent = xmobarColor "#ee9a00" "" . (wrap "["        "]" )
-          , ppHidden = hideScratchpad
-          {- , ppHiddenNoWindows =  (take 1) . hideScratchpad -}
-          , ppLayout = (\_->"")
-          {- , ppSep = " >-< " -}
-          , ppTitle = xmobarColor "#60b48a" "" .           shorten 300
-          }
-            where
-              hideScratchpad ws = if ws == "NSP" then "" else  ws
+-- end of MAIN }}}
 
 -- COLORS, FONTS, PROMPTS {{{
 
@@ -94,22 +90,6 @@ myTitleFgColor = myFgColor
 -- barFont = "-misc-fixed-medium-r-semicondensed-*-12-110-75-75-c-60-koi8-r"
 myFont = "xft:DejaVu Sans:size=9"
 
--- <prompts>
-myXPConfig :: XPConfig
-myXPConfig = def
-  { font                  = myFont
-  , bgColor               = myBgColor
-  , fgColor               = myFgColor
-  , bgHLight              = myHighlightedBgColor
-  , fgHLight              = myHighlightedFgColor
-  , borderColor           = myActiveBorderColor
-  , promptBorderWidth     = 1
-  , height                = 18
-  , position              = Bottom
-  , historySize           = 100
-  , historyFilter         = deleteConsecutive
-  }
-
 myTabFont = "xft:DejaVu Sans:size=8"
 myTheme = def
       { activeColor = myHighlightedBgColor
@@ -124,12 +104,14 @@ myTheme = def
 
 -- End of COLORS, FONTS, PROMPTS }}}
 
+-- LAYOUT {{{
+
 -- Scratchpads
 
 scratchpads=[
        NS "term" "urxvt -name term " (resource =? "term") termFloating
      , NS "ncmpcpp" "urxvt -name ncmpcpp -e ncmpcpp" (resource =? "ncmpcpp") termFloating
-     , NS "ipython" "urxvt -name ipython-scratch -e ipython3 --matplotlib=qt4" (resource =? "ipython-scratch") termFloating
+     , NS "ipython" "urxvt -name ipython-scratch -e ipython3 --matplotlib=qt" (resource =? "ipython-scratch") termFloating
      , NS "pavucontrol" "pavucontrol" (resource =? "pavucontrol") paFloating
      , NS "htop" "urxvt -name htop -e htop" (title =? "htop") htFloating
         ] where
@@ -140,12 +122,7 @@ scratchpads=[
 --- manageHook
 
 myManageHook = (composeAll
-    [ className =? "com-sun-javaws-Main" --> doFloat
-    , resource =? "sun-awt-X11-XFramePeer" --> doFloat
-    , className =? "ROOT" --> doFloat
-    , className =? "SeeVoghRN" --> doFloat
-    , resource =? "fv*" --> doFloat
-    , stringProperty "WM_WINDOW_ROLE" =? "pop-up" --> doFloat
+    [ stringProperty "WM_WINDOW_ROLE" =? "pop-up" --> doFloat
     , isFullscreen                       --> doFullFloat
     , isDialog                           --> doCenterFloat
     , manageDocks
@@ -159,16 +136,23 @@ myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
 gsconfig1 = def { gs_cellheight = 60, gs_cellwidth = 300 }
 
+myLayout = avoidStruts $ smartBorders $ (normalTiled ||| Grid ||| myTabbed )
+    where
+      normalTiled = Tall 1 (2/100) (1/2)
+      fitTiled = Tall 1 (2/100) (1/4)
+      extraFitTiled = Tall 1 (2/100) (1/5)
+      myTabbed = tabbed shrinkText myTheme
+      ratio = toRational (2/(1+sqrt(5)::Double))
+
+-- End of LAYOUT }}}
+
+-- KEYS {{{
+
 myKeys conf@(XConfig {modMask = modm}) =
       M.fromList $
          -- Aplicacions
-         [
-           ((modm .|. shiftMask, xK_x), spawn "urxvt -e nvim /home/vzabalza/.xmonad/xmonad.hs" )
-         , ((modm,               xK_i), submap internetMap )
-         , ((modm .|.controlMask,xK_c), spawn "/home/vzabalza/.local/bin/conky-init stop" )
-         , ((modm,               xK_c), spawn "/home/vzabalza/.local/bin/conky-init start" )
-         , ((modm,               xK_y), spawn "urxvt -e ipython3 --matplotlib=qt4" )
-         , ((modm,               xK_k), spawn "kodi" )
+         [ ((modm,               xK_i), submap internetMap )
+         , ((modm,               xK_y), spawn "urxvt -e ipython3 --matplotlib=qt" )
          -- Full Screen
          , ((modm,               xK_b), sendMessage ToggleStruts )
          -- Navegar entre finestres i WS
@@ -179,12 +163,8 @@ myKeys conf@(XConfig {modMask = modm}) =
          , ((modm,               xK_Down ), windows W.focusDown)
          , ((modm,               xK_Up   ), windows W.focusUp)
          , ((modm,               xK_Tab  ), toggleWS)
-         -- , ((modm,               xK_F1   ), windowPrompt myXPConfig)
-         -- , ((modm,               xK_F2   ), windowPrompt myXPConfig)
          -- GridSelect
          , ((modm, xK_g), goToSelected gsconfig1)
-         {-, ((modm, xK_comma), toggleWS)-}
-         {-, ((modm, xK_f), spawnSelected defaultGSConfig ["urxvt","zathura","libreoffice","gimp"])-}
          -- Volum
          , ((0, xF86XK_AudioMute ), spawn "pactl set-sink-mute 0 toggle")
          , ((0, xF86XK_AudioLowerVolume ), spawn "pavol -5%")
@@ -210,11 +190,6 @@ myKeys conf@(XConfig {modMask = modm}) =
          , ((0, xF86XK_Launch1 ), spawn "sudo tlp fullcharge")
          -- Varis
          , ((modm .|. shiftMask, xK_space), withFocused $ \w -> hide w >> reveal w >> setFocusX w)
-         -- %! force the window to redraw itself
-
-         -- Cerques
-         , ((modm,               xK_s), submap $ searchMap $ Search.promptSearch myXPConfig)
-         , ((modm .|. shiftMask, xK_s), submap $ searchMap $ Search.selectSearch)
          ]
          ++
          [((m .|. modm, k), windows $ f i)
@@ -224,32 +199,13 @@ myKeys conf@(XConfig {modMask = modm}) =
         {-shutdownHook = spawn "pkill -TERM -P `pgrep -o xmonad`"-}
 
 internetMap = M.fromList $
-               [
-                 ((0, xK_f), spawn "firefox" )
+               [ ((0, xK_f), spawn "firefox" )
                , ((0, xK_r), spawn "firefox --new-window http://cloud.feedly.com" )
                , ((0, xK_g), spawn "firefox --new-window http://mail.google.com/mail" )
                , ((0, xK_y), spawn "skypeforlinux" )
                , ((0, xK_b), spawn "deluge-gtk" )
-               {-, ((0, xK_s), sshPrompt myXPConfig ) -}
                , ((0, xK_t), spawn "rambox" )
                , ((0, xK_c), spawn "google-chrome" )
                ]
 
-myNasaADS = searchEngine "ads" "http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch="
-
-searchMap method = M.fromList $
-                   [ ((0, xK_g),  method Search.google )
-                   , ((0, xK_w),  method Search.wikipedia )
-                   , ((0, xK_a),  method myNasaADS )
-                   , ((0, xK_i),  method Search.imdb )
-                   , ((0, xK_m),  method Search.maps )
-                   , ((0, xK_d),  method Search.mathworld )
-                   , ((0, xK_y),  method Search.youtube ) ]
-
-myLayout = avoidStruts $ smartBorders $ (normalTiled ||| Grid ||| myTabbed )
-    where
-      normalTiled = Tall 1 (2/100) (1/2)
-      fitTiled = Tall 1 (2/100) (1/4)
-      extraFitTiled = Tall 1 (2/100) (1/5)
-      myTabbed = tabbed shrinkText myTheme
-      ratio = toRational (2/(1+sqrt(5)::Double))
+-- End of KEYS }}}
