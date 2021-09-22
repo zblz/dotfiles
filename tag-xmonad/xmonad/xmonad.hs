@@ -202,10 +202,11 @@ internetMap = M.fromList $
                [ ((0, xK_f), spawn "firefox" )
                , ((0, xK_r), spawn "firefox --new-window http://cloud.feedly.com" )
                , ((0, xK_g), spawn "firefox --new-window http://mail.google.com/mail" )
+               , ((0, xK_p), spawn "firefox --private-window" )
                , ((0, xK_y), spawn "skypeforlinux" )
                , ((0, xK_b), spawn "deluge-gtk" )
                , ((0, xK_t), spawn "rambox" )
-               , ((0, xK_c), spawn "google-chrome" )
+               , ((0, xK_c), spawn "chromium" )
                ]
 
 -- End of KEYS }}}
