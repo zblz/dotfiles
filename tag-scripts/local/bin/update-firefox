@@ -2,6 +2,8 @@
 
 set -eu
 
+echo Current version: $(/opt/firefox/firefox --version)
+
 wget --content-disposition "https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64" -O /tmp/firefox.tar.bz2
 
 pushd /opt
@@ -11,6 +13,6 @@ sudo tar xjf /tmp/firefox.tar.bz2
 
 rm -f /tmp/firefox.tar.bz2
 
-/opt/firefox/firefox --version
+echo New version: $(/opt/firefox/firefox --version)
 
 popd
