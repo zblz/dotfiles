@@ -33,7 +33,7 @@ import XMonad.Hooks.SetWMName
 -- MAIN {{{
 
 conf = def {
-    terminal = "urxvt"
+    terminal = "kitty -1"
   , manageHook = myManageHook <+> manageHook def
   , layoutHook = myLayout
   , workspaces = myWorkspaces
