@@ -33,5 +33,5 @@ if ! command -v jupyter >/dev/null; then
 fi
 
 jupyter-nbconvert --stdout --to markdown "$1" 2>/dev/null \
-  | pygmentize -l md \
+  | pygmentize -l md -O style=gruvbox-dark \
   | less -R
