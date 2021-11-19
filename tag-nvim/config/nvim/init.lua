@@ -38,6 +38,9 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
   use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
   use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
 end)
@@ -227,7 +230,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
+local servers = { 'pyright', 'metals' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -282,5 +285,19 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' },
   },
 }
+
+
+vim.cmd [[
+let g:loaded_python_provider = 0
+let hostname = substitute(system('hostname'), '\n', '', '')
+if hostname =~# '^cube-.*'
+    let g:python3_host_prog = '/opt/anaconda/envs/Python3/bin/python'
+    let g:black_virtualenv = '/opt/anaconda/envs/Python3'
+elseif hostname == 'vega'
+    let g:python3_host_prog = expand('~/miniconda3/envs/py3/bin/python')
+endif
+]]
