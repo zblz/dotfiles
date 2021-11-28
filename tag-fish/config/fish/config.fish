@@ -20,6 +20,7 @@ set -x PIP_NO_ALLOW_INSECURE "false"
 switch (uname)
     case Darwin
         set -gx VIRTUAL_ENV_DISABLE_PROMPT 1
+	path_prepend /opt/homebrew/bin
         source (pyenv init - | psub)
     case '*'
         if test -d /opt/anaconda
