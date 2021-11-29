@@ -21,10 +21,12 @@ require('packer').startup(function()
   use 'tpope/vim-fugitive' -- Git commands in nvim
   use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
   use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
+  use 'srstevenson/vim-topiary' -- trim whitespace
+  use 'h3xx/vim-shitespace' -- show shitespace
+  use 'sbdchd/neoformat'
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use 'navarasu/onedark.nvim'
   use 'sainnhe/gruvbox-material'
   use 'nvim-lualine/lualine.nvim'
   -- Add indentation guides even on blank lines
@@ -43,6 +45,7 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-cmdline'
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
+  use 'vimwiki/vimwiki'
 end)
 
 --Set highlight on search
@@ -64,6 +67,16 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+vim.opt.spelllang = 'en_gb'
+
+vim.cmd [[
+augroup init
+    autocmd!
+    autocmd BufWritePre * Neoformat
+    autocmd FileType gitcommit,markdown syntax enable | setlocal spell
+augroup END
+]]
+
 --Decrease update time
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
@@ -71,8 +84,13 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme
 vim.o.termguicolors = true
 vim.o.background = 'dark'
+
+vim.g.gruvbox_material_background = 'soft'
 vim.g.gruvbox_material_palette = 'original'
+vim.g.gruvbox_material_enable_bold = true
 vim.g.gruvbox_material_enable_italic = true
+vim.g.gruvbox_material_sign_column_background = 'none'
+
 vim.cmd 'colorscheme gruvbox-material'
 
 --Set statusbar
@@ -83,13 +101,17 @@ require('lualine').setup {
 }
 
 --Remap space as leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
 --Remap for dealing with word wrap
 vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
 vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
+
+--Some other remaps
+vim.api.nvim_set_keymap('n', ';', ':', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-l>', ':nohlsearch<CR><C-l>', { noremap = true, silent = true })
 
 -- Highlight on yank
 vim.api.nvim_exec(
@@ -135,7 +157,7 @@ require('telescope').setup {
 require('telescope').load_extension('fzf')
 
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><leader>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true, silent = true })
@@ -230,7 +252,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'pyright', 'metals' }
+local servers = { 'pyright', 'metals', 'yamlls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -290,7 +312,7 @@ cmp.setup {
   },
 }
 
-
+-- python provider
 vim.cmd [[
 let g:loaded_python_provider = 0
 let hostname = substitute(system('hostname'), '\n', '', '')
@@ -301,3 +323,13 @@ elseif hostname == 'vega'
     let g:python3_host_prog = expand('~/miniconda3/envs/py3/bin/python')
 endif
 ]]
+
+-- vimwiki setup
+vim.cmd [[
+let g:vimwiki_list = [{'path': '~/Dropbox/wiki/', 'syntax': 'markdown', 'ext': '.md'}]
+]]
+
+-- neoformat setup
+vim.g.neoformat_enabled_python = {'isort', 'black'}
+vim.g.neoformat_run_all_formatters = true
+vim.g.neoformat_only_msg_on_error = true
