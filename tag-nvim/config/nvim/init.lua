@@ -96,7 +96,9 @@ vim.cmd 'colorscheme gruvbox-material'
 --Set statusbar
 require('lualine').setup {
   options = {
-    theme = 'gruvbox-material'
+    theme = 'gruvbox-material',
+    component_separators = { left = '', right = '' },
+    section_separators = { left = '', right = '' },
   }
 }
 
