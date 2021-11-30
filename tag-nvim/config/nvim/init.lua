@@ -46,6 +46,7 @@ require('packer').startup(function()
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
   use 'vimwiki/vimwiki'
+  use 'ElPiloto/telescope-vimwiki.nvim'
 end)
 
 --Set highlight on search
@@ -157,6 +158,7 @@ require('telescope').setup {
 }
 
 require('telescope').load_extension('fzf')
+require('telescope').load_extension('vw')
 
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader><leader>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
@@ -168,6 +170,10 @@ vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin
 vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
+
+-- vimwiki telescope shortcuts
+vim.api.nvim_set_keymap('n', '<leader>ws', ':Telescope vimwiki<CR>', {noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>wg', ':Telescope vimwiki live_grep<CR>', {noremap = true })
 
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall
