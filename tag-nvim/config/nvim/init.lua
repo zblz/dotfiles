@@ -44,38 +44,26 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
   use 'saadparwaiz1/cmp_luasnip'
+  use 'onsails/lspkind-nvim'
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
   use 'vimwiki/vimwiki'
   use 'ElPiloto/telescope-vimwiki.nvim'
 end)
 
---Set highlight on search
-vim.o.hlsearch = false
-
---Make line numbers default
-vim.wo.number = true
-
---Enable mouse mode
-vim.o.mouse = 'a'
-
---Enable break indent
-vim.o.breakindent = true
-
---Save undo history
-vim.o.undofile = true
-
---Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
+vim.o.breakindent = true --Enable break indent
+vim.o.colorcolumn = '80'
+vim.o.expandtab = true
+vim.o.ignorecase = true --Case insensitive searching UNLESS /C or capital in search
+vim.o.mouse = 'a' --Enable mouse mode
+vim.o.number = true --Make line numbers default
 vim.o.smartcase = true
-
-vim.opt.spelllang = 'en_gb'
+vim.o.spelllang = 'en_gb'
+vim.o.splitright = true
+vim.o.textwidth = 80
+vim.o.undofile = true --Save undo history
 
 vim.cmd [[
-augroup init
-    autocmd!
-    autocmd BufWritePre * Neoformat
-    autocmd FileType gitcommit,markdown syntax enable | setlocal spell
-augroup END
+autocmd FileType gitcommit,markdown syntax enable | setlocal spell
 ]]
 
 --Decrease update time
@@ -92,6 +80,23 @@ vim.g.gruvbox_material_enable_bold = true
 vim.g.gruvbox_material_enable_italic = true
 vim.g.gruvbox_material_sign_column_background = 'none'
 
+--LSP kind highlights
+vim.cmd [[highlight BadWhitespace ctermbg=237]]
+vim.cmd [[highlight! link CmpItemAbbrMatchFuzzy Aqua]]
+vim.cmd [[highlight! link CmpItemKindText Fg]]
+vim.cmd [[highlight! link CmpItemKindMethod Purple]]
+vim.cmd [[highlight! link CmpItemKindFunction Purple]]
+vim.cmd [[highlight! link CmpItemKindConstructor Green]]
+vim.cmd [[highlight! link CmpItemKindField Aqua]]
+vim.cmd [[highlight! link CmpItemKindVariable Blue]]
+vim.cmd [[highlight! link CmpItemKindClass Green]]
+vim.cmd [[highlight! link CmpItemKindInterface Green]]
+vim.cmd [[highlight! link CmpItemKindValue Orange]]
+vim.cmd [[highlight! link CmpItemKindKeyword Keyword]]
+vim.cmd [[highlight! link CmpItemKindSnippet Red]]
+vim.cmd [[highlight! link CmpItemKindFile Orange]]
+vim.cmd [[highlight! link CmpItemKindFolder Orange]]
+
 vim.cmd 'colorscheme gruvbox-material'
 
 --Set statusbar
@@ -103,8 +108,7 @@ require('lualine').setup {
   }
 }
 
---Remap space as leader key
--- vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
+--Set leader
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
@@ -113,8 +117,17 @@ vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true,
 vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 
 --Some other remaps
-vim.api.nvim_set_keymap('n', ';', ':', { noremap = true })
+vim.api.nvim_set_keymap('n', ';', ':', { noremap = true }) -- avoid a shift for command
 vim.api.nvim_set_keymap('n', '<C-l>', ':nohlsearch<CR><C-l>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Tab>', '%', { noremap = true, silent = true })
+--toggle folds with <space>
+vim.api.nvim_set_keymap('n', '<Space>', 'za', { noremap = true, silent = true })
+--define folds over marked range
+vim.api.nvim_set_keymap('v', '<Space>', 'zf', { noremap = true, silent = true })
+--format paragraph
+vim.api.nvim_set_keymap('n', '<leader>q', 'gqip', { noremap = true, silent = true })
+--new tab
+vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true, silent = true })
 
 -- Highlight on yank
 vim.api.nvim_exec(
@@ -161,19 +174,20 @@ require('telescope').load_extension('fzf')
 require('telescope').load_extension('vw')
 
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader><leader>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ss', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sg', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '\\', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], { noremap = true, silent = true })
 
 -- vimwiki telescope shortcuts
-vim.api.nvim_set_keymap('n', '<leader>ws', ':Telescope vimwiki<CR>', {noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>wg', ':Telescope vimwiki live_grep<CR>', {noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>ws', ':Telescope vw<CR>', {noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>wg', ':Telescope vw live_grep<CR>', {noremap = true })
 
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall
@@ -282,6 +296,18 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
+  formatting = {
+    format = require('lspkind').cmp_format({
+      with_text = true,
+        menu = ({
+          buffer = "[Buffer]",
+          nvim_lsp = "[LSP]",
+          luasnip = "[LuaSnip]",
+          nvim_lua = "[Lua]",
+          latex_symbols = "[Latex]",
+        })
+    })
+  },
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -320,7 +346,7 @@ cmp.setup {
   },
 }
 
--- python provider
+-- python config
 vim.cmd [[
 let g:loaded_python_provider = 0
 let hostname = substitute(system('hostname'), '\n', '', '')
@@ -330,6 +356,30 @@ if hostname =~# '^cube-.*'
 elseif hostname == 'vega'
     let g:python3_host_prog = expand('~/miniconda3/envs/py3/bin/python')
 endif
+
+au FileType python
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix |
+    \ set formatoptions-=tc
+
+au FileType python map <silent> <leader>b oimport pdb; pdb.set_trace()<esc>
+
+" Display tabs and trailing space in Python mode as bad.
+au FileType python match BadWhitespace /^\t\+/
+au FileType python match BadWhitespace /\s\+$/
+]]
+
+--YAML config
+vim.cmd [[
+au FileType yaml
+	\ set tabstop=2 |
+	\ set shiftwidth=2 |
+	\ set softtabstop=2
 ]]
 
 -- vimwiki setup
@@ -338,6 +388,7 @@ let g:vimwiki_list = [{'path': '~/Dropbox/wiki/', 'syntax': 'markdown', 'ext': '
 ]]
 
 -- neoformat setup
+vim.api.nvim_set_keymap('n', '<leader>f', ":Neoformat<CR>", { noremap = true })
 vim.g.neoformat_enabled_python = {'isort', 'black'}
 vim.g.neoformat_run_all_formatters = true
 vim.g.neoformat_only_msg_on_error = true
