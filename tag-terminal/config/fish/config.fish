@@ -20,12 +20,13 @@ set -x PIP_NO_ALLOW_INSECURE false
 switch (uname)
     case Darwin
         set -gx VIRTUAL_ENV_DISABLE_PROMPT 1
-        path_prepend /opt/homebrew/bin
+        fish_add_path /opt/homebrew/bin
+        fish_add_path /opt/homebrew/sbin
         source (pyenv init - | psub)
         fnm env | source
     case '*'
         if test -d /opt/anaconda
-            path_prepend /opt/anaconda/bin
+            fish_add_path /opt/anaconda/bin
             source /opt/anaconda/etc/fish/conf.d/conda.fish
             alias workon 'conda activate'
             complete -f -c workon -a '(__fish_conda_envs)'
@@ -61,13 +62,11 @@ alias tmux 'tmux -2'
 
 alias cdd 'cd ~/.dotfiles'
 
+fish_add_path -a /usr/local/sbin
 # Make sure this has priority over anything else
-path_prepend ~/go/bin
-path_prepend ~/.nvm/current/bin
-set -g fish_user_paths /usr/local/sbin $fish_user_paths
-path_prepend ~/.local/bin
+fish_add_path ~/.local/bin
 
 # Add SDKMAN paths to PATH
 for ITEM in $HOME/.sdkman/candidates/*
-    set -gx PATH $PATH $ITEM/current/bin
+    fish_add_path -a $ITEM/current/bin
 end
