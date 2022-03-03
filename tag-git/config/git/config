@@ -47,9 +47,6 @@
     cob = checkout -b
     # list branches sorted by last modified
     b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
-    # fetch and clean dead branches
-    cr = "!git fetch -a --prune; git checkout master; git pull --rebase; git branch --merged master | grep -v '^[ *]*master$' | xargs -n 1 git branch -d"
-    crm = "!git fetch -a --prune; git checkout main; git pull --rebase; git branch --merged main | grep -v '^[ *]*main$' | xargs -n 1 git branch -d"
 
     # list aliases
     la = "!git config -l | grep alias | cut -c 7-"

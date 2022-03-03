@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+main=$(git branch -r | egrep -o '^\s*origin/(ma((in)|(ster)))$' | cut -d '/' -f 2)
+echo $main
+git fetch -a --prune
+git checkout $main
+git pull --rebase
+git branch --merged $main | grep -v "^[ *]*${main}$" | xargs -n 1 git branch -d
