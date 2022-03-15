@@ -282,6 +282,39 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- Configure pyright to use virtualenvs (see
+-- https://github.com/neovim/nvim-lspconfig/issues/500#issuecomment-876700701)
+local util = require('lspconfig/util')
+
+local path = util.path
+
+local function get_python_path(workspace)
+  -- Use activated virtualenv.
+  if vim.env.VIRTUAL_ENV then
+    print("activated virtual env" .. vim.env.VIRTUAL_ENV)
+    return path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
+  end
+
+  -- Find and use virtualenv from pipenv in workspace directory.
+  local match = vim.fn.glob(path.join(workspace, 'Pipfile'))
+  if match ~= '' then
+    local venv = vim.fn.trim(vim.fn.system('PIPENV_PIPFILE=' .. match .. ' pipenv --venv'))
+    print("pipfile env" .. venv)
+    return path.join(venv, 'bin', 'python')
+  end
+
+  -- Find and use virtualenv from .venv in workspace directory.
+  local match = vim.fn.glob(path.join(workspace, '.venv'))
+  if match ~= '' then
+    print(".venv" .. match)
+    return path.join(match, 'bin', 'python')
+  end
+
+  -- Fallback to system Python.
+  print("system python")
+  return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
+end
+
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
