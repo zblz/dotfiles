@@ -38,6 +38,8 @@ require('packer').startup(function()
   -- Additional textobjects for treesitter
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+  use {'folke/trouble.nvim', requires = { 'kyazdani42/nvim-web-devicons' } }
+  use 'folke/lsp-colors.nvim'
   use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
@@ -53,6 +55,8 @@ end)
 vim.o.breakindent = true --Enable break indent
 vim.o.colorcolumn = '80'
 vim.o.expandtab = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
 vim.o.ignorecase = true --Case insensitive searching UNLESS /C or capital in search
 vim.o.mouse = 'a' --Enable mouse mode
 vim.o.number = true --Make line numbers default
