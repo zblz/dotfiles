@@ -2,7 +2,7 @@ status -i; or exit
 
 set fish_greeting
 
-set -x ARCHFLAGS "-arch x86_64"
+set -x ARCHFLAGS -arch (uname -m)
 set -x EDITOR nvim
 
 # Python variables
@@ -18,11 +18,12 @@ set -x PIP_NO_ALLOW_INSECURE false
 
 switch (uname)
     case Darwin
-        set -gx VIRTUAL_ENV_DISABLE_PROMPT 1
         fish_add_path /opt/homebrew/bin
         fish_add_path /opt/homebrew/sbin
-        source (pyenv init - | psub)
-        fnm env | source
+        status is-login; and pyenv init --path | source
+        status is-interactive; and pyenv init - | source
+        source (fnm env | psub)
+        source (conda shell.fish hook | grep -v "conda activate base" | psub)
     case '*'
         if test -d /opt/anaconda
             fish_add_path /opt/anaconda/bin
@@ -48,18 +49,17 @@ set -gx LESSOPEN "| highlight %s --out-format xterm256 --line-numbers --quiet --
 set -gx LESS " -R"
 alias less 'less -m -N -g -i -J --line-numbers --underline-special'
 alias more less
-# alias cat "highlight $1 --out-format xterm256 --line-numbers --quiet --force --style zenburn"
 
 # Aliases
-alias vi nvim
-alias vim nvim
-alias lt 'ls -lhtr'
+abbr --add vi nvim
+abbr --add vim nvim
+abbr --add lt 'ls -lhtr'
 
 alias start_conda 'source (conda info --root)/etc/fish/conf.d/conda.fish'
 
 alias tmux 'tmux -2'
 
-alias cdd 'cd ~/.dotfiles'
+abbr --add cdd 'cd ~/.dotfiles'
 
 fish_add_path -a /usr/local/sbin
 # Make sure this has priority over anything else
