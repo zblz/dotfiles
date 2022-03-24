@@ -44,6 +44,14 @@ set -g __fish_git_prompt_showupstream auto
 set -g __fish_git_prompt_describe_style branch
 set -g __fish_git_prompt_showcolorhints true
 
+set -U async_prompt_functions __fish_git_prompt
+set -U async_prompt_inherit_variables \
+        __fish_git_prompt_showupstream \
+        __fish_git_prompt_describe_style \
+        __fish_git_prompt_showcolorhints \
+        __fish_git_prompt_show_informative_status \
+        status SHLVL CMD_DURATION
+
 # Better less
 set -gx LESSOPEN "| highlight %s --out-format xterm256 --line-numbers --quiet --force --style zenburn"
 set -gx LESS " -R"

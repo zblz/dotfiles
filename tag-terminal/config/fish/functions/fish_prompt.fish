@@ -72,9 +72,3 @@ function fish_prompt --description 'Write out the prompt'
 
 	echo -n -s (set_color $fish_color_user) "$USER" $normal @ (set_color $fish_color_host) "$__fish_prompt_hostname" $normal ' ' (set_color $color_cwd) (prompt_pwd) $normal (__fish_git_prompt) $normal $prompt_status "> "
 end
-
-function fish_right_prompt -d "Write out the right prompt"
-    if set -q VIRTUAL_ENV
-		echo -n -s (set_color brblue) "(" (basename "$VIRTUAL_ENV") "|" (python --version | cut -f 2 -d ' ') ")" (set_color normal) " "
-	end
-end
