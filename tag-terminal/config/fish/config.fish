@@ -52,6 +52,7 @@ set -U async_prompt_inherit_variables \
         __fish_git_prompt_show_informative_status \
         VIRTUAL_ENV \
         CONDA_DEFAULT_ENV \
+        PATH \
         status SHLVL CMD_DURATION
 
 # Better less
