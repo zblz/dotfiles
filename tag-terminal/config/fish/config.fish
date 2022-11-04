@@ -24,6 +24,7 @@ switch (uname)
         status is-interactive; and pyenv init - | source
         source (fnm env | psub)
         source (conda shell.fish hook | grep -v "conda activate base" | psub)
+        fish_add_path -a /opt/homebrew/Caskroom/miniforge/base/bin
     case '*'
         if test -d /opt/anaconda
             fish_add_path /opt/anaconda/bin
@@ -65,12 +66,9 @@ alias more less
 abbr --add vi nvim
 abbr --add vim nvim
 abbr --add lt 'ls -lhtr'
+abbr --add cdd 'cd ~/.dotfiles'
 
 alias start_conda 'source (conda info --root)/etc/fish/conf.d/conda.fish'
-
-alias tmux 'tmux -2'
-
-abbr --add cdd 'cd ~/.dotfiles'
 
 fish_add_path -a /usr/local/sbin
 # Make sure this has priority over anything else
