@@ -45,8 +45,10 @@ require('packer').startup(function()
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use 'saadparwaiz1/cmp_luasnip'
   use 'onsails/lspkind-nvim'
+  use 'petertriho/cmp-git'
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
   use 'vimwiki/vimwiki'
   use 'ElPiloto/telescope-vimwiki.nvim'
@@ -275,11 +277,10 @@ local on_attach = function(_, bufnr)
 end
 
 -- nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Enable the following language servers
-local servers = { 'pyright', 'metals', 'yamlls' }
+local servers = { 'pyright', 'metals', 'yamlls', 'sumneko_lua'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -288,10 +289,9 @@ for _, lsp in ipairs(servers) do
 end
 
 -- Configure pyright to use virtualenvs (see
--- https://github.com/neovim/nvim-lspconfig/issues/500#issuecomment-876700701)
-local util = require('lspconfig/util')
-
-local path = util.path
+-- https://github.com/neovim/nvim-lspconfig/issues/500#issuecomment-876700701
+-- )
+local path = require('lspconfig/util').path
 
 local function get_python_path(workspace)
   -- Use activated virtualenv.
@@ -320,15 +320,14 @@ local function get_python_path(workspace)
   return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
 end
 
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
 -- luasnip setup
 local luasnip = require 'luasnip'
 
 -- nvim-cmp setup
+vim.o.completeopt = 'menu,menuone,noselect'
+
 local cmp = require 'cmp'
-cmp.setup {
+cmp.setup({
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
@@ -353,10 +352,7 @@ cmp.setup {
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
+    ['<CR>'] = cmp.mapping.confirm { select = true },
     ['<Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -376,13 +372,27 @@ cmp.setup {
       end
     end,
   },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+  sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+      { name = 'nvim_lsp_signature_help' },
+  }, {
+      { name = 'buffer' },
+      { name = 'path' },
+  })
+})
+
+-- Set configuration for specific types
+cmp.setup.filetype('gitcommit', {
+  sources = cmp.config.sources({
+    { name = 'cmp_git' },
+  }, {
     { name = 'buffer' },
-    { name = 'path' },
-  },
-}
+  })
+})
+
+-- LSP format
+vim.cmd([[command Format :lua require("utils").lsp_format({force = true})]])
 
 -- python config
 vim.cmd [[
