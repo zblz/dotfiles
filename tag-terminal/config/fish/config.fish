@@ -4,6 +4,7 @@ set fish_greeting
 
 set -x ARCHFLAGS -arch (uname -m)
 set -x EDITOR nvim
+set -x DOCKER_DEFAULT_PLATFORM linux/amd64
 
 # Python variables
 
