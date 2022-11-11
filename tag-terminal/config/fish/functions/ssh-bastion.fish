@@ -13,5 +13,5 @@ function ssh-bastion
     | contains( {"Key": "Name", "Value": "sherlockml-bastion"})) | .InstanceId')
     echo "Using \"$profile\" AWS profile to connect to EC2 instance ID: \"$instanceId\""
 
-    mssh --profile $profile kops@$instanceId
+    env TERM=xterm-256color mssh --profile $profile kops@$instanceId
 end
