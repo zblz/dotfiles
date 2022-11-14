@@ -56,7 +56,7 @@ myPP = xmobarPP {
       hideScratchpad ws = if ws == "NSP" then "" else  ws
 
 main = do
-  spawn "xmobar /home/vzabalza/.xmonad/xmobar"
+  spawn "xmobar /home/victor/.xmonad/xmobar"
   xmonad $ ewmhFullscreen $ ewmh $ docks $ conf {
     logHook = dynamicLogString myPP >>= xmonadPropLog
   }
@@ -167,6 +167,7 @@ myKeys conf@(XConfig {modMask = modm}) =
          , ((modm, xK_g), goToSelected gsconfig1)
          -- Volum
          , ((0, xF86XK_AudioMute ), spawn "pactl set-sink-mute 0 toggle")
+         , ((0, xF86XK_AudioMicMute ), spawn "pactl set-source-mute 1 toggle")
          , ((0, xF86XK_AudioLowerVolume ), spawn "pavol -5%")
          , ((0, xF86XK_AudioRaiseVolume ), spawn "pavol +5%")
          , ((modm, xK_Page_Up ), spawn  "pavol +5%")
@@ -178,14 +179,14 @@ myKeys conf@(XConfig {modMask = modm}) =
          , ((modm .|. shiftMask, xK_y   ), namedScratchpadAction scratchpads "ipython")
          , ((modm .|. shiftMask, xK_m   ), namedScratchpadAction scratchpads "ncmpcpp")
          -- toggle display outputs
-         , ((0, xF86XK_Display ), spawn "/home/vzabalza/.local/bin/thinkpad-fn-f7 toggle")
-         , ((modm, xK_F7 ), spawn "/home/vzabalza/.local/bin/thinkpad-fn-f7 toggle")
+         , ((0, xF86XK_Display ), spawn "/home/victor/.local/bin/thinkpad-fn-f7 toggle")
+         , ((modm, xK_F7 ), spawn "/home/victor/.local/bin/thinkpad-fn-f7 toggle")
          -- Xscreensaver
          , ((0, xK_Pause  ), spawn "xscreensaver-command -lock")
          , ((0, xF86XK_ScreenSaver ), spawn "xscreensaver-command -lock")
          -- Suspend
          , ((0, 0x1008ffa7), spawn "systemctl hibernate")
-         , ((modm .|. shiftMask, xK_t), spawn "/home/vzabalza/.local/bin/trayer-xmonad" )
+         , ((modm .|. shiftMask, xK_t), spawn "/home/victor/.local/bin/trayer-xmonad" )
          -- TLP full charge
          , ((0, xF86XK_Launch1 ), spawn "sudo tlp fullcharge")
          -- Varis
@@ -199,10 +200,11 @@ myKeys conf@(XConfig {modMask = modm}) =
         {-shutdownHook = spawn "pkill -TERM -P `pgrep -o xmonad`"-}
 
 internetMap = M.fromList $
-               [ ((0, xK_f), spawn "firefox" )
-               , ((0, xK_r), spawn "firefox --new-window http://cloud.feedly.com" )
-               , ((0, xK_g), spawn "firefox --new-window http://mail.google.com/mail" )
-               , ((0, xK_p), spawn "firefox --private-window" )
+               [ ((0, xK_f), spawn "firefox -P personal" )
+               , ((0, xK_r), spawn "firefox -P personal --new-window http://cloud.feedly.com" )
+               , ((0, xK_g), spawn "firefox -P personal --new-window http://mail.google.com/mail" )
+               , ((0, xK_p), spawn "firefox -P personal --private-window" )
+               , ((0, xK_w), spawn "firefox -P work" )
                , ((0, xK_y), spawn "skypeforlinux" )
                , ((0, xK_b), spawn "deluge-gtk" )
                , ((0, xK_t), spawn "ferdi" )

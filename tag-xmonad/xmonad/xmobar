@@ -13,7 +13,7 @@ Config { font = "xft:DejaVu Sans Mono:size=9"
                     , Run Battery [] 250
                     , Run Date "%d/%m/%y %H:%M" "mydate" 100
                     , Run XMonadLog
-                    ,  Run Network "wlan0" ["-L","0","-H","100","--normal","green","--high","red","-w","4"] 25
+                    , Run DynNetwork ["-L","0","-H","100","--normal","green","--high","red","-w","4"] 10
                     ]
-       , template = "%XMonadLog% }{ %multicpu% | %memory% | %battery% | %wlan0% | <fc=#ee9a00>%mydate%</fc> "
+       , template = "%XMonadLog% }{ %multicpu% | %memory% | %battery% | %dynnetwork% | <fc=#ee9a00>%mydate%</fc> "
        }
