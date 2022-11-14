@@ -19,8 +19,12 @@ local use = require('packer').use
 require('packer').startup(function()
         use 'wbthomason/packer.nvim' -- Package manager
         use 'tpope/vim-fugitive' -- Git commands in nvim
-        use 'tpope/vim-rhubarb' -- Fugitive-companion to interact with github
-        use 'tpope/vim-commentary' -- "gc" to comment visual regions/lines
+        use {
+                'numToStr/comment.nvim',
+                config = function()
+                        require('Comment').setup()
+                end
+        }
         use 'srstevenson/vim-topiary' -- trim whitespace
         use 'h3xx/vim-shitespace' -- show shitespace
         use 'sbdchd/neoformat'
