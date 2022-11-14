@@ -8,5 +8,5 @@ partial alphanumeric_keys xkb_symbols "updn" {
     replace key <I166> { [      Prior ] };
     replace key <I167> { [       Next ] };
     // Avoid double suspend by avoiding xkb XF86Suspend
-    replace key <I213> { [ VoidSymbol ] };
+    // replace key <I213> { [ VoidSymbol ] };
 };

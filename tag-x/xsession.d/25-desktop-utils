@@ -1,2 +1,2 @@
-/usr/local/bin/dunst &
+dunst &
 $HOME/.local/bin/trayer-xmonad &
