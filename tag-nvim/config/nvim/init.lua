@@ -317,7 +317,7 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Enable the following language servers
-local servers = { 'pyright', 'metals', 'yamlls', 'sumneko_lua' }
+local servers = { 'pyright', 'metals', 'yamlls', 'sumneko_lua', 'bashls' }
 for _, lsp in ipairs(servers) do
         nvim_lsp[lsp].setup {
                 on_attach = on_attach,
