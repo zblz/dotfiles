@@ -56,6 +56,7 @@ require('packer').startup(function()
         use 'L3MON4D3/LuaSnip' -- Snippets plugin
         use 'vimwiki/vimwiki'
         use 'ElPiloto/telescope-vimwiki.nvim'
+        use 'ojroques/vim-oscyank' -- yank through SSH
 end)
 
 vim.o.breakindent = true --Enable break indent
