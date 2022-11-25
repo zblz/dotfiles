@@ -38,7 +38,7 @@ require('packer').startup(function()
         -- Add git related info in the signs columns and popups
         use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
         -- Highlight, edit, and navigate code using a fast incremental parsing library
-        use 'nvim-treesitter/nvim-treesitter'
+        use { 'nvim-treesitter/nvim-treesitter', run=':TSUpdate' }
         -- Additional textobjects for treesitter
         use 'nvim-treesitter/nvim-treesitter-textobjects'
         use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
@@ -57,6 +57,13 @@ require('packer').startup(function()
         use 'vimwiki/vimwiki'
         use 'ElPiloto/telescope-vimwiki.nvim'
         use 'ojroques/vim-oscyank' -- yank through SSH
+        use {
+                "rest-nvim/rest.nvim",
+                requires = { "nvim-lua/plenary.nvim" },
+                config = function()
+                        require("rest-nvim").setup()
+                end
+        }
 end)
 
 vim.o.breakindent = true --Enable break indent
@@ -232,12 +239,25 @@ vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
         { silent = true, noremap = true }
 )
 
+vim.keymap.set("n", "<leader>rr", "<Plug>RestNvim<cr>",
+        { silent = true, noremap = true }
+)
+vim.keymap.set("n", "<leader>rl", "<Plug>RestNvimLast<cr>",
+        { silent = true, noremap = true }
+)
+vim.keymap.set("n", "<leader>rp", "<Plug>RestNvimPreview<cr>",
+        { silent = true, noremap = true }
+)
+
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall
 require('nvim-treesitter.configs').setup {
         highlight = {
                 enable = true, -- false will disable the whole extension
         },
+        ensure_installed = { "fish", "bash", "python", "scala", "dockerfile", "json", "http", "lua" },
+        auto_install = true,
+        additional_vim_regex_highlighting = true,
         incremental_selection = {
                 enable = true,
                 keymaps = {
