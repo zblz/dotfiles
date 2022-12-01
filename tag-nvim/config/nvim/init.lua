@@ -18,7 +18,11 @@ vim.api.nvim_exec(
 local use = require('packer').use
 require('packer').startup(function()
         use 'wbthomason/packer.nvim' -- Package manager
-        use 'tpope/vim-fugitive' -- Git commands in nvim
+        -- git tools
+        use 'tpope/vim-fugitive'
+        use 'lewis6991/gitsigns.nvim'
+        use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+        -- comment, linting, formatting
         use {
                 'numToStr/comment.nvim',
                 config = function()
@@ -35,12 +39,10 @@ require('packer').startup(function()
         use 'nvim-lualine/lualine.nvim'
         -- Add indentation guides even on blank lines
         use 'lukas-reineke/indent-blankline.nvim'
-        -- Add git related info in the signs columns and popups
-        use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
         -- Highlight, edit, and navigate code using a fast incremental parsing library
         use { 'nvim-treesitter/nvim-treesitter', run=':TSUpdate' }
-        -- Additional textobjects for treesitter
         use 'nvim-treesitter/nvim-treesitter-textobjects'
+        -- LSP and autocomplete
         use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
         use { 'folke/trouble.nvim', requires = { 'nvim-tree/nvim-web-devicons' } }
         use 'folke/lsp-colors.nvim'
@@ -50,10 +52,10 @@ require('packer').startup(function()
         use 'hrsh7th/cmp-path'
         use 'hrsh7th/cmp-cmdline'
         use 'hrsh7th/cmp-nvim-lsp-signature-help'
-        use 'saadparwaiz1/cmp_luasnip'
         use 'onsails/lspkind-nvim'
         use 'petertriho/cmp-git'
         use 'L3MON4D3/LuaSnip' -- Snippets plugin
+        -- vimwiki
         use 'vimwiki/vimwiki'
         use 'ElPiloto/telescope-vimwiki.nvim'
         use 'ojroques/vim-oscyank' -- yank through SSH
@@ -165,17 +167,6 @@ vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 vim.g.indent_blankline_char_highlight = 'LineNr'
 vim.g.indent_blankline_show_trailing_blankline_indent = false
-
--- Gitsigns
-require('gitsigns').setup {
-        signs = {
-                add = { hl = 'GitGutterAdd', text = '+' },
-                change = { hl = 'GitGutterChange', text = '~' },
-                delete = { hl = 'GitGutterDelete', text = '_' },
-                topdelete = { hl = 'GitGutterDelete', text = '‾' },
-                changedelete = { hl = 'GitGutterChange', text = '~' },
-        },
-}
 
 -- Telescope
 require('telescope').setup {
@@ -500,3 +491,48 @@ vim.api.nvim_set_keymap('n', '<leader>f', ":Neoformat<CR>", { noremap = true })
 vim.g.neoformat_enabled_python = { 'isort', 'black' }
 vim.g.neoformat_run_all_formatters = true
 vim.g.neoformat_only_msg_on_error = true
+
+-- git tools setup
+vim.api.nvim_set_keymap('n', '<leader>do', [[<cmd>DiffviewOpen<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dc', [[<cmd>DiffviewClose<CR>]], { noremap = true, silent = true })
+
+require('gitsigns').setup {
+        on_attach = function(bufnr)
+                local gs = package.loaded.gitsigns
+
+                local function map(mode, l, r, opts)
+                        opts = opts or {}
+                        opts.buffer = bufnr
+                        vim.keymap.set(mode, l, r, opts)
+                end
+
+                -- Navigation
+                map('n', ']c', function()
+                        if vim.wo.diff then return ']c' end
+                        vim.schedule(function() gs.next_hunk() end)
+                        return '<Ignore>'
+                end, { expr = true })
+
+                map('n', '[c', function()
+                        if vim.wo.diff then return '[c' end
+                        vim.schedule(function() gs.prev_hunk() end)
+                        return '<Ignore>'
+                end, { expr = true })
+
+                -- Actions
+                map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+                map({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+                map('n', '<leader>hS', gs.stage_buffer)
+                map('n', '<leader>hu', gs.undo_stage_hunk)
+                map('n', '<leader>hR', gs.reset_buffer)
+                map('n', '<leader>hp', gs.preview_hunk)
+                map('n', '<leader>hb', function() gs.blame_line { full = true } end)
+                map('n', '<leader>tb', gs.toggle_current_line_blame)
+                map('n', '<leader>hd', gs.diffthis)
+                map('n', '<leader>hD', function() gs.diffthis('~') end)
+                map('n', '<leader>td', gs.toggle_deleted)
+
+                -- Text object
+                map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+        end
+}
