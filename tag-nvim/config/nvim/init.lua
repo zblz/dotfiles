@@ -241,12 +241,18 @@ vim.keymap.set("n", "<leader>rp", "<Plug>RestNvimPreview<cr>",
 )
 
 -- Treesitter configuration
--- Parsers must be installed manually via :TSInstall
 require('nvim-treesitter.configs').setup {
         highlight = {
                 enable = true, -- false will disable the whole extension
         },
-        ensure_installed = { "fish", "bash", "python", "scala", "dockerfile", "json", "http", "lua" },
+        ensure_installed = {
+                "fish",
+                "bash",
+                "python",
+                "gitcommit",
+                "json",
+                "http",
+        },
         auto_install = true,
         additional_vim_regex_highlighting = true,
         incremental_selection = {
@@ -296,6 +302,7 @@ require('nvim-treesitter.configs').setup {
                 },
         },
 }
+vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- LSP settings
 local nvim_lsp = require 'lspconfig'
