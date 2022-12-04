@@ -181,9 +181,9 @@ myKeys conf@(XConfig {modMask = modm}) =
          -- toggle display outputs
          , ((0, xF86XK_Display ), spawn "/home/victor/.local/bin/thinkpad-fn-f7 toggle")
          , ((modm, xK_F7 ), spawn "/home/victor/.local/bin/thinkpad-fn-f7 toggle")
-         -- Xscreensaver
-         , ((0, xK_Pause  ), spawn "xscreensaver-command -lock")
-         , ((0, xF86XK_ScreenSaver ), spawn "xscreensaver-command -lock")
+         -- screensaver
+         , ((0, xK_Pause  ), spawn "xfce4-screensaver-command --lock")
+         , ((0, xF86XK_ScreenSaver ), spawn "xfce4-screensaver-command --lock")
          -- Suspend
          , ((0, 0x1008ffa7), spawn "systemctl hibernate")
          , ((modm .|. shiftMask, xK_t), spawn "/home/victor/.local/bin/trayer-xmonad" )

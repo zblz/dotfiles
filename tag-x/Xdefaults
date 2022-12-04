@@ -65,26 +65,3 @@ xpdf*background:        #e4e4e4
 xpdf*urlCommand:        xdg-open %s
 xpdf*initialZoom:       width
 xpdf*continuousView:    true
-
-!! xscreensaver
-xscreensaver.splash: false
-! -- font settings -- !
-!general dialog box (affects main hostname, username, password text)
-xscreensaver.Dialog.foreground:         COLOR_FG
-xscreensaver.Dialog.background:         COLOR_BG
-xscreensaver.Dialog.topShadowColor:     COLOR_BG
-xscreensaver.Dialog.bottomShadowColor:  COLOR_BG
-xscreensaver.Dialog.Button.foreground:  COLOR_FG
-xscreensaver.Dialog.Button.background:  #505050
-!username/password input box and date text colour
-xscreensaver.Dialog.text.foreground:    COLOR_FG
-xscreensaver.Dialog.text.background:    #505050
-xscreensaver.Dialog.internalBorderWidth:25
-xscreensaver.Dialog.borderWidth:        0
-xscreensaver.Dialog.shadowThickness:    0
-!timeout bar (background is actually determined by Dialog.text.background)
-xscreensaver.passwd.thermometer.foreground:  COLOR_TERM_DARK_GREEN
-xscreensaver.passwd.thermometer.background:  COLOR_BG
-xscreensaver.passwd.thermometer.width:       8
-!datestamp format--see the strftime(3) manual page for details
-xscreensaver.dateFormat:    %H:%M %a %b %d, %Y
