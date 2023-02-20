@@ -1,4 +1,5 @@
-Config { font = "xft:DejaVu Sans Mono:size=9"
+Config { font = "JetBrains Mono"
+       , dpi = 80
        , bgColor = "#3f3f3f"
        , fgColor = "#dcdccc"
        , alpha = 255

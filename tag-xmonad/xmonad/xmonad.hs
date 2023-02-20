@@ -181,6 +181,8 @@ myKeys conf@(XConfig {modMask = modm}) =
          -- toggle display outputs
          , ((0, xF86XK_Display ), spawn "/home/victor/.local/bin/thinkpad-fn-f7 toggle")
          , ((modm, xK_F7 ), spawn "/home/victor/.local/bin/thinkpad-fn-f7 toggle")
+         , ((0, xF86XK_MonBrightnessDown ), spawn "xbacklight -dec 5")
+         , ((0, xF86XK_MonBrightnessUp ), spawn "xbacklight -inc 5")
          -- screensaver
          , ((0, xK_Pause  ), spawn "xfce4-screensaver-command --lock")
          , ((0, xF86XK_ScreenSaver ), spawn "xfce4-screensaver-command --lock")
@@ -207,7 +209,7 @@ internetMap = M.fromList $
                , ((0, xK_w), spawn "firefox -P work" )
                , ((0, xK_y), spawn "skypeforlinux" )
                , ((0, xK_b), spawn "deluge-gtk" )
-               , ((0, xK_t), spawn "ferdi" )
+               , ((0, xK_t), spawn "ferdium" )
                , ((0, xK_c), spawn "chromium" )
                ]
 
