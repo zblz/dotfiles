@@ -11,7 +11,7 @@ vim.api.nvim_exec(
     autocmd!
     autocmd BufWritePost init.lua PackerCompile
   augroup end
-]]       ,
+]],
         false
 )
 
@@ -30,7 +30,7 @@ require('packer').startup(function()
                 end
         }
         use 'srstevenson/vim-topiary' -- trim whitespace
-        use 'h3xx/vim-shitespace' -- show shitespace
+        use 'h3xx/vim-shitespace'     -- show shitespace
         use 'sbdchd/neoformat'
         -- UI to select things (files, grep results, open buffers...)
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
@@ -40,7 +40,7 @@ require('packer').startup(function()
         -- Add indentation guides even on blank lines
         use 'lukas-reineke/indent-blankline.nvim'
         -- Highlight, edit, and navigate code using a fast incremental parsing library
-        use { 'nvim-treesitter/nvim-treesitter', run=':TSUpdate' }
+        use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
         use 'nvim-treesitter/nvim-treesitter-textobjects'
         -- LSP and autocomplete
         use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
@@ -55,6 +55,23 @@ require('packer').startup(function()
         use 'onsails/lspkind-nvim'
         use 'petertriho/cmp-git'
         use 'L3MON4D3/LuaSnip' -- Snippets plugin
+        -- copilot
+        -- use 'github/copilot.vim'
+        use {
+                "zbirenbaum/copilot.lua",
+                cmd = "Copilot",
+                event = "InsertEnter",
+                config = function()
+                        require("copilot").setup({})
+                end,
+        }
+        use {
+                "zbirenbaum/copilot-cmp",
+                after = { "copilot.lua" },
+                config = function()
+                        require("copilot_cmp").setup()
+                end
+        }
         -- vimwiki
         use 'vimwiki/vimwiki'
         use 'ElPiloto/telescope-vimwiki.nvim'
@@ -74,8 +91,8 @@ vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.ignorecase = true --Case insensitive searching UNLESS /C or capital in search
-vim.o.mouse = 'a' --Enable mouse mode
-vim.o.number = true --Make line numbers default
+vim.o.mouse = 'a'       --Enable mouse mode
+vim.o.number = true     --Make line numbers default
 vim.o.relativenumber = true
 vim.o.smartcase = true
 vim.o.spelllang = 'en_gb'
@@ -157,7 +174,7 @@ vim.api.nvim_exec(
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
   augroup end
-]]       ,
+]],
         false
 )
 
@@ -337,13 +354,22 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Enable the following language servers
-local servers = { 'pyright', 'metals', 'yamlls', 'lua_ls', 'bashls' }
+local servers = { 'pyright', 'metals', 'lua_ls', 'bashls', 'jsonls' }
 for _, lsp in ipairs(servers) do
         nvim_lsp[lsp].setup {
                 on_attach = on_attach,
                 capabilities = capabilities,
         }
 end
+nvim_lsp.yamlls.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+                yaml = {
+                        keyOrdering = false
+                }
+        }
+})
 
 -- Configure pyright to use virtualenvs (see
 -- https://github.com/neovim/nvim-lspconfig/issues/500#issuecomment-876700701
@@ -383,6 +409,12 @@ local luasnip = require 'luasnip'
 -- nvim-cmp setup
 vim.o.completeopt = 'menu,menuone,noselect'
 
+local has_words_before = function()
+        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+end
+
 local cmp = require 'cmp'
 cmp.setup({
         snippet = {
@@ -392,14 +424,8 @@ cmp.setup({
         },
         formatting = {
                 format = require('lspkind').cmp_format({
-                        with_text = true,
-                        menu = ({
-                                buffer = "[Buffer]",
-                                nvim_lsp = "[LSP]",
-                                luasnip = "[LuaSnip]",
-                                nvim_lua = "[Lua]",
-                                latex_symbols = "[Latex]",
-                        })
+                        mode = "symbol",
+                        symbol_map = { Copilot = "" },
                 })
         },
         mapping = {
@@ -411,8 +437,8 @@ cmp.setup({
                 ['<C-e>'] = cmp.mapping.close(),
                 ['<CR>'] = cmp.mapping.confirm { select = true },
                 ['<Tab>'] = function(fallback)
-                        if cmp.visible() then
-                                cmp.select_next_item()
+                        if cmp.visible() and has_words_before() then
+                                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
                         elseif luasnip.expand_or_jumpable() then
                                 luasnip.expand_or_jump()
                         else
@@ -430,6 +456,7 @@ cmp.setup({
                 end,
         },
         sources = cmp.config.sources({
+                { name = 'copilot' },
                 { name = 'nvim_lsp' },
                 { name = 'luasnip' },
                 { name = 'nvim_lsp_signature_help' },
