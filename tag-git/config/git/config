@@ -1,13 +1,15 @@
 [user]
-    name = Víctor Zabalza
-    email = vzabalza@gmail.com
+  name = Víctor Zabalza
+  email = vzabalza@gmail.com
+  signingkey = ~/.ssh/id_ed25519
 [push]
-    default = simple
-    followTags = true
-    autoSetupRemote = true
+  default = simple
+  followTags = true
+  autoSetupRemote = true
 
 [commit]
   verbose = true
+  gpgsign = true
 [merge]
   tool = nvimdiff
 [mergetool]
@@ -19,64 +21,66 @@
   colorMoved = true
 
 [help]
-    autocorrect = 1
+  autocorrect = 1
 [alias]
-    last = log -1 HEAD
-    visual = !gitg
-    latexdiff = !scm-latexdiff
-    g = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    gs = g --simplify-by-decoration
+  last = log -1 HEAD
+  visual = !gitg
+  latexdiff = !scm-latexdiff
+  g = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  gs = g --simplify-by-decoration
 
-    # one-line log
-    l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+  # one-line log
+  l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
 
-    a = add
-    ap = add -p
-    c = commit --verbose
-    ca = commit -a --verbose
-    cm = commit -m
-    cam = commit -a -m
-    m = commit --amend --verbose
+  a = add
+  ap = add -p
+  c = commit --verbose
+  ca = commit -a --verbose
+  cm = commit -m
+  cam = commit -a -m
+  m = commit --amend --verbose
 
-    puo = push -u origin
+  puo = push -u origin
 
-    d = diff
-    ds = diff --stat
-    dc = diff --cached
+  d = diff
+  ds = diff --stat
+  dc = diff --cached
 
-    s = status -s
-    co = checkout
-    cob = checkout -b
-    # list branches sorted by last modified
-    b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+  s = status -s
+  co = checkout
+  cob = checkout -b
+  # list branches sorted by last modified
+  b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
 
-    # list aliases
-    la = "!git config -l | grep alias | cut -c 7-"
+  # list aliases
+  la = "!git config -l | grep alias | cut -c 7-"
 
 [http]
-    postBuffer = 524288000
+  postBuffer = 524288000
 
 [url "git@github.com:"]
-    insteadOf = gh:
+  insteadOf = gh:
 
 [url "git@bitbucket.org:"]
-    insteadOf = bb:
+  insteadOf = bb:
 
 [url "https://gist.github.com/"]
-    insteadOf = gist:
+  insteadOf = gist:
 
 [diff "jupyternotebook"]
-    command = git-nbdiffdriver diff
+  command = git-nbdiffdriver diff
 
 [merge "jupyternotebook"]
-    driver = git-nbmergedriver merge %O %A %B %L %P
-    name = jupyter notebook merge driver
+  driver = git-nbmergedriver merge %O %A %B %L %P
+  name = jupyter notebook merge driver
 [core]
-    excludesfile = ~/.config/git/ignore
+  excludesfile = ~/.config/git/ignore
 [pull]
-	rebase = true
+  rebase = true
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[gpg]
+  format = ssh
