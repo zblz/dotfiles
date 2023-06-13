@@ -1,9 +1,16 @@
 -- Install packer
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-        vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+local ensure_packer = function()
+        local fn = vim.fn
+        local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+        if fn.empty(fn.glob(install_path)) > 0 then
+                fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+                vim.cmd [[packadd packer.nvim]]
+                return true
+        end
+        return false
 end
+
+local packer_bootstrap = ensure_packer()
 
 vim.api.nvim_exec(
         [[
@@ -31,7 +38,6 @@ require('packer').startup(function()
         }
         use 'srstevenson/vim-topiary' -- trim whitespace
         use 'h3xx/vim-shitespace'     -- show shitespace
-        use 'sbdchd/neoformat'
         -- UI to select things (files, grep results, open buffers...)
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
         use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
@@ -44,6 +50,10 @@ require('packer').startup(function()
         use 'nvim-treesitter/nvim-treesitter-textobjects'
         -- LSP and autocomplete
         use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+        use {
+                "jose-elias-alvarez/null-ls.nvim",
+                requires = { "nvim-lua/plenary.nvim" },
+        }
         use { 'folke/trouble.nvim', requires = { 'nvim-tree/nvim-web-devicons' } }
         use 'folke/lsp-colors.nvim'
         use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
@@ -52,8 +62,9 @@ require('packer').startup(function()
         use 'hrsh7th/cmp-path'
         use 'hrsh7th/cmp-cmdline'
         use 'hrsh7th/cmp-nvim-lsp-signature-help'
-        use 'onsails/lspkind-nvim'
+        use 'ray-x/cmp-treesitter'
         use 'petertriho/cmp-git'
+        use 'onsails/lspkind-nvim'
         use 'L3MON4D3/LuaSnip' -- Snippets plugin
         -- copilot
         -- use 'github/copilot.vim'
@@ -83,6 +94,10 @@ require('packer').startup(function()
                         require("rest-nvim").setup()
                 end
         }
+        -- Automatically set up your configuration after cloning packer.nvim
+        if packer_bootstrap then
+                require('packer').sync()
+        end
 end)
 
 vim.o.breakindent = true --Enable break indent
@@ -354,13 +369,14 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Enable the following language servers
-local servers = { 'pyright', 'metals', 'lua_ls', 'bashls', 'jsonls' }
+local servers = { 'pyright', 'metals', 'bashls', 'jsonls' }
 for _, lsp in ipairs(servers) do
         nvim_lsp[lsp].setup {
                 on_attach = on_attach,
                 capabilities = capabilities,
         }
 end
+
 nvim_lsp.yamlls.setup({
         on_attach = on_attach,
         capabilities = capabilities,
@@ -369,6 +385,51 @@ nvim_lsp.yamlls.setup({
                         keyOrdering = false
                 }
         }
+})
+
+nvim_lsp.lua_ls.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+                Lua = {
+                        runtime = {
+                                -- Tell the language server which version of Lua you're using
+                                -- (most likely LuaJIT in the case of Neovim)
+                                version = 'LuaJIT',
+                        },
+                        diagnostics = {
+                                -- Get the language server to recognize the `vim` global
+                                globals = {
+                                        'vim',
+                                        'require'
+                                },
+                        },
+                        workspace = {
+                                -- Make the server aware of Neovim runtime files
+                                library = vim.api.nvim_get_runtime_file("", true),
+                        },
+                },
+        },
+}
+
+nvim_lsp.util.default_config = vim.tbl_deep_extend('force', nvim_lsp.util.default_config, {
+        capabilities = capabilities,
+})
+
+local null_ls = require('null-ls')
+null_ls.setup({
+        sources = {
+                null_ls.builtins.code_actions.refactoring,
+                null_ls.builtins.completion.spell,
+                null_ls.builtins.diagnostics.eslint,
+                null_ls.builtins.diagnostics.mypy,
+                null_ls.builtins.diagnostics.ruff,
+                null_ls.builtins.formatting.black,
+                null_ls.builtins.formatting.isort,
+                null_ls.builtins.formatting.jq,
+                null_ls.builtins.formatting.mdformat,
+                -- null_ls.builtins.formatting.yq, -- converts to JSON :(
+        },
 })
 
 -- Configure pyright to use virtualenvs (see
@@ -407,7 +468,7 @@ end
 local luasnip = require 'luasnip'
 
 -- nvim-cmp setup
-vim.o.completeopt = 'menu,menuone,noselect'
+vim.o.completeopt = 'menu,menuone,noselect,preview'
 
 local has_words_before = function()
         if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
@@ -435,7 +496,19 @@ cmp.setup({
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.close(),
-                ['<CR>'] = cmp.mapping.confirm { select = true },
+                -- ['<CR>'] = cmp.mapping.confirm { select = true },
+                -- only select completion if it has been selected
+                ['<CR>'] = cmp.mapping({
+                        i = function(fallback)
+                                if cmp.visible() and cmp.get_active_entry() then
+                                        cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                                else
+                                        fallback()
+                                end
+                        end,
+                        s = cmp.mapping.confirm({ select = true }),
+                        c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+                }),
                 ['<Tab>'] = function(fallback)
                         if cmp.visible() and has_words_before() then
                                 cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
@@ -456,11 +529,13 @@ cmp.setup({
                 end,
         },
         sources = cmp.config.sources({
-                { name = 'copilot' },
                 { name = 'nvim_lsp' },
+                { name = 'copilot' },
                 { name = 'luasnip' },
                 { name = 'nvim_lsp_signature_help' },
+                { name = 'treesitter' },
         }, {
+                { name = 'cmdline' },
                 { name = 'buffer' },
                 { name = 'path' },
         })
@@ -469,10 +544,30 @@ cmp.setup({
 -- Set configuration for specific types
 cmp.setup.filetype('gitcommit', {
         sources = cmp.config.sources({
-                { name = 'cmp_git' },
+                { name = 'git' },
         }, {
                 { name = 'buffer' },
         })
+})
+-- Use cmdline & path source for ':'
+cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        completion = { autocomplete = false },
+        sources = cmp.config.sources({
+                { name = 'path' }
+        }, {
+                {
+                        name = 'cmdline',
+                }
+        })
+})
+-- Use buffer source for `/` and `?`
+cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        completion = { autocomplete = false },
+        sources = {
+                { name = 'buffer' }
+        }
 })
 
 -- python config
@@ -519,12 +614,6 @@ au FileType vimwiki
 	\ set shiftwidth=2 |
 	\ set softtabstop=2
 ]]
-
--- neoformat setup
-vim.api.nvim_set_keymap('n', '<leader>f', ":Neoformat<CR>", { noremap = true })
-vim.g.neoformat_enabled_python = { 'isort', 'black' }
-vim.g.neoformat_run_all_formatters = true
-vim.g.neoformat_only_msg_on_error = true
 
 -- git tools setup
 vim.api.nvim_set_keymap('n', '<leader>do', [[<cmd>DiffviewOpen<CR>]], { noremap = true, silent = true })
