@@ -596,6 +596,10 @@ au FileType python map <silent> <leader>b oimport pdb; pdb.set_trace()<esc>
 " Display tabs and trailing space in Python mode as bad.
 au FileType python match BadWhitespace /^\t\+/
 au FileType python match BadWhitespace /\s\+$/
+
+au FileType json
+    \ set tabstop=2 |
+    \ set softtabstop=2
 ]]
 
 --YAML config
