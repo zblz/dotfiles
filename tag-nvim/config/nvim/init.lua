@@ -39,7 +39,7 @@ require('packer').startup(function()
         use 'srstevenson/vim-topiary' -- trim whitespace
         use 'h3xx/vim-shitespace'     -- show shitespace
         -- UI to select things (files, grep results, open buffers...)
-        use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+        use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
         use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
         use 'sainnhe/gruvbox-material'
         use 'nvim-lualine/lualine.nvim'
