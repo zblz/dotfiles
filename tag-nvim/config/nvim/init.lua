@@ -27,7 +27,7 @@ require('packer').startup(function()
         use 'wbthomason/packer.nvim' -- Package manager
         -- git tools
         use 'tpope/vim-fugitive'
-        use 'lewis6991/gitsigns.nvim'
+        use { 'lewis6991/gitsigns.nvim', tag = 'v0.6' }
         use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
         -- comment, linting, formatting
         use {
@@ -181,6 +181,12 @@ vim.api.nvim_set_keymap('v', '<Space>', 'zf', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>q', 'gqip', { noremap = true, silent = true })
 --new tab
 vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true, silent = true })
+
+-- Sensible window movement
+vim.api.nvim_set_keymap('n', '<c-h>', '<c-w>h', { silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', '<c-j>', '<c-w>j', { silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', '<c-k>', '<c-w>k', { silent = true, noremap = true })
+vim.api.nvim_set_keymap('n', '<c-l>', '<c-w>l', { silent = true, noremap = true })
 
 -- Highlight on yank
 vim.api.nvim_exec(
