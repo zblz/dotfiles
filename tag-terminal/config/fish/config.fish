@@ -70,6 +70,7 @@ abbr --add lt 'ls -lhtr'
 abbr --add cdd 'cd ~/.dotfiles'
 
 alias start_conda 'source (conda info --root)/etc/fish/conf.d/conda.fish'
+alias activate-poetry-venv 'source (poetry env info --path)/bin/activate.fish'
 
 fish_add_path -a /usr/local/sbin
 # Make sure this has priority over anything else
