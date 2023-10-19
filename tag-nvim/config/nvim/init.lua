@@ -115,9 +115,9 @@ vim.o.splitright = true
 vim.o.textwidth = 80
 vim.o.undofile = true --Save undo history
 
-vim.cmd [[
-autocmd FileType gitcommit,markdown syntax enable | setlocal spell
-]]
+-- vim.cmd [[
+-- autocmd FileType gitcommit,markdown syntax enable | setlocal spell
+-- ]]
 
 --Decrease update time
 vim.o.updatetime = 250
@@ -264,7 +264,7 @@ vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
 vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
         { silent = true, noremap = true }
 )
-vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
+vim.keymap.set("n", "gr", "<cmd>TroubleToggle lsp_references<cr>",
         { silent = true, noremap = true }
 )
 
@@ -359,7 +359,7 @@ local on_attach = function(_, bufnr)
                 '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+        -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
         -- vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
