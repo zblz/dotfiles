@@ -375,7 +375,7 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Enable the following language servers
-local servers = { 'pyright', 'metals', 'bashls', 'jsonls' }
+local servers = { 'pyright', 'metals', 'bashls', 'jsonls', 'graphql' }
 for _, lsp in ipairs(servers) do
         nvim_lsp[lsp].setup {
                 on_attach = on_attach,
@@ -626,7 +626,7 @@ au FileType vimwiki
 ]]
 
 -- git tools setup
-vim.api.nvim_set_keymap('n', '<leader>do', [[<cmd>DiffviewOpen<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>dv', [[<cmd>DiffviewOpen<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>dc', [[<cmd>DiffviewClose<CR>]], { noremap = true, silent = true })
 
 require('gitsigns').setup {
