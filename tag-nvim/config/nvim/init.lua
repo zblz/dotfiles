@@ -368,7 +368,7 @@ local on_attach = function(_, bufnr)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>so',
                 [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
-        vim.cmd [[ command! Format execute 'lua vim.lsp.buf.format({async=False})' ]]
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.format({async=False})<CR>', opts)
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -430,8 +430,8 @@ null_ls.setup({
                 null_ls.builtins.diagnostics.eslint,
                 null_ls.builtins.diagnostics.mypy,
                 null_ls.builtins.diagnostics.ruff,
+                null_ls.builtins.formatting.ruff,
                 null_ls.builtins.formatting.black,
-                null_ls.builtins.formatting.isort,
                 null_ls.builtins.formatting.jq,
                 null_ls.builtins.formatting.mdformat,
                 -- null_ls.builtins.formatting.yq, -- converts to JSON :(
@@ -455,6 +455,14 @@ local function get_python_path(workspace)
         if match ~= '' then
                 local venv = vim.fn.trim(vim.fn.system('PIPENV_PIPFILE=' .. match .. ' pipenv --venv'))
                 print("pipfile env" .. venv)
+                return path.join(venv, 'bin', 'python')
+        end
+
+        -- Find and use virtualenv from poetry in workspace directory.
+        local match = vim.fn.glob(path.join(workspace, 'poetry.lock'))
+        if match ~= '' then
+                local venv = vim.fn.trim(vim.fn.system('poetry env info --path'))
+                print("poetry env" .. venv)
                 return path.join(venv, 'bin', 'python')
         end
 
