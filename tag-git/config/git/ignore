@@ -44,3 +44,5 @@ Thumbs.db
 pip-wheel-metadata
 
 *.orig
+
+.ipynb_checkpoints
