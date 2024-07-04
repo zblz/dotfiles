@@ -1,3 +1,5 @@
 function uuid
-	python -c 'import uuid; print(uuid.uuid4())'
+	python3 -c 'import uuid; print(uuid.uuid4())'
 end
+
+alias uuidgen uuid
