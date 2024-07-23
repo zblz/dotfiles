@@ -25,10 +25,12 @@ vim.api.nvim_exec(
 local use = require('packer').use
 require('packer').startup(function()
         use 'wbthomason/packer.nvim' -- Package manager
+
         -- git tools
         use 'tpope/vim-fugitive'
         use { 'lewis6991/gitsigns.nvim', tag = 'v0.6' }
         use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
+
         -- comment, linting, formatting
         use {
                 'numToStr/comment.nvim',
@@ -38,24 +40,38 @@ require('packer').startup(function()
         }
         use 'srstevenson/vim-topiary' -- trim whitespace
         use 'h3xx/vim-shitespace'     -- show shitespace
-        -- UI to select things (files, grep results, open buffers...)
+
+        -- Selection UI
         use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
         use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
         use 'sainnhe/gruvbox-material'
         use 'nvim-lualine/lualine.nvim'
+
         -- Add indentation guides even on blank lines
         use 'lukas-reineke/indent-blankline.nvim'
-        -- Highlight, edit, and navigate code using a fast incremental parsing library
+
+        -- Tressitter
         use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
         use 'nvim-treesitter/nvim-treesitter-textobjects'
-        -- LSP and autocomplete
+
+        -- LSP
+        use "williamboman/mason.nvim"
+        use "williamboman/mason-lspconfig.nvim"
         use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
         use {
                 "jose-elias-alvarez/null-ls.nvim",
                 requires = { "nvim-lua/plenary.nvim" },
         }
-        use { 'folke/trouble.nvim', requires = { 'nvim-tree/nvim-web-devicons' } }
+        use {
+                'folke/trouble.nvim',
+                requires = { 'nvim-tree/nvim-web-devicons' },
+                config = function()
+                        require('trouble').setup({})
+                end
+        }
         use 'folke/lsp-colors.nvim'
+
+        -- autocompletion
         use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
         use 'hrsh7th/cmp-nvim-lsp'
         use 'hrsh7th/cmp-buffer'
@@ -64,10 +80,20 @@ require('packer').startup(function()
         use 'hrsh7th/cmp-nvim-lsp-signature-help'
         use 'ray-x/cmp-treesitter'
         use 'petertriho/cmp-git'
+
         use 'onsails/lspkind-nvim'
-        use 'L3MON4D3/LuaSnip' -- Snippets plugin
+        use 'simrat39/rust-tools.nvim'
+        use {
+                'MeanderingProgrammer/markdown.nvim',
+                as = 'render-markdown',
+                after = { 'nvim-treesitter' },
+                requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+                config = function()
+                        require('render-markdown').setup({})
+                end,
+        }
+
         -- copilot
-        -- use 'github/copilot.vim'
         use {
                 "zbirenbaum/copilot.lua",
                 cmd = "Copilot",
@@ -83,9 +109,8 @@ require('packer').startup(function()
                         require("copilot_cmp").setup()
                 end
         }
-        -- vimwiki
-        use 'vimwiki/vimwiki'
-        use 'ElPiloto/telescope-vimwiki.nvim'
+
+        use 'lervag/wiki.vim'
         use 'ojroques/vim-oscyank' -- yank through SSH
         use {
                 "rest-nvim/rest.nvim",
@@ -94,6 +119,7 @@ require('packer').startup(function()
                         require("rest-nvim").setup()
                 end
         }
+
         -- Automatically set up your configuration after cloning packer.nvim
         if packer_bootstrap then
                 require('packer').sync()
@@ -115,9 +141,9 @@ vim.o.splitright = true
 vim.o.textwidth = 80
 vim.o.undofile = true --Save undo history
 
--- vim.cmd [[
--- autocmd FileType gitcommit,markdown syntax enable | setlocal spell
--- ]]
+vim.cmd [[
+        autocmd FileType gitcommit,markdown syntax enable | setlocal spell
+]]
 
 --Decrease update time
 vim.o.updatetime = 250
@@ -173,12 +199,15 @@ vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true,
 vim.api.nvim_set_keymap('n', ';', ':', { noremap = true }) -- avoid a shift for command
 vim.api.nvim_set_keymap('n', '<C-l>', ':nohlsearch<CR><C-l>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Tab>', '%', { noremap = true, silent = true })
+
 --toggle folds with <space>
 vim.api.nvim_set_keymap('n', '<Space>', 'za', { noremap = true, silent = true })
 --define folds over marked range
 vim.api.nvim_set_keymap('v', '<Space>', 'zf', { noremap = true, silent = true })
+
 --format paragraph
 vim.api.nvim_set_keymap('n', '<leader>q', 'gqip', { noremap = true, silent = true })
+
 --new tab
 vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true, silent = true })
 
@@ -219,7 +248,6 @@ require('telescope').setup {
 }
 
 require('telescope').load_extension('fzf')
-require('telescope').load_extension('vw')
 
 --Add leader shortcuts
 vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files()<CR>]],
@@ -244,18 +272,11 @@ vim.api.nvim_set_keymap('n', '\\', [[<cmd>lua require('telescope.builtin').live_
 vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]],
         { noremap = true, silent = true })
 
--- vimwiki telescope shortcuts
-vim.api.nvim_set_keymap('n', '<leader>ws', ':Telescope vw<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>wg', ':Telescope vw live_grep<CR>', { noremap = true })
-
--- Trouble bindings
-vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
+-- Trouble
+vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",
         { silent = true, noremap = true }
 )
-vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
-        { silent = true, noremap = true }
-)
-vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
+vim.keymap.set("n", "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
         { silent = true, noremap = true }
 )
 vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
@@ -264,10 +285,11 @@ vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
 vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
         { silent = true, noremap = true }
 )
-vim.keymap.set("n", "gr", "<cmd>TroubleToggle lsp_references<cr>",
+vim.keymap.set("n", "gr", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
         { silent = true, noremap = true }
 )
 
+-- Rest client
 vim.keymap.set("n", "<leader>rr", "<Plug>RestNvim<cr>",
         { silent = true, noremap = true }
 )
@@ -343,6 +365,12 @@ require('nvim-treesitter.configs').setup {
 vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- LSP settings
+
+require("mason").setup()
+require("mason-lspconfig").setup {
+        automatic_installation = true,
+}
+
 local nvim_lsp = require 'lspconfig'
 local on_attach = function(_, bufnr)
         vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -375,7 +403,7 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Enable the following language servers
-local servers = { 'pyright', 'metals', 'bashls', 'jsonls', 'graphql' }
+local servers = { 'metals', 'bashls', 'jsonls', 'graphql', 'taplo', 'sqlls', 'rust_analyzer', 'ruff_lsp' }
 for _, lsp in ipairs(servers) do
         nvim_lsp[lsp].setup {
                 on_attach = on_attach,
@@ -429,12 +457,9 @@ null_ls.setup({
                 null_ls.builtins.completion.spell,
                 null_ls.builtins.diagnostics.eslint,
                 null_ls.builtins.diagnostics.mypy,
-                null_ls.builtins.diagnostics.ruff,
-                null_ls.builtins.formatting.ruff,
                 null_ls.builtins.formatting.black,
                 null_ls.builtins.formatting.jq,
                 null_ls.builtins.formatting.mdformat,
-                -- null_ls.builtins.formatting.yq, -- converts to JSON :(
         },
 })
 
@@ -448,14 +473,6 @@ local function get_python_path(workspace)
         if vim.env.VIRTUAL_ENV then
                 print("activated virtual env" .. vim.env.VIRTUAL_ENV)
                 return path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
-        end
-
-        -- Find and use virtualenv from pipenv in workspace directory.
-        local match = vim.fn.glob(path.join(workspace, 'Pipfile'))
-        if match ~= '' then
-                local venv = vim.fn.trim(vim.fn.system('PIPENV_PIPFILE=' .. match .. ' pipenv --venv'))
-                print("pipfile env" .. venv)
-                return path.join(venv, 'bin', 'python')
         end
 
         -- Find and use virtualenv from poetry in workspace directory.
@@ -477,6 +494,14 @@ local function get_python_path(workspace)
         print("system python")
         return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
 end
+
+nvim_lsp.pyright.setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        on_init = function(client)
+                client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+        end
+}
 
 -- luasnip setup
 local luasnip = require 'luasnip'
@@ -510,19 +535,19 @@ cmp.setup({
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.close(),
-                -- ['<CR>'] = cmp.mapping.confirm { select = true },
+                ['<CR>'] = cmp.mapping.confirm { select = true },
                 -- only select completion if it has been selected
-                ['<CR>'] = cmp.mapping({
-                        i = function(fallback)
-                                if cmp.visible() and cmp.get_active_entry() then
-                                        cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-                                else
-                                        fallback()
-                                end
-                        end,
-                        s = cmp.mapping.confirm({ select = true }),
-                        c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-                }),
+                -- ['<CR>'] = cmp.mapping({
+                --         i = function(fallback)
+                --                 if cmp.visible() and cmp.get_active_entry() then
+                --                         cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                --                 else
+                --                         fallback()
+                --                 end
+                --         end,
+                --         s = cmp.mapping.confirm({ select = true }),
+                --         c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+                -- }),
                 ['<Tab>'] = function(fallback)
                         if cmp.visible() and has_words_before() then
                                 cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
@@ -560,6 +585,8 @@ cmp.setup.filetype('gitcommit', {
         sources = cmp.config.sources({
                 { name = 'git' },
         }, {
+                { name = "conventionalcommits" }
+        }, {
                 { name = 'buffer' },
         })
 })
@@ -570,9 +597,7 @@ cmp.setup.cmdline(':', {
         sources = cmp.config.sources({
                 { name = 'path' }
         }, {
-                {
-                        name = 'cmdline',
-                }
+                { name = 'cmdline' }
         })
 })
 -- Use buffer source for `/` and `?`
@@ -624,14 +649,15 @@ au FileType yaml
 	\ set softtabstop=2
 ]]
 
--- vimwiki setup
-vim.cmd [[
-let g:vimwiki_list = [{'path': '~/Dropbox/wiki/', 'syntax': 'markdown', 'ext': '.md'}]
-au FileType vimwiki
-	\ set tabstop=2 |
-	\ set shiftwidth=2 |
-	\ set softtabstop=2
-]]
+-- Wiki config
+vim.g.wiki_root = '~/Dropbox/wiki'
+vim.g.wiki_select_method = {
+        pages = require("wiki.telescope").pages,
+        tags = require("wiki.telescope").tags,
+        toc = require("wiki.telescope").toc,
+        links = require("wiki.telescope").links,
+}
+vim.g.wiki_journal = { frequency = 'weekly' }
 
 -- git tools setup
 vim.api.nvim_set_keymap('n', '<leader>dv', [[<cmd>DiffviewOpen<CR>]], { noremap = true, silent = true })
