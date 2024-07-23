@@ -19,6 +19,14 @@
   cmd = "nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c '$wincmd w' -c 'wincmd J'"
 [diff]
   colorMoved = true
+  tool = difftastic
+[difftool]
+  prompt = false
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
+
+[pager]
+        difftool = true
 
 [help]
   autocorrect = 1
@@ -54,6 +62,8 @@
 
   # list aliases
   la = "!git config -l | grep alias | cut -c 7-"
+
+  dft = difftool
 
 [http]
   postBuffer = 524288000
