@@ -291,13 +291,16 @@ vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",
 vim.keymap.set("n", "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
         { silent = true, noremap = true }
 )
-vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
+vim.keymap.set("n", "<leader>xl", "<cmd>Trouble loclist toggle<cr>",
         { silent = true, noremap = true }
 )
-vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
+vim.keymap.set("n", "<leader>xq", "<cmd>Trouble quickfix toggle<cr>",
         { silent = true, noremap = true }
 )
-vim.keymap.set("n", "gr", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+vim.keymap.set("n", "gr", "<cmd>Trouble lsp toggle focus=false<cr>",
+        { silent = true, noremap = true }
+)
+vim.keymap.set("n", "gR", "<cmd>Trouble lsp toggle focus=true<cr>",
         { silent = true, noremap = true }
 )
 
@@ -313,6 +316,7 @@ vim.keymap.set("n", "<leader>rp", "<Plug>RestNvimPreview<cr>",
 )
 
 -- Treesitter configuration
+---@diagnostic disable-next-line: missing-fields
 require('nvim-treesitter.configs').setup {
         highlight = {
                 enable = true, -- false will disable the whole extension
