@@ -119,6 +119,10 @@ require('packer').startup(function()
                         require("rest-nvim").setup()
                 end
         }
+        use {
+                'nvim-tree/nvim-tree.lua',
+                requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+        }
 
         -- Automatically set up your configuration after cloning packer.nvim
         if packer_bootstrap then
@@ -140,6 +144,9 @@ vim.o.spelllang = 'en_gb'
 vim.o.splitright = true
 vim.o.textwidth = 80
 vim.o.undofile = true --Save undo history
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 vim.cmd [[
         autocmd FileType gitcommit,markdown syntax enable | setlocal spell
@@ -216,6 +223,11 @@ vim.api.nvim_set_keymap('n', '<c-h>', '<c-w>h', { silent = true, noremap = true 
 vim.api.nvim_set_keymap('n', '<c-j>', '<c-w>j', { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', '<c-k>', '<c-w>k', { silent = true, noremap = true })
 vim.api.nvim_set_keymap('n', '<c-l>', '<c-w>l', { silent = true, noremap = true })
+
+-- NvimTree
+require("nvim-tree").setup()
+vim.api.nvim_set_keymap("n", "<leader>nn", [[<cmd>NvimTreeToggle<CR>]], { silent = true, noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>nf", [[<cmd>NvimTreeFindFile<CR>]], { silent = true, noremap = true })
 
 -- Highlight on yank
 vim.api.nvim_exec(
@@ -503,9 +515,6 @@ nvim_lsp.pyright.setup {
         end
 }
 
--- luasnip setup
-local luasnip = require 'luasnip'
-
 -- nvim-cmp setup
 vim.o.completeopt = 'menu,menuone,noselect,preview'
 
@@ -519,7 +528,7 @@ local cmp = require 'cmp'
 cmp.setup({
         snippet = {
                 expand = function(args)
-                        luasnip.lsp_expand(args.body)
+                        vim.snippet.expand(args.body)
                 end,
         },
         formatting = {
