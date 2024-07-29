@@ -1,5 +1,4 @@
-Configuration files
--------------------
+# Configuration files
 
 Install [rcm](https://thoughtbot.github.io/rcm), and then checkout the
 repository and link the files into place with:
