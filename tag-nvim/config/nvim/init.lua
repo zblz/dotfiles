@@ -53,6 +53,7 @@ require('packer').startup(function()
         -- Tressitter
         use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
         use 'nvim-treesitter/nvim-treesitter-textobjects'
+        use 'RRethy/nvim-treesitter-textsubjects'
 
         -- LSP
         use "williamboman/mason.nvim"
@@ -112,13 +113,6 @@ require('packer').startup(function()
 
         use 'lervag/wiki.vim'
         use 'ojroques/vim-oscyank' -- yank through SSH
-        use {
-                "rest-nvim/rest.nvim",
-                requires = { "nvim-lua/plenary.nvim" },
-                config = function()
-                        require("rest-nvim").setup()
-                end
-        }
         use {
                 'nvim-tree/nvim-tree.lua',
                 requires = { 'nvim-tree/nvim-web-devicons', opt = true },
@@ -379,6 +373,15 @@ require('nvim-treesitter.configs').setup {
         },
 }
 vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+
+require('nvim-treesitter.configs').setup({
+        textsubjects = {
+                enable = true,
+                prev_selection = ',', -- (Optional) keymap to select the previous selection
+                keymaps = {
+                        ['.'] = 'textsubjects-smart' }
+        }
+})
 
 -- LSP settings
 
