@@ -80,3 +80,5 @@ fish_add_path ~/.local/bin
 for ITEM in $HOME/.sdkman/candidates/*
     fish_add_path -a $ITEM/current/bin
 end
+
+uv generate-shell-completion fish | source
