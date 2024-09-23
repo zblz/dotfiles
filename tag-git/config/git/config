@@ -1,15 +1,18 @@
 [user]
   name = Víctor Zabalza
   email = vzabalza@gmail.com
-  signingkey = ~/.ssh/id_ed25519
+
+[commit]
+  verbose = true
+
+[include]
+  path = config-local
+
 [push]
   default = simple
   followTags = true
   autoSetupRemote = true
 
-[commit]
-  verbose = true
-  gpgsign = true
 [merge]
   tool = nvimdiff
 [mergetool]
@@ -26,7 +29,7 @@
   cmd = difft "$LOCAL" "$REMOTE"
 
 [pager]
-        difftool = true
+  difftool = true
 
 [help]
   autocorrect = 1
@@ -92,5 +95,3 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
-[gpg]
-  format = ssh

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-main=$(git branch -r | egrep -o '^\s*origin/(ma((in)|(ster)))$' | cut -d '/' -f 2)
-git fetch -a --prune
-git checkout $main
+set -euo pipefail
+
+main=$(git branch -r | grep -E -o '^\s*origin/(ma((in)|(ster)))$' | cut -d '/' -f 2)
+git fetch --all --prune
+git checkout "$main"
 git pull --rebase
-git branch --merged $main | grep -v "^[ *]*${main}$" | xargs -r -n 1 git branch -d
+git branch --merged "$main" | grep -v "^[ *]*${main}$" | xargs -r -n 1 git branch -d
