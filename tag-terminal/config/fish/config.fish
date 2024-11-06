@@ -22,8 +22,6 @@ switch (uname)
         fish_add_path /opt/homebrew/bin
         fish_add_path /opt/homebrew/sbin
         set -gx HOMEBREW_AUTO_UPDATE_SECS 7776000 # 90 days
-        status is-login; and pyenv init --path | source
-        status is-interactive; and pyenv init - | source
         source (fnm env | psub)
         source (conda shell.fish hook | grep -v "conda activate base" | psub)
         fish_add_path -a /opt/homebrew/Caskroom/miniforge/base/bin
