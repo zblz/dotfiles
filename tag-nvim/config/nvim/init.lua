@@ -41,8 +41,20 @@ require('packer').startup(function()
         -- Selection UI
         use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
         use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-        use 'sainnhe/gruvbox-material'
-        use 'nvim-lualine/lualine.nvim'
+        use { 'sainnhe/gruvbox-material' }
+        use {
+                'nvim-lualine/lualine.nvim',
+                config = function()
+                        --Set statusbar
+                        require('lualine').setup {
+                                options = {
+                                        theme = 'gruvbox-material',
+                                        component_separators = { left = '', right = '' },
+                                        section_separators = { left = '', right = '' },
+                                }
+                        }
+                end
+        }
 
         -- Add indentation guides even on blank lines
         use 'lukas-reineke/indent-blankline.nvim'
@@ -157,38 +169,12 @@ vim.o.termguicolors = true
 vim.o.background = 'dark'
 
 vim.g.gruvbox_material_background = 'soft'
-vim.g.gruvbox_material_palette = 'original'
+vim.g.gruvbox_material_palette = 'mix'
 vim.g.gruvbox_material_enable_bold = true
 vim.g.gruvbox_material_enable_italic = true
 vim.g.gruvbox_material_sign_column_background = 'none'
 
---LSP kind highlights
-vim.cmd [[highlight BadWhitespace ctermbg=237]]
-vim.cmd [[highlight! link CmpItemAbbrMatchFuzzy Aqua]]
-vim.cmd [[highlight! link CmpItemKindText Fg]]
-vim.cmd [[highlight! link CmpItemKindMethod Purple]]
-vim.cmd [[highlight! link CmpItemKindFunction Purple]]
-vim.cmd [[highlight! link CmpItemKindConstructor Green]]
-vim.cmd [[highlight! link CmpItemKindField Aqua]]
-vim.cmd [[highlight! link CmpItemKindVariable Blue]]
-vim.cmd [[highlight! link CmpItemKindClass Green]]
-vim.cmd [[highlight! link CmpItemKindInterface Green]]
-vim.cmd [[highlight! link CmpItemKindValue Orange]]
-vim.cmd [[highlight! link CmpItemKindKeyword Keyword]]
-vim.cmd [[highlight! link CmpItemKindSnippet Red]]
-vim.cmd [[highlight! link CmpItemKindFile Orange]]
-vim.cmd [[highlight! link CmpItemKindFolder Orange]]
-
 vim.cmd.colorscheme('gruvbox-material')
-
---Set statusbar
-require('lualine').setup {
-        options = {
-                theme = 'gruvbox-material',
-                component_separators = { left = '', right = '' },
-                section_separators = { left = '', right = '' },
-        }
-}
 
 --Set leader
 vim.g.mapleader = ' '
@@ -258,26 +244,26 @@ require('telescope').setup {
 require('telescope').load_extension('fzf')
 
 --Add leader shortcuts
-vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files()<CR>]],
+vim.keymap.set('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files()<CR>]],
         { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]],
+vim.keymap.set('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').buffers()<CR>]],
         { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ss', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]],
+vim.keymap.set('n', '<leader>ss', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]],
         { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
+vim.keymap.set('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]],
         { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]],
+vim.keymap.set('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]],
         { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>so',
+vim.keymap.set('n', '<leader>so',
         [[<cmd>lua require('telescope.builtin').tags{ only_current_buffer = true }<CR>]],
         { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]],
+vim.keymap.set('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]],
         { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sg', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
+vim.keymap.set('n', '<leader>sg', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
         { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '\\', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
+vim.keymap.set('n', '\\', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
         { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]],
+vim.keymap.set('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]],
         { noremap = true, silent = true })
 
 -- Trouble
@@ -387,7 +373,7 @@ local on_attach = function(_, bufnr)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl',
@@ -399,8 +385,8 @@ local on_attach = function(_, bufnr)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+        -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.jump({count=1, float=true})<CR>', opts)
+        -- vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.jump({count=-1, float=true})<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>so',
                 [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
 end
