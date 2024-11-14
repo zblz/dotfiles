@@ -1,3 +1,0 @@
-#!/bin/bash
-
-$HOME/.local/bin/hibernate_on_low_battery.sh &

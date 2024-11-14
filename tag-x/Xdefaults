@@ -36,7 +36,7 @@
 *color15: COLOR_TERM_WHITE
 
 !! Xft
-!Xft.dpi:       96
+Xft.dpi:       192
 Xft.rgba:       rgb
 Xft.hinting:    1
 Xft.autohint:   0

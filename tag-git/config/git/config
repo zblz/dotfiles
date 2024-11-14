@@ -1,9 +1,11 @@
 [user]
   name = Víctor Zabalza
   email = vzabalza@gmail.com
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB6ac9wmi79E/nRGA0mqGaeyruWBBAnRz7pFBklA5l+G
 
 [commit]
   verbose = true
+  gpgsign = true
 
 [include]
   path = config-local
@@ -95,3 +97,7 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  program = /opt/1Password/op-ssh-sign

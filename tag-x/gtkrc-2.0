@@ -1,5 +1,5 @@
-gtk-theme-name = "FlatStudioDark"
+gtk-theme-name = "Yaru-sage"
 gtk-font-name = "DejaVu Sans 10"
-gtk-icon-theme-name = "Faenza-Dark"
-gtk-icon-sizes = "panel-menu=16,16:panel=16,16:gtk-menu=16,16:gtk-large-toolbar=16,16\
-:gtk-small-toolbar=16,16:gtk-button=16,16"
+gtk-icon-theme-name = "Papirus"
+gtk-icon-sizes = "panel-menu=32,32:panel=32,32:gtk-menu=32,32:gtk-large-toolbar=32,32\
+:gtk-small-toolbar=32,32:gtk-button=32,32"

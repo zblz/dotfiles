@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# $HOME/.local/bin/hibernate_on_low_battery.sh &
+
+xfce4-power-manager &

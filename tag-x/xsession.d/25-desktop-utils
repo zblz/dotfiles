@@ -1,2 +1,13 @@
+export GTK_A11Y=none
+mate-polkit
 dunst &
-$HOME/.local/bin/trayer-xmonad &
+
+gtk-sni-tray-standalone --watcher \
+        --size 22 --bottom --end --color '#3f3f3f' \
+        --length '9 % 100' &
+
+pasystray --notify=sink_default &
+
+1password --silent &
+
+easyeffects --gapplication-service &

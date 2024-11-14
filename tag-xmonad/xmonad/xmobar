@@ -1,20 +1,19 @@
 Config { font = "JetBrains Mono"
-       , dpi = 80
+       , dpi = 192
        , bgColor = "#3f3f3f"
        , fgColor = "#dcdccc"
        , alpha = 255
        , allDesktops = True
-       -- , position = BottomW L 91
-       , position = Static { xpos=0, ypos=748, width=1244, height=20 }
+       , position = BottomSize L 91 44
        , lowerOnStart = True
        , sepChar = "%"
        , alignSep = "}{"
-       , commands = [ Run MultiCpu ["-t","Cpu: <total0><total1><total2><total3>","-L","30","-H","60","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC","-w","3"] 25
-                    , Run Memory ["-t","Mem: <usedratio>%","-L","15","-H","50","--low","green","--high","red"] 50
+       , commands = [ Run MultiCpu ["-t","C<total>%","-L","30","-H","60","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC","-w","3"] 25
+                    , Run Memory ["-t","M<usedratio>%","-L","15","-H","50","--low","green","--high","red"] 50
                     , Run Battery [] 250
-                    , Run Date "%d/%m/%y %H:%M" "mydate" 100
+                    , Run Date "%H:%M" "mydate" 100
                     , Run XMonadLog
-                    , Run DynNetwork ["-L","0","-H","100","--normal","green","--high","red","-w","4"] 10
+                    , Run DynNetwork ["-t","R<rx>Kb|T<tx>Kb","-L","0","-H","100","--normal","green","--high","red","-w","4"] 10
                     ]
-       , template = "%XMonadLog% }{ %multicpu% | %memory% | %battery% | %dynnetwork% | <fc=#ee9a00>%mydate%</fc> "
+       , template = "%XMonadLog% }{|%multicpu%|%memory%|%battery%|%dynnetwork%| <fc=#ee9a00>%mydate%</fc>"
        }

@@ -1,5 +1,3 @@
--- vim:foldmethod=marker foldmarker={{{,}}} sw=2 sts=2 ts=2 tw=0 et ai nowrap
-
 -- IMPORTS {{{
 import XMonad
 import qualified XMonad.StackSet as W
@@ -36,7 +34,7 @@ myXmobarPP = xmobarPP {
     ppOutput = putStrLn . wrap "< " " >"
   , ppCurrent = xmobarColor "#ee9a00" "" . (wrap "[" "]" )
   , ppLayout = (\_->"")
-  , ppTitle = xmobarColor "#60b48a" "" . shorten 60
+  , ppTitle = xmobarColor "#60b48a" "" . shorten 84
   }
 
 myConfig = def {
@@ -72,7 +70,7 @@ myHighlightedBgColor = "#7F9F7F"
 --- Borders
 myActiveBorderColor = myCurrentWsBgColor
 myInactiveBorderColor = "#262626"
-myBorderWidth = 1
+myBorderWidth = 2
 
 --- Ws Stuff
 myCurrentWsFgColor = myHighlightedFgColor
@@ -95,7 +93,7 @@ myTheme = def
       , inactiveTextColor = myHighlightedBgColor
       , inactiveBorderColor = myInactiveBorderColor
       , fontName = myTabFont
-      , decoHeight = 14
+      , decoHeight = 28
       }
 
 -- End of COLORS, FONTS, PROMPTS }}}
@@ -111,7 +109,7 @@ myManageHook = (composeAll
     , manageDocks
     ])
 
-myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces = ["1","2","3","4"]
 
 myLayout = avoidStruts $ smartBorders $ (normalTiled ||| Grid ||| myTabbed )
     where
@@ -140,18 +138,13 @@ myKeys conf@(XConfig {modMask = modm}) =
          , ((modm,               xK_Tab  ), toggleWS)
          -- GridSelect
          , ((modm, xK_g), goToSelected gsconfig1)
-         -- Volum
+         -- -- Volum
          , ((0, xF86XK_AudioMute ), spawn "pactl set-sink-mute 0 toggle")
-         , ((0, xF86XK_AudioMicMute ), spawn "pactl set-source-mute 1 toggle")
+         -- , ((0, xF86XK_AudioMicMute ), spawn "pactl set-source-mute 1 toggle")
          , ((0, xF86XK_AudioLowerVolume ), spawn "pavol -5%")
          , ((0, xF86XK_AudioRaiseVolume ), spawn "pavol +5%")
-         , ((modm, xK_Page_Up ), spawn  "pavol +5%")
-         , ((modm, xK_Page_Down ), spawn  "pavol -5%")
-         -- toggle display outputs
-         , ((0, xF86XK_Display ), spawn "/home/victor/.local/bin/thinkpad-fn-f7 toggle")
-         , ((modm, xK_F7 ), spawn "/home/victor/.local/bin/thinkpad-fn-f7 toggle")
-         , ((0, xF86XK_MonBrightnessDown ), spawn "xbacklight -dec 5")
-         , ((0, xF86XK_MonBrightnessUp ), spawn "xbacklight -inc 5")
+         -- , ((modm, xK_Page_Up ), spawn  "pavol +5%")
+         -- , ((modm, xK_Page_Down ), spawn  "pavol -5%")
          -- screensaver
          , ((0, xK_Pause  ), spawn "xfce4-screensaver-command --lock")
          , ((0, xF86XK_ScreenSaver ), spawn "xfce4-screensaver-command --lock")
@@ -165,7 +158,7 @@ myKeys conf@(XConfig {modMask = modm}) =
          ]
          ++
          [((m .|. modm, k), windows $ f i)
-              | (i, k) <- zip myWorkspaces [xK_1 .. xK_9]
+              | (i, k) <- zip myWorkspaces [xK_1 .. xK_4]
               , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
     where
         gsconfig1 = def { gs_cellheight = 60, gs_cellwidth = 300 }
