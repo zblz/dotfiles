@@ -1,32 +1,78 @@
+# vim: ts=2:sw=2:ft=gitconfig
+
+[include]
+  path = config-local
+
 [user]
   name = Víctor Zabalza
   email = vzabalza@gmail.com
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB6ac9wmi79E/nRGA0mqGaeyruWBBAnRz7pFBklA5l+G
 
+[core]
+  excludesfile = ~/.config/git/ignore
+  fsmonitor = true
+  untrackedCache = true
+  pager = delta
+
+[interactive]
+diffFilter = delta --color-only
+
 [commit]
   verbose = true
   gpgsign = true
 
-[include]
-  path = config-local
+[pull]
+  rebase = true
 
 [push]
   default = simple
   followTags = true
   autoSetupRemote = true
 
+[fetch]
+  prune = true
+  pruneTags = true
+  all = true
+
+[rerere]
+  enabled = true
+  autoupdate = true
+
+[rebase]
+  autoSquash = true
+  autoStash = true
+  updateRefs = true
+
+[tag]
+  sort = version:refname
+
+[branch]
+  sort = committerdate
+
+[column]
+  ui = auto
+
 [merge]
   tool = nvimdiff
+  conflictstyle = zdiff3
+
 [mergetool]
   prompt = true
   conflictstyle = zdiff3
+
 [mergetool "nvimdiff"]
   cmd = "nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c '$wincmd w' -c 'wincmd J'"
+
 [diff]
+  algorithm = histogram
   colorMoved = true
+  mnemonicPrefix = true
+  renames = true
   tool = difftastic
+
 [difftool]
   prompt = false
+
 [difftool "difftastic"]
   cmd = difft "$LOCAL" "$REMOTE"
 
@@ -34,7 +80,16 @@
   difftool = true
 
 [help]
-  autocorrect = 1
+  autocorrect = prompt
+
+[delta]
+  navigate = true
+  side-by-side = true
+  line-numbers = true
+  syntax-theme = gruvbox-dark
+  dark = true
+  diff-so-fancy = true
+
 [alias]
   last = log -1 HEAD
   visual = !gitg
@@ -46,14 +101,8 @@
   l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
 
   a = add
-  ap = add -p
-  c = commit --verbose
-  ca = commit -a --verbose
+  c = commit
   cm = commit -m
-  cam = commit -a -m
-  m = commit --amend --verbose
-
-  puo = push -u origin
 
   d = diff
   ds = diff --stat
@@ -70,28 +119,13 @@
 
   dft = difftool
 
-[http]
-  postBuffer = 524288000
-
-[url "git@github.com:"]
-  insteadOf = gh:
-
-[url "git@bitbucket.org:"]
-  insteadOf = bb:
-
-[url "https://gist.github.com/"]
-  insteadOf = gist:
-
 [diff "jupyternotebook"]
   command = git-nbdiffdriver diff
 
 [merge "jupyternotebook"]
-  driver = git-nbmergedriver merge %O %A %B %L %P
   name = jupyter notebook merge driver
-[core]
-  excludesfile = ~/.config/git/ignore
-[pull]
-  rebase = true
+  driver = git-nbmergedriver merge %O %A %B %L %P
+
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
