@@ -23,7 +23,6 @@ switch (uname)
         fish_add_path /opt/homebrew/sbin
         set -gx HOMEBREW_AUTO_UPDATE_SECS 7776000 # 90 days
         source (fnm env | psub)
-        source (conda shell.fish hook | grep -v "conda activate base" | psub)
         fish_add_path -a /opt/homebrew/Caskroom/miniforge/base/bin
     case '*'
         if test -d /opt/anaconda
@@ -68,8 +67,6 @@ abbr --add vim nvim
 abbr --add lt 'ls -lhtr'
 abbr --add cdd 'cd ~/.dotfiles'
 
-alias start_conda 'source (conda info --root)/etc/fish/conf.d/conda.fish'
-
 fish_add_path -a /usr/local/sbin
 # Make sure this has priority over anything else
 fish_add_path ~/.local/bin
@@ -80,3 +77,4 @@ for ITEM in $HOME/.sdkman/candidates/*
 end
 
 uv generate-shell-completion fish | source
+abbr --add ipython 'uvx --from ipython --with pandas --with ibis-framework[duckdb] --with requests --with pydantic --with scipy ipython'
