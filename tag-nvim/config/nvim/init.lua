@@ -132,6 +132,29 @@ require('packer').startup(function()
                 requires = { 'nvim-tree/nvim-web-devicons', opt = true },
         }
 
+        -- Required plugins
+        use 'stevearc/dressing.nvim'
+        use 'nvim-lua/plenary.nvim'
+        use 'MunifTanjim/nui.nvim'
+        use 'MeanderingProgrammer/render-markdown.nvim'
+
+        -- Optional dependencies
+        use 'hrsh7th/nvim-cmp'
+        use 'nvim-tree/nvim-web-devicons'   -- or use 'echasnovski/mini.icons'
+        use 'HakonHarnes/img-clip.nvim'
+        -- use 'zbirenbaum/copilot.lua'
+
+        -- Avante.nvim with build process
+        use {
+                'yetone/avante.nvim',
+                branch = 'main',
+                run = 'make',
+                config = function()
+                        require('avante_lib').load()
+                        require('avante').setup()
+                end
+        }
+
         -- Automatically set up your configuration after cloning packer.nvim
         if packer_bootstrap then
                 require('packer').sync()
@@ -395,7 +418,8 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Enable the following language servers
-local servers = { 'pyright', 'metals', 'bashls', 'jsonls', 'graphql', 'taplo', 'sqlls', 'rust_analyzer', 'ruff' }
+local servers = { 'pyright', 'metals', 'bashls', 'jsonls', 'graphql', 'taplo', 'sqlls', 'rust_analyzer', 'bacon_ls',
+        'ruff', 'eslint', 'ts_ls' }
 for _, lsp in ipairs(servers) do
         nvim_lsp[lsp].setup {
                 on_attach = on_attach,
