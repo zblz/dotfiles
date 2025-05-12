@@ -35,8 +35,6 @@ require('packer').startup(function()
                         require('Comment').setup()
                 end
         }
-        use 'srstevenson/vim-topiary' -- trim whitespace
-        use 'h3xx/vim-shitespace'     -- show shitespace
 
         -- Selection UI
         use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -56,17 +54,14 @@ require('packer').startup(function()
                 end
         }
 
-        -- Add indentation guides even on blank lines
-        use 'lukas-reineke/indent-blankline.nvim'
-
         -- Treesitter
         use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
         use 'nvim-treesitter/nvim-treesitter-textobjects'
         use 'RRethy/nvim-treesitter-textsubjects'
 
         -- LSP, diagnostics, formatting
-        use 'williamboman/mason.nvim'
-        use 'williamboman/mason-lspconfig.nvim'
+        use 'mason-org/mason.nvim'
+        use 'mason-org/mason-lspconfig.nvim'
         use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
         use "stevearc/conform.nvim"
         use {
@@ -76,7 +71,6 @@ require('packer').startup(function()
                         require('trouble').setup({})
                 end
         }
-        use 'folke/lsp-colors.nvim'
         use {
                 'linux-cultist/venv-selector.nvim',
                 branch = 'regexp',
@@ -86,18 +80,19 @@ require('packer').startup(function()
                 end,
         }
 
-        -- autocompletion
+        -- autocompletion w/ nvim-cmp
         use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
         use 'hrsh7th/cmp-nvim-lsp'
+        use 'hrsh7th/cmp-nvim-lsp-signature-help'
         use 'hrsh7th/cmp-buffer'
         use 'hrsh7th/cmp-path'
         use 'hrsh7th/cmp-cmdline'
-        use 'hrsh7th/cmp-nvim-lsp-signature-help'
         use 'ray-x/cmp-treesitter'
         use 'petertriho/cmp-git'
-
         use 'onsails/lspkind-nvim'
+
         use 'simrat39/rust-tools.nvim'
+
         use {
                 'MeanderingProgrammer/markdown.nvim',
                 as = 'render-markdown',
@@ -132,34 +127,12 @@ require('packer').startup(function()
                 requires = { 'nvim-tree/nvim-web-devicons', opt = true },
         }
 
-        -- Required plugins
-        use 'stevearc/dressing.nvim'
-        use 'nvim-lua/plenary.nvim'
-        use 'MunifTanjim/nui.nvim'
-        use 'MeanderingProgrammer/render-markdown.nvim'
-
-        -- Optional dependencies
-        use 'hrsh7th/nvim-cmp'
-        use 'nvim-tree/nvim-web-devicons'   -- or use 'echasnovski/mini.icons'
-        use 'HakonHarnes/img-clip.nvim'
-        -- use 'zbirenbaum/copilot.lua'
-
-        -- Avante.nvim with build process
-        use {
-                'yetone/avante.nvim',
-                branch = 'main',
-                run = 'make',
-                config = function()
-                        require('avante_lib').load()
-                        require('avante').setup()
-                end
-        }
-
         -- Automatically set up your configuration after cloning packer.nvim
         if packer_bootstrap then
                 require('packer').sync()
         end
 end)
+
 
 vim.o.breakindent = true --Enable break indent
 vim.o.colorcolumn = '80'
@@ -174,7 +147,8 @@ vim.o.smartcase = true
 vim.o.spelllang = 'en_gb'
 vim.o.splitright = true
 vim.o.textwidth = 88
-vim.o.undofile = true --Save undo history
+vim.o.undofile = true           --Save undo history
+vim.o.clipboard = 'unnamedplus' --Copy paste between vim and everything else
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -189,10 +163,10 @@ vim.wo.signcolumn = 'yes'
 
 --Set colorscheme
 vim.o.termguicolors = true
-vim.o.background = 'dark'
+vim.o.background = 'light'
 
-vim.g.gruvbox_material_background = 'soft'
-vim.g.gruvbox_material_palette = 'mix'
+vim.g.gruvbox_material_background = 'medium'
+vim.g.gruvbox_material_palette = 'original'
 vim.g.gruvbox_material_enable_bold = true
 vim.g.gruvbox_material_enable_italic = true
 vim.g.gruvbox_material_sign_column_background = 'none'
@@ -381,88 +355,65 @@ require('nvim-treesitter.configs').setup {
 vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- LSP settings
-
 require("mason").setup()
 require("mason-lspconfig").setup {
-        automatic_installation = true,
+        automatic_enable = true,
+        ensure_installed = { 'pyright', 'bashls', 'jsonls', 'graphql', 'taplo', 'sqlls', 'rust_analyzer',
+                'ruff', 'eslint', 'ts_ls', 'lua_ls', 'yamlls' }
 }
+vim.lsp.enable('bacon_ls')
 
-local nvim_lsp = require 'lspconfig'
-local on_attach = function(_, bufnr)
-        vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', { buf = bufnr })
-
-        local opts = { noremap = true, silent = true }
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl',
-                '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-        -- replaced with trouble
-        -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-        -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.jump({count=1, float=true})<CR>', opts)
-        -- vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.jump({count=-1, float=true})<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>so',
-                [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
-end
-
--- nvim-cmp supports additional completion capabilities
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
--- Enable the following language servers
-local servers = { 'pyright', 'metals', 'bashls', 'jsonls', 'graphql', 'taplo', 'sqlls', 'rust_analyzer', 'bacon_ls',
-        'ruff', 'eslint', 'ts_ls' }
-for _, lsp in ipairs(servers) do
-        nvim_lsp[lsp].setup {
-                on_attach = on_attach,
-                capabilities = capabilities,
-        }
-end
-
-nvim_lsp.yamlls.setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
+vim.lsp.config('lua_ls', {
         settings = {
-                yaml = {
-                        keyOrdering = false
+                Lua = {
+                        workspace = {
+                                library = vim.api.nvim_get_runtime_file("", true),
+                        },
+                        diagnostics = {
+                                globals = {
+                                        "vim", "require"
+                                }
+                        },
                 }
         }
 })
 
-nvim_lsp.lua_ls.setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-        settings = {
-                Lua = {
-                        runtime = {
-                                version = 'LuaJIT',
-                        },
-                        diagnostics = {
-                                -- Get the language server to recognize the `vim` global
-                                globals = {
-                                        'vim',
-                                        'require'
-                                },
-                        },
-                        workspace = {
-                                -- Make the server aware of Neovim runtime files
-                                library = vim.api.nvim_get_runtime_file("", true),
-                        },
+-- advertise nvim-cmp capabilities to servers
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+vim.lsp.config('*', {
+        capabilities = capabilities
+})
+
+vim.diagnostic.config({
+        virtual_text = {
+                severity = {
+                        max = vim.diagnostic.severity.WARN,
                 },
         },
-}
-
-nvim_lsp.util.default_config = vim.tbl_deep_extend('force', nvim_lsp.util.default_config, {
-        capabilities = capabilities,
+        virtual_lines = {
+                severity = {
+                        min = vim.diagnostic.severity.ERROR,
+                },
+        },
 })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(event)
+                local client = vim.lsp.get_client_by_id(event.data.client_id)
+                -- if client:supports_method('textDocument/completion') then
+                --         vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
+                -- end
+                -- Inlay hints
+                if client:supports_method "textDocument/inlayHints" then
+                        vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+                end
+                vim.api.nvim_buf_set_keymap(event.buf, 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>',
+                        { noremap = true, silent = true })
+                vim.keymap.set("i", "<C-space>", vim.lsp.completion.get, { desc = "trigger autocompletion" })
+        end,
+})
+
+-- Formatting
 
 local conform = require('conform')
 conform.setup({
@@ -470,6 +421,7 @@ conform.setup({
                 markdown = { "mdformat" },
                 json = { "jq" },
                 sql = { "sqlfmt" },
+                terraform = { "terraform_fmt" },
         },
         default_format_opts = {
                 lsp_format = "prefer",
@@ -490,15 +442,14 @@ vim.api.nvim_create_user_command("Format", function(args)
         require("conform").format({ async = true, lsp_format = "fallback", range = range })
 end, { range = true })
 
-vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>Format<CR>]], { noremap = true, silent = true })
-
+vim.keymap.set('n', '<leader>f', [[<cmd>Format<CR>]], { noremap = true, silent = true })
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 
 -- nvim-cmp setup
 vim.o.completeopt = 'menu,menuone,noselect,preview'
 
 local has_words_before = function()
-        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+        if vim.api.nvim_buf_get_option_value(0, "buftype") == "prompt" then return false end
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 end
