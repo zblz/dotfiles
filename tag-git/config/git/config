@@ -6,7 +6,6 @@
 [user]
   name = Víctor Zabalza
   email = vzabalza@gmail.com
-  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB6ac9wmi79E/nRGA0mqGaeyruWBBAnRz7pFBklA5l+G
 
 [core]
   excludesfile = ~/.config/git/ignore
@@ -15,11 +14,10 @@
   pager = delta
 
 [interactive]
-diffFilter = delta --color-only
+  diffFilter = delta --color-only
 
 [commit]
   verbose = true
-  gpgsign = true
 
 [pull]
   rebase = true
