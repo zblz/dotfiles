@@ -19,6 +19,7 @@ vim.cmd [[
   augroup end
 ]]
 
+
 local use = require('packer').use
 require('packer').startup(function()
         use 'wbthomason/packer.nvim' -- Package manager
@@ -405,11 +406,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 -- end
                 -- Inlay hints
                 if client:supports_method "textDocument/inlayHints" then
-                        vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+                        vim.lsp.inlay_hint.enable(true)
                 end
-                vim.api.nvim_buf_set_keymap(event.buf, 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>',
-                        { noremap = true, silent = true })
-                vim.keymap.set("i", "<C-space>", vim.lsp.completion.get, { desc = "trigger autocompletion" })
+                local opts = { noremap = true, silent = true, buffer = event.buf }
+                vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
+                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
         end,
 })
 
@@ -449,12 +451,12 @@ vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 vim.o.completeopt = 'menu,menuone,noselect,preview'
 
 local has_words_before = function()
-        if vim.api.nvim_buf_get_option_value(0, "buftype") == "prompt" then return false end
+        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 end
 
-local cmp = require 'cmp'
+local cmp = require('cmp')
 cmp.setup({
         snippet = {
                 expand = function(args)
