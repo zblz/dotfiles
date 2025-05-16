@@ -379,6 +379,14 @@ vim.lsp.config('lua_ls', {
         }
 })
 
+vim.lsp.config['ty'] = {
+        cmd = { 'uvx', 'ty', 'server' },
+        filetypes = { 'python' },
+        root_markers = { 'pyproject.toml' },
+}
+vim.lsp.enable('ty')
+
+
 -- advertise nvim-cmp capabilities to servers
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 vim.lsp.config('*', {
